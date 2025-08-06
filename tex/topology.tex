@@ -1,0 +1,313 @@
+%%
+%% topology.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-23T09:41:40-0700
+%% Last update 2025-07-23T09:41:40-0700
+%% 
+
+\chapter{Point-Set Topology}
+
+\begin{remark}[Motivation for topology]
+Different mathematicians have different motivations for topology. For
+our purposes, we need some notion of a ``space'', and topological
+spaces are good enough. The definitions may seem \Latin{ad hoc}, but
+they are ``reverse engineered'' from considering the situation in
+$\RR^{n}$. 
+\end{remark}
+
+\begin{remark}[Topology requires classical mathematics]
+In many proofs and constructions throughout topology, we will require
+the axiom of choice (which forces our hand to use classical
+logic). There are ways to formalize some of these notions in more
+constructive settings. We are not interested in them.
+\end{remark}
+
+\section{Topological Spaces}
+
+\begin{definition}[Topological space]\mml{pre_topc}
+A \define{Topological Space} $T$ consists of a structure
+$T=\structure{U,\tau}$ where
+\begin{itemize}
+\item the set $U$ is the \emph{carrier} of $T$, and
+\item the \emph{topology} $\tau$ of $T$ is a family of subsets of $U$
+\end{itemize}
+where we call the elements of $\tau$ \define{Open} subsets of $T$ and
+the elements of $T$ are called \define{Points} of $T$, such that
+\begin{itemize}
+\property{$U$ is open} $U\in\tau$
+\property{$\emptyset$ is open} $\emptyset\in\tau$
+\property{Topology closed under arbitrary unions}
+  for any $A$ being an arbitrary family of subsets of $T$ such that
+  $A\subset\tau$ (or, equivalently, every $a\in A$ implies $a\in\tau$),
+  we have $\Union A\in\tau$
+\property{Topology closed under finite intersections}
+  for any subsets $A\subset T$ and $B\subset T$ such that $A\in\tau$
+  and $B\in\tau$, we have $A\cap B\in\tau$.
+\end{itemize}\vskip-\medskipamount
+\end{definition}
+
+\begin{example}[Nonempty topological space]
+Consider the set $X=\{\emptyset\}$. Take $\tau=\{\emptyset,X\}$.
+Then $T=\structure{U=X,\tau}$ forms a topological space.
+
+\begin{proof}
+We see that $\tau$ really is a family of subsets of $X$.
+We see $X\in\tau$ and $\emptyset\in\tau$.
+
+For $A$ being a family of subsets of $T$ such that $A\subset\tau$ we
+have $\Union A\in\tau$. There are only four possibilities here since
+the only family of subsets would be $A=\emptyset$ or $A=\{\emptyset\}$
+or $A=\{X\}$ or $A=\{\emptyset,X\}$. In any of these four cases, we
+see $\Union A\in\tau$.
+
+Let $A\subset T$ and $B\subset T$. Assume $A\in\tau$ and $B\in\tau$. 
+Then $A=\emptyset$ or $A=X$, and separately either $B=\emptyset$ or $B=X$.
+Then we see $A\cap B=\emptyset$ or $A\cap B=X$ are the only possibilities. 
+Hence $A\cap B\in\tau$.
+\end{proof}
+\end{example}
+
+\begin{definition}[Closed subsets]
+Let $T$ be a topological space, let $P\subset T$ be a subset of $T$.
+We call $P$ \define{Closed} if $T\setminus P$ is an open subset of $T$.
+\end{definition}
+
+\begin{remark}[Variable $F$ used for closed subsets]
+Bourbaki used the variable $F$ (and $F_{1}$, $F_{2}$, etc.) for closed
+subsets of a topological space. This is because the French word for
+``closed'' is \French{ferm\'{e}} which starts with the letter ``F''.
+(Bourbaki uses $\mathop{\rm Fr}(A)$ for the boundary of a subset
+$A\subset T$ since the french word for ``boundary'' is
+\French{fronti\`{e}re}.) 
+\end{remark}
+
+\begin{example}[Trivial closed subsets]
+Let $T = \structure{U,\tau}$ be a topological space.
+Then both $\emptyset$ and $U$ is a closed subset of $T$.
+In particular, this also means we can use ``closed'' as an adjective
+for subsets of topological spaces.
+
+\begin{proof}[Proof sketch]
+We see $U$ is an open subset of $T$, therefore $T\setminus U=\emptyset$
+is closed in $T$
+
+Similarly, $\emptyset$ is an open subset of $T$, therefore
+$T\setminus\emptyset=U$ is closed in $T$.
+\end{proof}
+\end{example}
+
+\begin{theorem}[Union of closed subsets is closed]\mml{tops_1}
+Let $T$ be a topological space. Let $F_{1}$, $F_{2}$ be closed subsets
+of $T$. Then $F_{1}\cup F_{2}$ is a closed subset of $T$.
+\end{theorem}
+
+\begin{theorem}[Intersection of closed subsets is closed]\mml{tops_1}
+Let $T$ be a topological space. Let $F_{1}$, $F_{2}$ be closed subsets
+of $T$. Then $F_{1}\cap F_{2}$ is a closed subset of $T$.
+\end{theorem}
+
+%%% SUBSPACES
+
+\begin{definition}[Subspaces]
+Let $T = \structure{U_{T},\tau_{T}}$ be a topological space.
+We define a \define{Subspace} of $T$ to be a topological space
+$S=\structure{U_{S},\tau_{S}}$ such that $U_{S}\subset U_{T}$ and also
+for $P\subset S$ we have $P\in\tau_{S}$ if and only if there is a
+subset $Q\subset T$ such that $Q\in\tau_{T}$ and $P = Q\cap U_{S}$.
+
+If $P\subset T$ is a nonempty subset, then we may introduce the term
+$T|_{P}$ for the [strict] Subspace of $T$ whose underlying set is $P$.
+\end{definition}
+
+
+%%% CONTINUOUS
+
+\begin{definition}[Continuous functions]
+Let $S$, $T$ be topological spaces. Let $f\colon S\to T$ be a function.
+We call $f$ \define{Continuous} if for every closed subset $P\subset T$
+we have $\preimage{f}{P}$ is closed in $S$.
+\end{definition}
+
+\begin{remark}[Intuition behind continuous functions]
+We should think of continuous functions using metric spaces $\structure{U,d}$.
+If $X$ and $Y$ are metric spaces, then a function $f\colon X\to Y$ is
+continuous at $x_{0}\in X$ if for each $\varepsilon>0$ there is a $\delta>0$ such that 
+$d_{X}(x,x_{0})<\delta$ implies $d_{Y}(y,f(x_{0}))<\varepsilon$.
+
+This can be rephrased as: for every open ball $B_{Y}$ in $Y$
+containing $f(x_{0})$, there exists an open ball $B_{X}$ in $X$ such
+that $\preimage{f}{B_{Y}}\subset B_{X}$. We can replace ``open ball''
+with ``open sets'' to generalize the notion to functions between
+topological spaces.
+
+The definition we have formalized is logically equivalent, though
+perhaps pedagogically deficient.
+\end{remark}
+
+\begin{example}[Identity function is continuous]
+Let $T$ be a topological space. The identity function $\id_{T}\colon T\to T$
+is a continuous function.
+\end{example}
+
+\begin{example}[Constant function is continuous]
+Let $T$ and $T'$ be topological spaces, let $c\in T'$.
+The constant function $f\colon T\to T'$ sending $x\in T$ to $f(x)=c$
+is continuous.
+\end{example}
+
+\begin{theorem}[Continuous function restricted to subspace is continuous]\mml{pre_topc:27}
+Let $T$ and $T'$ be topological spaces, let $S\subset T$ be a subspace
+of $T$. If $f\colon T\to T'$, then its restriction to $S$,
+$$f|_{S}\colon S\to T',$$
+is a continuous function.
+\end{theorem}
+
+\begin{theorem}[Composing continuous functions yields a continuous function]
+Let $T_{1}$, $T_{2}$, $T_{3}$ be topological spaces.
+Let $f\colon T_{1}\to T_{2}$ and $g\colon T_{2}\to T_{3}$ be
+continuous functions.
+Then $g\circ f\colon T_{1}\to T_{3}$ is a continuous function.
+\end{theorem}
+
+\begin{remark}[Category of topological spaces]
+We can form the large category $\Top$ of topological spaces, specifically:
+\begin{itemize}
+\property{Objects} The objects of $\Top$ consists of topological spaces
+\property{Morphisms} The morphisms of $\Top$ are the continuous
+  functions between topological spaces in $\Top$.
+\end{itemize}%
+We can form a small category if we are given a set $U$ of topological
+spaces, which we denote by $\Top_{U}$.
+\end{remark}
+
+\begin{definition}[Homeomorphism and Homeomorphic spaces]
+Let $X$ and $Y$ be topological spaces. A \define{Homeomorphism} from
+$X$ to $Y$ is a continuous function $f\colon X\to Y$ such that there
+exists an inverse function $f^{-1}\colon Y\to X$ which is also a
+continuous function. That is to say, it is a bijection $f$ of the
+underlying sets such that $f$ is continuous and its inverse $f^{-1}$
+is continuous.
+
+When there exists a homeomorphism between $X$ and $Y$, we say that $X$
+and $Y$ are \define{Homeomorphic}. Importantly, this relation (``$X$
+and $Y$ are homeomorphic'') forms an equivalence relation.
+
+Caution: a continuous bijection \emph{is not necessarily a homeomorphism!}
+For example, consider the function $f\colon[0,1)\to S^{1}$ defined by
+$f(x)=\exp(2\pi\I x)$. This is a bijection and it is continuous, but
+it is not a homeomorphism.
+\end{definition}
+
+\begin{remark}[Topological invariants preserved by homeomorphisms]
+We care about ``topological invariants'' in topology. It is hard to
+actually determine if two spaces are homeomorphic or not, but it is
+easier to find some invariant which one space has but the other lacks.
+
+We could define a ``topological invariant'' to be an equivalence class
+of topological spaces (which share the same invariant or property).
+\end{remark}
+
+%%% Closures of a set
+
+\begin{definition}[Closure of a subset]
+Let $T$ be a topological space, let $A\subset T$ be a subset of $T$.
+We define the term the \define{Closure of $A$} to be the subset
+$\closure{A}$ of $T$ such that
+for $p\in T$ we have $p\in\closure{A}$ if and only if for each open
+subset $U\subset T$ containing $p\in U$ we have $A\cap U\neq\emptyset$.
+\end{definition}
+
+\begin{theorem}[Properties of the closure of a subset]
+Let $T$ be a topological space, let $A$ and $B$ be subsets of $T$.
+\begin{enumerate}
+\item\textsc{Projectivity:} We have $\closure{\closure{A}}=\closure{A}$.
+\item We have $\closure{A}$ be a closed subset of $T$.
+\item We have $A\subset\closure{A}$.
+\item If $A\subset B$, then $\closure{A}\subset\closure{B}$.
+\item We have $\closure{A\cup B}=\bigl(\closure{A}\bigr)\cup\bigl(\closure{B}\bigr)$.
+\item We have $\closure{A\cap B}=\bigl(\closure{A}\bigr)\cap\bigl(\closure{B}\bigr)$.
+\item\mml{tops_1:5} If $B$ is closed and $A\subset B$, then $\closure{A}\subset B$.
+\end{enumerate}
+\end{theorem}
+
+
+\begin{definition}[$T_{0}$, $T_{1}$, $T_{2}$, regular, normal topological spaces]\mml{pre_topc:def 8-14}
+Let $T$ be a topological space.
+\begin{enumerate}
+\item We say $T$ is ``$T_{0}$'' (or \define{Kolmogorov})
+  if for all points $x\in T$ and $y\in T$
+  such that, whenever an open subset $U\subset T$ satisfies $x\in U$
+  iff $y\in U$, implies $x = y$.
+\item%\mml{pre_topc:def 9}
+  We say $T$ is ``$T_{1}$'' (or \define{Frechet})
+  if for all distinct points $x\in T$ and $y\in T$ (s.t., $x\neq y$)
+  there exists an open subset $U\subset T$ such that $x\in U$ and
+  $y\in T\setminus U$.
+\item%\mml{pre_topc:def 10}
+  We say $T$ is \define{Hausdorff} (or ``$T_{2}$'')
+  if for each pair of distinct points $x\in T$ and $y\in T$ 
+  there exists disjoint open subsets $U_{1}\subset T$ and
+  $U_{2}\subset T$ such that $x\in U_{1}$ and $y\in U_{1}$ (and
+  $U_{1}\cap U_{2}=\emptyset$).
+\item%\mml{pre_topc:def 11}
+  We say $T$ is \define{Regular} if
+  for each point $p\in T$ and closed subset $F\subset T$ such that
+  $p\in T\setminus F$ there exists disjoint open subsets $U_{1}\subset T$ and
+  $U_{2}\subset T$ such that $p\in U_{1}$ and $F\subset U_{2}$ (and
+  $U_{1}\cap U_{2}=\emptyset$).
+\item%\mml{pre_topc:def 12}
+  We say $T$ is \define{Normal} if
+  for each pair of disjoint closed subsets $F_{1}\subset T$ and
+  $F_{2}\subset T$ there exists a disjoint pair of open subsets
+  $U_{1}\subset T$ and $U_{2}\subset T$ such that $F_{1}\subset U_{1}$
+  and $F_{2}\subset U_{2}$ (and $U_{1}\cap U_{2}=\emptyset$).
+\item%\mml{pre_topc:def 13}
+  We say $T$ is \define{$T_{3}$} if $T$ is $T_{1}$ and regular
+\item%\mml{pre_topc:def 14}
+  We say $T$ is \define{$T_{4}$} if $T$ is $T_{1}$ and normal
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Terminology]
+These properties $T_{n}$ for $n>2$ are always of the form ``$T_{1}$ and\dots''.
+
+We seldom see $T_{3}$ in the literature (more often we find ``regular $T_{1}$''),
+nor do we see $T_{4}$ much either (we often see ``normal $T_{1}$'').
+\end{remark}
+
+\begin{example}[Empty topological space is $T_{0}$]
+The empty topological space is $T_{0}$.
+
+\begin{proof}[Proof sketch]
+Let $T$ be a topological space. Assume $T$ is empty.
+Let $x$, $y$ be points of $T$. Assume for $U$ being an open subset of
+$T$ we have $x\in U$ iff $y\in U$.
+But $x\in U$ implies a contradiction (and similarly $y\in U$ implies a
+contradiction), which implies the result by the explosion principle.
+\end{proof}
+\end{example}
+
+\begin{theorem}[Relation among these properties]
+Let $T$ be a topological space. We see the following holds:
+\begin{enumerate}
+\item If $T$ is $T_{1}$, then $T$ is $T_{0}$.
+\item If $T$ is $T_{2}$, then $T$ is $T_{1}$ (and $T$ is $T_{0}$)
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Diagonal map of $T$ is closed iff $T$ is Hausdorff]
+Let $T$ be a topological space.
+Then $T$ is Hausdorff if and only if the image of the diagonal map (\S\ref{defn:set-theory:diagonal-function}) $\Delta\colon T\to T\times T$
+is closed in $T\times T$.
+\end{theorem}
+
+\begin{remark}[Generalization of Hausdorff property]
+This previous theorem (the image of $\Delta$ is closed in $T\times T$)
+is used or abused by algebraic geometers to generalize the notion of
+``Hausdorff'' for algebraic varieties. It is a fact that prevarieties
+are Hausdorff iff they are singletons (see, e.g.,
+Osserman~\cite[ch.5]{osserman2021concise}). 
+\end{remark}

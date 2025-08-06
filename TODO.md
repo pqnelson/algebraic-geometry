@@ -1,0 +1,2 @@
+- [ ] Definition of a bag requires defining "finite-support" for a function
+- [ ] Multi-index requires notion of monus to be defined

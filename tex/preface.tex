@@ -1,0 +1,63 @@
+%%
+%% preface.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-19T19:23:26-0700
+%% Last update 2025-07-19T19:23:26-0700
+%% 
+
+\chapter{Preface}
+
+\begin{remark}[Structure of this manuscript]
+This is my collection of notes on stuff related to algebraic geometry,
+and possibly other subjects in pure mathematics. Algebraic geometry is
+a horribly presented subject, since it has evolved in ``waves''. Each
+``wave'' reused the same terminology, but assigned different meanings
+to the terms (or so it seems to me, as an outsider).
+
+I am hoping to make sense of it. I am organizing my notes into
+``chunks'', following Alan Kennington's writing style in his book on
+differential geometry.
+
+Of course, I am doing this with an eye towards formalizing the
+mathematics in \Mizar/. So the proofs are probably going to be written
+in a ``pidgin \Mizar/'', if you will.\mml{MML ref} Consequently, I will also be
+writing references to articles appearing in the Mizar Mathematical
+Library in the left margin. This is where the relevant result may be found.
+\end{remark}
+
+\begin{remark}[Types of definitions]
+Again, following \Mizar/, we will use their taxonomy of definitions:
+\begin{itemize}
+\item[$-$] Predicates produce formulas from terms. They are always
+  well-defined. 
+\item[$-$] Term constructors (or \emph{functors}) produce terms
+  parametrized by finitely many terms. We need to prove this is
+  well-defined (abbreviations need to be proven to have the correct
+  type, ``standard'' term definitions need to be proven to exist and
+  be unique).
+\item[$-$] Soft Types are predicates in the ambient logic; these are
+  dependent types. We need to prove there exists at least one term
+  satisfying this predicate (i.e., the type is nonempty) since we are
+  using classical logic and not \emph{free} logic.
+\item[$-$] Attributes are modifiers to soft types. We need to prove
+  there always exists a term satisfying this attribute before we can
+  use it as an adjective on types.
+\item[$-$] Structures describe tuples in ``Mathematical Reality'' and
+  describes a new soft type. This is always well-defined.
+\end{itemize}%
+\end{remark}
+
+\begin{remark}[Stipulated mathematics]
+We will stipulate that the real numbers (and possibly the complex
+numbers) have been introduced and shown to exist. We denote the set of
+real numbers by $\RR$.
+\end{remark}
+
+\begin{remark}[Referring to material out of order]
+We will isolate discussions which require material yet to be
+presented, we follow Bourbaki's example and wrap it in ``earmuffs''
+(as the Lisp programmers call it): \future{$\cdots$}.
+\end{remark}

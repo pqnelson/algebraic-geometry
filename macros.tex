@@ -1,0 +1,280 @@
+%%
+%% macros.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-19T10:37:32-0700
+%% Last update 2025-07-19T10:37:32-0700
+%% 
+
+\ifLaTeX\else
+  \input{pmbook}
+\fi
+
+\makeatletter
+
+
+%% Date manipulation
+% ISO-8601 date looks like: yyyy-mm-dd
+\def\pad@one@zero#1{\ifnum#1<10{0\number#1}\else{\number#1}\fi}
+\def\isodate{\number\year-\pad@one@zero{\month}-\pad@one@zero{\day}}
+\newif\ifdst\dstfalse                % guess it's not DST by default
+
+\def\@dst@in@oct@or@mar{%
+  \begingroup %
+% let \r := (\divide\year by100) mod 4
+% \ifcase\r \global\anchor=2 \or \global\anchor=0 \or \global\anchor=5 \or%
+%           \global\anchor=3 \fi
+% let \doomsday := \year mod 100
+% \ifodd\doomsday\advance\doomsday by11\fi
+% \doomsday=\divide\doomsday by2
+% \ifodd\doomsday\advance\doomsday by11\fi
+% \doomsday = 7 - (\doomsday mod 7)
+% \advance\doomsday\by\r
+% \doomsday = \doomsday mod 7
+  % count0 = century
+  \count0 = \year         %
+  \divide\count0 by 100   %
+  % count1 = century mod 4
+  \count2 = \count0       %
+  \divide\count2 by 4     %
+  \count1 = \count0       %
+  \multiply\count2 by 4   %
+  \advance\count1 by-\count2 %
+  % count2 = anchor
+  \ifcase\count1 %
+    \count2=2 \or \count2 = 0 \or \count2=5 \or \count2=3 %
+  \fi %
+  % count 3 = year - 100*century
+  \count4 = \count0           % 
+  \multiply\count4 by 100     % count4 = 100*century
+  \count3 = \year             %
+  \advance\count3 by -\count4 % count3 = year - 100*century
+  \ifodd\count3 \advance\count3 by11 \fi  % ifodd count3, count3 += 11
+  \divide\count3 by2                      % count3 := count3 / 2
+  \ifodd\count3 \advance\count3 by 11 \fi % ifodd count3, count3 += 11
+  % count3 = (count3 mod 7)
+  \count4=\count3             %
+  \divide\count4 by 7         % 
+  \multiply\count4 by 7       % count4 = 7 * floor(count3 / 7)
+  \advance\count3 by -\count4 %
+  % count3 = count3 - 7
+  \advance\count3 by -7       %
+  \count4=0                   %
+  \advance\count4 by -\count3 %
+  \count3=\count4 % so now, count3 = 7 - (doomsday mod 7)
+  % count3 := count3 + anchor
+  \advance\count3 by \count2  %
+  % doomsday = doomsday mod 7
+  \count4 = \count3           %
+  \divide\count4 by 7         %
+  \multiply\count4 by 7       % count4 = 7 * floor(count3 / 7)
+  \advance\count3 by -\count4 %
+  \message{Day of week for Doomsday is \number\count3 ^^J}
+  % so now, \count3 is doomsday
+  \ifnum\month=10
+    % if Oct 10 is Wed or later, then the second Sunday of October
+    % is *after* October 10; otherwise, it is *before* October 10.
+    % if doomsday < 3, then Second Sunday = 11 - doomsday
+    % else Second Sunday = 18 - doomsday
+    \ifnum\count3 < 3  %
+      \count0 = 10     %
+    \else              %
+      \count0 = 17     %
+    \fi                %
+    \advance\count0 by -\count3 % count0 is now second Sunday of October
+    \ifnum\day<\count0 %
+      \global\dsttrue  %
+    \fi                %
+  \else%
+    \ifnum\month=3     %
+      % Second Sunday of March is the Sunday before Mar 14;
+      % i.e., 14 - doomsday
+      \count0 = 14     %
+      \advance\count0 by -\count3% count0 is now second Sunday of March
+      \advance\count0 by -1 % count0 is now day BEFORE second Sunday of March
+      % so any day AFTER that in March *would* be in Daylight savings time...
+      \ifnum\day>\count0 \global\dsttrue \fi %
+    \fi %
+  \fi %
+\endgroup%
+}
+
+\ifnum\month=3
+  \@dst@in@oct@or@mar 
+\else
+  \ifnum\month>3
+    \ifnum\month<10
+      \dsttrue
+    \else
+      \ifnum\month=10
+        \@dst@in@oct@or@mar
+      \fi
+    \fi
+  \fi
+\fi
+
+\def\isotz{%$\mathord{-}$
+-\ifdst700\else800\fi} % Pacific time zone
+
+% XXX: TeX does not give us the time in seconds, so we just truncate
+% the ISO 8601 time down.
+\def\isotime{\begingroup%
+  \count0 = \time\divide\count0 by 60 %
+  \count2 = \count0 % the hour
+  \count4 = \time\multiply\count0 by 60 %
+  \advance\count4 by -\count0 % the minute
+  \pad@one@zero{\count2}:\pad@one@zero{\count4}:00\isotz %
+\endgroup}
+
+\def\isodatetime{\isodate T\isotime}
+
+\def\@maketitleaddenda{\mbox{Compiled: {\tt\isodatetime}}}
+
+
+% \journal[abbrevated name]{full name} will print the abbreviated
+% name, if present. If absent, it prints the full name.
+% ALSO: there will be no "extra spacing" after periods, to facilitate
+% abbreviations properly and ease writing them.
+\def\@journal[#1]#2{\emph{\frenchspacing#1}}
+\def\@@journal#1{\@journal[#1]{}}
+\def\journal{\@ifnextchar[\@journal\@@journal}
+% \volume{x}
+\def\volume{\textbf}
+
+%%
+%% Quotes
+%%
+\font\eightss=cmssq8
+\font\eightssi=cmssqi8
+\font\sixss=cmssq8 scaled 800
+\font\tenssbx=cmssbx10
+\font\twelvess=cmss12
+\font\titlefont=cmssbx10 scaled\magstep2
+
+
+\def\chapterquotes{
+  \baselineskip 10pt
+  \parfillskip \z@
+  \interlinepenalty 10000
+  \leftskip \z@ plus 40pc minus \parindent
+  \let\rm=\eightss \let\sl=\eightssi \let\adbcfont=\sixss \let\em=\sl
+  \everypar{\sl}
+  \def\from{\par\nobreak\smallskip\noindent\rm--- }
+  \def\author##1(##2){\from ##1\unskip\enspace(##2)}
+  \def\\{\hskip.05em} % can say 3\\:\\16
+  \obeylines}
+\def\endchapterquotes{}
+
+
+%%
+%% Theorems
+%%
+
+\newcounter{theorem}
+\@addtoreset{theorem}{section}
+
+\def\thetheorem{\thesection.\arabic{theorem}}
+
+\def\theorembreak{\smallbreak}
+% \newtheorem{environment-name}{Printed Name}{body font}
+% produces an environment with a mandatory argument (in brackets) for
+% the "slogan" to be printed.
+% Ex: \begin{definition}[Monoids are unital loops] ... \end{definition}
+% Without the optional slogan, the body of the theorem will start on
+% the same line as the theorem heading.
+\def\newtheorem#1#2#3{
+  \expandafter\gdef\csname @#1\endcsname[##1]{% \begin{theorem}
+    \theorembreak% \medbreak
+    \refstepcounter{theorem}\noindent{\bf \thetheorem} {\textsc{#2:}} {\sl##1\@addpunct{.}}\hfill\break#3\ignorespaces%
+  }
+  \expandafter\gdef\csname @@#1\endcsname{% \begin{theorem}
+    \theorembreak% \medbreak
+    \refstepcounter{theorem}\noindent{\bf \thetheorem} {\textsc{#2:}} #3\ignorespaces%
+  }
+  \expandafter\gdef\csname #1\endcsname{
+    \def\unbracketed@thm{\csname @@#1\endcsname}
+    \def\bracketed@thm{\csname @#1\endcsname}
+    \@ifnextchar[\bracketed@thm\unbracketed@thm
+  }
+  %% \expandafter\gdef\csname #1\endcsname[##1]{% \begin{theorem}
+  %%   \theorembreak% \medbreak
+  %%   \refstepcounter{theorem}\noindent{\bf \thetheorem} {\textsc{#2:}} {\sl##1\@addpunct{.}}\hfill\break#3\ignorespaces%
+  %% }
+  %%% End theorem
+  \ifLaTeX
+  \expandafter\gdef\csname end#1\endcsname{% \end{theorem}
+    \ifdim\lastskip<\bigskipamount \removelastskip\penalty55\smallskip\fi%
+  }
+  \else
+  \expandafter\gdef\csname end#1\endcsname{% \end{theorem}
+    \@ignoretrue\smallbreak%\medbreak%
+  }
+  \fi%
+}
+
+\newtheorem{theorem}{Theorem}{\sl}
+\newtheorem{proposition}{Proposition}{\sl}
+\newtheorem{lemma}{Lemma}{\sl}
+\newtheorem{corollary}{Corollary}{\sl}
+\newtheorem{scheme}{Scheme}{\sl}
+\newtheorem{definition}{Definition}{}
+\newtheorem{axiom}{Axiom}{\sl}
+\newtheorem{axiom-scheme}{Axiom Scheme}{\sl}
+\newtheorem{example}{Example}{}
+\newtheorem{remark}{Remark}{}
+
+%% \newenvironment{theorem}{% \begin{theorem}
+%%   \medbreak
+%%   \stepcounter{theorem}\noindent{\bf \thetheorem} {\tensc Theorem \thetheorem.\enspace}\sl\ignorespaces%
+%% }{% \end{theorem}
+%%     \ifdim\lastskip<\medskipamount \removelastskip\penalty55\medskip\fi%
+%% }
+
+
+%% Math subject classification (stuf)
+% \@subjclass[year]{primary, secondary}
+\expandafter\ifx\csname subjclass\endcsname\relax
+  \def\@subjclass[#1]#2{}
+  \def\@@subjclass#1{\@subjclass[2000]{#1}}
+  \def\subjclass{\@ifnextchar[\@subjclass\@@subjclass}
+\fi
+
+
+%%%
+%%% Commutative diagrams
+%%%
+\input xy
+\xyoption{all}
+\SelectTips{cm}{}
+\makeatother
+
+
+%%%
+%%% Plain TeX href, since LaTeX will have hyperref available
+%%%
+\ifLaTeX\else
+\def\href#1#2{\special{html:<a href="#1">}#2\special{html:</a>}}
+\fi
+
+\endinput
+
+
+% for Bbb, see https://tex.stackexchange.com/a/236331/14751
+\input amstex
+\loadmsbm
+
+\catcode`@=11
+\font@\tenbbold=bbold10
+\font@\sevenbbold=bbold7
+\font@\fivebbold=bbold5
+\newfam\bboldfam
+\textfont\bboldfam=\tenbbold
+\scriptfont\bboldfam=\sevenbbold
+\scriptscriptfont\bboldfam=\fivebbold
+\def\xbb{\RIfM@\expandafter\xbb@\else
+ \expandafter\nonmatherr@\expandafter\xbb\fi}
+\def\xbb@#1{{\xbb@@{#1}}}
+\def\xbb@@#1{\noaccents@\fam\bboldfam\relax#1}
+\let\mathbb\Bbb

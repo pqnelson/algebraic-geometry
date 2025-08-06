@@ -1,0 +1,701 @@
+%%
+%% ring.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-20T10:08:56-0700
+%% Last update 2025-07-20T10:08:56-0700
+%% 
+
+\chapter{Ring Theory}
+
+\section{Basic Structures}
+
+\begin{definition}[Magmas]\mml{algstr_0}
+A (multiplicative) \define{Magma} is a one-sorted structure
+$\structure{U, \cdot}$ where $U$ is a set called its \define{Carrier}
+or \emph{Underlying Set}, and $\cdot\colon U\times U\to U$ is its
+\emph{binary operator} called its \define{Multiplication} operator
+(sometimes we will use $\star$ or $*$ or $\times$ for the binary
+operator). We will often drop the $\cdot$, writing $xy$ instead of
+$x\cdot y$.
+
+We call a magma $M$ \define{Commutative} if for all $x,y\in M$ we have
+$x\cdot y=y\cdot x$. In this case, it is common to use $+$ instead of
+$\cdot$ for the binary operator. In this case, we often refer to it as
+an \define{Additive Magma}.
+\end{definition}
+
+\begin{definition}[Monoids]\label{defn:monoid}
+A (multiplicative) \define{Monoid} is a multiplicative Magma $M$ such that
+\begin{itemize}
+\property{Associativity} for all $x,y,z\in U$ we have $x(yz)=(xy)z$
+\property{Unital} there exists an element $e\in U$ such that for all
+  $x\in U$ we have $xe=x$ and $ex=x$
+\end{itemize}
+Furthermore, the unital element $e$ is unique, so we will write
+$1_{M}$ for the unital element of a monoid $M$ when the binary
+operator is multiplication (and $0_{M}$ when the binary operator is
+addition). 
+
+It is often more natural to work with monoids than magmas for a
+variety of reasons. (Later, we will see that a monoid is really the
+same thing as a category with a single object.)
+\end{definition}
+
+\begin{remark}[Ambiguity in structure of a monoid]
+There is some ambiguity regarding the exact structure of a
+monoid. Specifically, is it a double $M=\structure{U,\cdot}$ with this
+unital axiom? Then $1_{-}$ is a ``term constructor'' in the ambient
+logic (it eats in a magma $M$ and spits out an element $1_{M}\in M$).
+
+On the other hand, we could define a monoid to be a triple
+$M=\structure{U,\cdot,1_{U}}$ and have the extra element $1_{U}\in U$ obey the
+unital condition. What could go wrong here? Well, an ordered pair is
+not an ordered triple, so a monoid could not also be a magma (they are
+different objects in ``mathematical reality'').
+
+Thanks to the invention of proof assistants, we have much experience
+exploring which formalization reflects mathematical practice, and it
+appears the former should be preferred: using ``the smallest structure possible''
+has its benefits. Most relevant for us, every monoid \emph{really is}
+a magma.
+\end{remark}
+
+\begin{definition}[Groups and Inverse Operator]\mml{group_1}
+A \define{Group} is a Monoid $G$ such that
+\begin{itemize}
+\property{Invertibility} For each $x\in G$, there exists a $y\in G$
+  such that $xy=1_{G}$ and $yx=1_{G}$.
+\end{itemize}
+Associativity makes the element $y$ unique, so we will write this as
+$x^{-1}$. The mapping on $G$ sending $x\mapsto x^{-1}$ is called the
+\define{Inverse Operator} of $G$.
+\end{definition}
+
+\begin{definition}[Loops Structure]\mml{algstr_0}
+Following the tradition of Polish logicians, we will define a
+\define{Multiplicative Loop Structure} is a multiplicative magma which
+is also a one structure $\structure{U,\cdot,1_{U}}$.
+
+An \define{Additive Loop Structure} is an additive magma which is also a zero
+structure $\structure{U,+,0_{U}}$.
+
+A (multiplicative) Loop is a (multiplicative) Loop Structure which is
+unital and invertible. The One field of the Loop Structure is the
+multiplicative identity element.
+\end{definition}
+
+\begin{definition}[Ringoid, double magma, and double loop structures]\mml{algstr_0}
+A \define{Double Magma Structure} is a structure $D=\structure{U,+,\cdot}$
+which is both a multiplicative magma and an additive magma.
+
+A \define{Ringoid Structure} 
+is a double magma structure and a zero structure $R=\structure{U,\cdot,+,0_{U}}$ which is
+a magma in $U$ and $\cdot$, adjoined with a binary operator $+\colon U\times U\to U$
+called \emph{Addition},
+and a ``zero element'' $0_{U}\in U$.
+
+A \define{Double Loop Structure} is a Ringoid which is also a multiplicative
+loop, i.e., it is a structure $\structure{U,\cdot,+,0_{U},1_{U}}$. 
+\end{definition}
+
+\begin{definition}[Pointed and Absorption magmas and monoids]
+We define an \define{Magma with Zero} to consist of the structure
+$M=\structure{U,\cdot,0_{U}}$. We further call it an \define{Absorption Magma}
+if it is such that
+\begin{itemize}
+\property{Absorption property} for all $x\in M$, we have
+  $x\cdot0_{U}=0_{U}$ and $0_{U}\cdot x=0_{U}$.
+\end{itemize}
+We define a \define{Monoid with Zero} to be an associative unital
+magma with zero. Furthermore, an \define{Absorption Monoid} to be an
+absorption magma which is unital and associative.
+\end{definition}
+
+\begin{example}[Real numbers]
+The real numbers forms a one-sorted structure $\structure{U=\RR}$,
+a zero structure $\structure{U=\RR,0_{U}=0}$, a one structure
+$\structure{U=\RR,1_{U}=1}$, a zero-one structure, a multiplicative magma
+structure under multiplication, an additive magma structure under
+addition. Hence it also gives us a double magma, a double loop, a ringoid,
+a pointed magma, and every other structure we have defined so far.
+\end{example}
+
+\section{Rings}
+
+\begin{definition}[Distributive double magmas]\mml{vectsp_1:def 7}\label{defn:double-magma:distributive}
+Let $D=\structure{U,\cdot,+}$ be a nonempty double magma. We call $D$
+\define{Distributive} if multiplication distributes over addition,
+i.e.,
+\begin{itemize}
+\property{Left distributivity} $x(y+z)=xy+xz$ for all $x,y,z\in D$,
+\property{Right distributivity} $(x+y)z=xz+yz$ for all $x,y,z\in D$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Unital Ring]\mml{vectsp_1}
+A \define{Unital Ring} consists of a non empty double loop structure
+$R=\structure{U,+,\cdot,0_{U},1_{U}}$ such that
+\begin{itemize}
+\property{Abelian} addition is commutative, i.e., for all $x,y\in R$
+  we have $x + y = y + x$
+\property{Addition is associative} for all $x,y,z\in R$ we have
+  $(x+y)+z=x+(y+z)$
+\property{Right complementable} for every $x\in R$, there exists a
+  $y\in R$ such that $x + y = 0_{U}$.
+\property{Right zeroed} for every $x\in R$ we have $x + 0_{U} = x$
+\property{Multiplication is associative} for all $x,y,z\in R$
+  we have $(x\cdot y)\cdot z=x\cdot(y\cdot z)$
+\property{Well-Unital} for all $x\in R$ we have $x\cdot 1_{U}=x$ and
+  $1_{U}\cdot x = x$
+\property{Distributive} multiplication distributes over addition as
+  per Definition~\ref{defn:double-magma:distributive}.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Ring = Abelian additive group + multiplication]
+We could define a ring to be an Abelian additive group equipped with a
+bilinear operator which is its multiplication operator. Distributivity
+of multiplication over addition comes for ``free'' from
+bilinearity. This means that a ring is a monoid object in the category
+of Abelian groups.
+\end{remark}
+
+\begin{remark}[Non-unital rings]
+Here's where we run into issues with the ``willinilly'' attitude the
+Working Mathematician adopts. A non-unital ring would be a ringoid
+satisfying all the properties of a unital ring \emph{except} the
+well-unital property. We should think of this as a ring, and that
+we can use the ``unital'' property from Definition~\ref{defn:monoid}.
+Programmers would call this reworking of things ``refactoring''.
+
+Arguably, we could weaken things even further and remove the
+requirement that a ring is associative under multiplication. This
+would allow us to define, e.g., a [not-necessarily-associative]
+algebra over a ring $R$ is a module over $R$ which is also a ring.
+Lie Algebras are an example of this. For algebraic geometers,
+associativity may be safely assumed for the rings of interest.
+\end{remark}
+
+\begin{example}[Noncommutative and commutative rings]
+Consider the ring of $2\times 2$ matrices over $\RR$. This is famously
+a noncommutative ring (i.e., multiplication is a noncommutative operator).
+This is also a unital ring since the identity matrix is its identity
+element. 
+
+On the other hand, $\RR$ equipped with the usual multiplication and
+addition operations forms a commutative ring.
+
+Hence we can use both ``commutative'' and ``noncommutative'' as
+adjectives for ``unital ring'' (and for ``ring'').
+\end{example}
+
+\begin{example}[Ring of endomorphisms]
+Let $G$ be an Abelian group.
+Consider the set $\End(G)$ of endomorphisms of $G$. We claim this
+forms a ring.
+
+\begin{proof}
+We have $f_{1}$, $f_{2}\in\End(G)$. We define $f_{1}+f_{2}$ by
+$(f_{1}+f_{2})(g)=f_{1}(g)+f_{2}(g)$ for each $g\in G$. When equipped
+with this, we find $\End(G)$ forms an Abelian group with identity
+element $e(g)=0$ for all $g\in G$. The operator is commutative since
+$G$ is an \emph{Abelian} group.
+
+We can define multiplication by $f_{1}f_{2} = f_{1}\circ f_{2}$. The
+identity element for this multiplication is $\id_{G}$, and it is
+associative. We see that this is left-distributive
+$(f_{1}(f_{2}+f_{3}))(g)=f_{1}(f_{2}(g)+f_{3}(g))=f_{1}(f_{2}(g))+f_{1}(f_{3}(g))$ 
+by $f_{i}$ being group morphisms. The proof for right-distributivity
+is similar.
+\end{proof}
+\end{example}
+
+\begin{example}[Boolean rings]
+Consider the ring $B = \structure{\{0,1\}, 0_{B} = 0, 1_{B} = 1, +, \star}$
+where we define addition by the rules $0+x=x+0=x$ and $1+1=0$, and we
+define multiplication by the rules $1\star x=x\star 1=x$ and $0\star x=x\star0=0$.
+This is the \define{Canonical Boolean Ring}.
+
+More generally, let $X$ be a set. We can form a ring $R=\structure{\powerset{X},+=\symdiff,\star=\cap,1_{R}=X,0_{R}=\emptyset}$.
+This is a Boolean ring over $X$. When $X$ is a singleton, this is
+isomorphic to the canonical Boolean ring.
+\end{example}
+
+\begin{theorem}[Zero absorps stuff in a ring]\mml{vectsp_1:6}
+Let $R$ be a nonempty right complementable, right zeroed, right
+distributive double loop structure with associative addition.
+Let $x\in R$ be any element.
+Then $x\cdot 0_{R}=0_{R}$.
+\end{theorem}
+
+\begin{proof}
+We see that (by right zeroed and distributivity)
+\begin{equation*}
+\begin{aligned}
+(x\cdot 0_{R}) + 0_{R} &= (x\cdot(0_{R} + 0_{R})) + 0_{R}\\
+&= x\cdot(0_{R} + 0_{R})\\
+&= (x\cdot0_{R}) + (x\cdot0_{R}).\\
+\end{aligned}
+\end{equation*}
+Hence the result by Definition of right-complementable.
+\end{proof}
+
+\begin{definition}[Almost left invertible]\mml{vectsp_1:def 9}
+Let $M$ be a multiplicative loop with zero structure.
+We can define the attribute calling $M$ \define{Almost Left Invertible} 
+if for every $x\in M$ such that $x\neq 0_{M}$ there exists a $y\in M$
+such that $yx=1_{M}$.
+\end{definition}
+
+\begin{definition}[Zero-divisor]
+Let $R$ be a ring, let $x\in R$ be nonzero $x\neq 0$.
+We call $x$ a \define{Zero-Divisor} if there exists a $y\in R$ such
+that $y\neq0$ and either $xy=0$ or $yx=0$.
+\end{definition}
+
+\begin{definition}[Skew-field]\mml{vectsp_1}
+We define a \define{Skew-field} (or \emph{Division Ring}) to be a
+nondegenerate almost left invertible unital Ring.
+\end{definition}
+
+\begin{example}[Quaternions form a skew-field]
+The canonical example of a skew-field is the quaternions $\HH$.
+\end{example}
+
+\begin{theorem}[Endomorphism ring of a simple module is a skew-field]
+Let $R$ be a ring, let $M$ be a simple module over $R$. Then the endomorphism ring $\End(M)$ is a
+skew-field.
+\end{theorem}
+
+This follows by Schur's lemma.
+
+\begin{definition}[Field]\mml{vectsp_1}
+We define a \define{Field} to be a commutative Skew-field.
+\end{definition}
+
+\begin{example}[Finite field of order $p$]
+Let $p$ be a prime number. Consider $\FF_{p}$ consisting of natural
+numbers up to $p$ equipped with addition of integers taken modulo $p$,
+multiplication of integers taken modulo $p$. Then $\FF_{p}$ is a
+finite field.
+\end{example}
+
+\begin{definition}[Units and Group of Units]\mml{matgrp_0}
+Let $R$ be a unital ring, let $x\in R$ be an element of $R$.
+We call $x$ a \define{Unit} if there exists an element $y\in R$
+such that $xy=1_{R}$ and $yx=1_{R}$. Observe that $1_{R}$ is a unit.
+
+The collection of all such units forms a group under multiplication
+from $R$. We refer to this group as the \define{Group of Units} and
+denote it by $\UnitGroup{R}$
+\end{definition}
+
+\begin{remark}[Number of one-sided inverses]
+It is important that we have \emph{both} $xy=1_{R}$ and $yx=1_{R}$ in
+the definition of units because if we just imposed one condition, say
+$xy=1_{R}$, then one of the following is true: there is no such $y$,
+or else there is a unique $y$, or else there are infinitely many such $y$.
+When we impose the second condition (that we must also have $yx=1_{R}$),
+then there is either zero or one such $y$. This result is known as
+``Kaplansky's theorem''.
+\end{remark}
+
+\begin{theorem}[(Kaplansky) Non-uniqueness of right inverses in Ring]
+Let $R$ be a unital ring, let $x$ be an element of $R$.
+Suppose there exists a right inverse of $x$ in $R$, but there is no
+left inverse of $x$ in $R$. Then there are infinitely many right
+inverses of $x$ in $R$.
+\end{theorem}
+
+Dijkstra worked through this theorem in EWD1124. His proof is a little
+too slick for my preferences. A particularly noteworthy proof may be
+found in Bitzer~\cite{bitzer1963inverses}, which does not rely on the
+ring structure.
+
+\begin{proof}[Proof sketch]
+We assume there exists a right inverse of $x$ in $R$, i.e., there is
+an element $r\in R$ such that
+\begin{equation}
+xr = 1_{R}.
+\end{equation}
+Consider the sequence $c_{n}=r+(1-rx)x^{n}$ with $c_{0}=r$. We claim
+that $xc_{n}=xr+x(1-rx)x^{n}=1+(x-xrx)x^{n}=1+(x-1_{R}x)x^{n}=1+0$,
+hence $c_{n}$ is another right inverse of $x$.
+
+We claim $c_{n}$ are distinct. Assume for contradiction that
+$c_{n}=c_{k}$ and $n\neq k$. Then we have
+\begin{equation}
+(1-rx)x^{n}=(1-rx)x^{k}.
+\end{equation}
+Suppose $k<n$. Then we can multiply on the right by $r^{k}$ to obtain
+\begin{equation}
+(1-rx)x^{n}r^{k}=(1-rx)x^{k}r^{k}=(1-rx)(xr)^{k}=1-rx.
+\end{equation}
+This means, in particular,
+\begin{equation}
+(1-rx)x^{n-k}+rx = \bigl((1-rx)x^{n-k-1}+r\bigr)x=1,
+\end{equation}
+and therefore we have obtained a left inverse of $x$. But this is a
+contradiction. Therefore we reject our assumption, and conclude that
+$c_{n}\neq c_{k}$ for $n\neq k$.
+\end{proof}
+
+\subsection{Ring morphisms}
+
+\begin{definition}[Ring morphism, endomorphism, and isomorphism]\mml{quofield, ringcat1}
+Let $R_{1}$ and $R_{2}$ be rings. We define a \define{Ring Morphism}
+to be a function $f\colon R_{1}\to R_{2}$ such that
+\begin{itemize}
+\property{Additive} for any $x$, $y\in R_{1}$, we have $f(x+y)=f(x)+f(y)$
+\property{Preserves zero} we have $f(0_{R_{1}})=0_{R_{2}}$
+\property{Multiplicative} for any $x$ and $y\in R_{1}$, we have $f(xy)=f(x)f(y)$.
+\property{Unit-preserving} When $R_{1}$ and $R_{2}$ are unital rings,
+  we have $f(1_{R_{1}})=1_{R_{2}}$
+\end{itemize}%
+That is to say, it is a morphism of the underlying Abelian groups such
+that it is multiplicative.
+
+When $R_{1} = R_{2}$, the ring morphism is referred to as a
+\define{Ring Endomorphism}.
+
+Furthermore, a \define{Ring Isomorphism} is a bijective ring morphism.
+A ring endomorphism which is also an isomorphism is called a
+\define{Ring Automorphism}.
+\end{definition}
+
+\begin{theorem}[Ring morphisms never map one to zero]
+Let $R_{1}$, $R_{2}$ be rings. Let $f\colon R_{1}\to R_{2}$ be a ring
+morphism. Then $f(1)\neq0$.
+\end{theorem}
+
+\begin{example}%[Identity ring automorphism]
+Let $R$ be a ring. Then $\id_{R}\colon R\to R$ is a ring morphism.
+\end{example}
+
+\begin{example}[Automorphism of field of complex numbers]
+Complex conjugation $\gamma\colon\CC\to\CC$, $\gamma(x+\I y)=x-\I y$,
+is an automorphism of $\CC$. The only \emph{continuous} functions of
+complex numbers which are also field automorphisms are the identity
+function and complex conjugation.
+
+Any automorphism $\alpha$ of $\CC$ must leave the rational numbers
+invariant $\alpha(q)=q$ for each $q\in\QQ$.
+
+We refer to automorphisms of $\CC$ which are neither $\id_{\CC}$ nor
+complex conjugation as \define{Wild Automorphisms} of $\CC$.
+Constructing a wild automorphism explicitly requires the axiom of choice,
+and are far from continuous. Kestelman~\cite{kestelman1951automorphisms}
+first discussed them.
+\end{example}
+
+\begin{example}[Not every two rings have a morphism between them]
+Here are a number of times where there are no ring morphisms between
+two rings.
+\begin{enumerate}
+\item Consider two primes $p\neq q$. There is no unit-preserving ring
+morphism from the finite field of $p$ elements $\FF_{p}$ to the finite
+field of $q$ elements $\FF_{q}$. (Hint: suppose
+$f\colon\FF_{p}\to\FF_{q}$ is a ring morphism. Then
+$qf(1)=0=f(p1)=pf(1)$ which implies $f(1)=0$.)
+\item  There is no unit-preserving ring morphism from the ring of 2-by-2
+matrices over the integers to the integers $M_{2}(\ZZ)\to\ZZ$.
+\item There is no unit-preserving ring morphism $\QQ\to\ZZ$.
+\end{enumerate}
+\end{example}
+
+\begin{example}[Existence of canonical ring morphism $\ZZ\to R$]
+Let $R$ be any unital ring. There exists a canonical ring morphism
+$f\colon\ZZ\to R$ defined by $f(1_{\ZZ})=1_{R}$.
+\end{example}
+
+\begin{remark}[Unit-preserving condition arguably un-natural]
+It is arguable that the condition $f(1)=1$ is too much, because unital
+rings are less ``natural'' than possibly-nonunital rings. For example,
+the kernel of a unital ring morphism is not a unital ring. But the
+kernel of a unital ring morphism \emph{is} an Abelian subgroup.
+\end{remark}
+
+\subsection{Subrings}
+
+\begin{definition}[Subrings]\mml{c0sp1:def 3}
+Let $R$ be a ring. We define a \define{Subring} of $R$ to be a ring
+$S$ such that $S\subset R$ and $0_{S}=0_{R}$ and the binary operators
+of $S$ are the binary operators of $R$ restricted to $S$, i.e., that
+$+_{S} = +_{R}|_{S\times S}$ and  $\star_{S} = \star_{R}|_{S\times S}$.
+
+Furthermore, when $R$ is a unital ring, we call $S$ a \define{Unital Subring} 
+of $R$ if we also have $1_{S}=1_{R}$ in addition to the preceding
+properties. 
+\end{definition}
+
+\begin{example}
+We see $\ZZ$ is a subring of $\RR$, and $\RR$ is a subring of $\CC$,
+and $\CC$ is a subring of $\HH$.
+\end{example}
+
+\begin{theorem}[Subring is a transitive notion]
+If $R_{1}$ is a subring of $R_{2}$, and $R_{2}$ is a subring of
+$R_{3}$, then $R_{1}$ is a subring of $R_{3}$.
+\end{theorem}
+
+\begin{definition}[Center of a ring]
+Let $R$ be a (possibly non-unital) ring. We define the \define{Center} of $R$
+to be the commutative Subring of $R$ denoted $Z(R)$ such that
+for $z\in R$ we have $z\in Z(R)$ iff for all $x\in R$ we have $zx=xz$.
+That is to say, $Z(R)$ consists of all elements which commute with
+everything in $R$.
+\end{definition}
+
+\begin{theorem}
+The center of a skew-field is a field.
+\end{theorem}
+
+\section{Formal Polynomials}
+
+\begin{remark}[Formalization of formal polynomials]
+It appears that formal polynomials were taken for granted until people
+tried formalizing them in proof assistants. The earliest formalization
+of formal polynomials may be found in \Mizar/. See Piotr Rudnicki
+and Andrzej Trybulec's ``Multivariate Polynomials with Arbitrary
+Number of Variables'' (\journal[Formaliz.\ Math.]{Formalized Mathematics}
+\volume{9}
+no.1 (2001) pp.95--110) which was reinvented multiple times.\nocite{rudnicki2001multivariate}
+
+The basic idea is to work with a notion of ``bags''. A bag of a set
+$X$ is a natural-valued function on $X$ which is zero almost everywhere.
+When $X=\{x_{1},\dots,x_{n}\}$, a bag $b$ corresponds to the monomial
+$x_{1}^{b_{1}}\cdots x_{n}^{b_{n}}$. (We abuse notation, abbreviating
+$b_{x_{i}}$ to $b_{i}$.) Then a formal series is a
+function from the set of bags on $X$ to the set of coefficients, and a
+formal polynomial is a formal series with finite support.
+\end{remark}
+
+\begin{definition}[Multi-index]
+Let $n$ be a natural number. We define an $n$-dimensional \define{Multi-Index}
+to be an $n$-tuple of numbers
+$\alpha=(\alpha_{1},\dots,\alpha_{n})$.
+
+We can define, for any two $n$-dimensional multi-indices
+$\alpha\in\NN_{0}^{n}$ and $\beta\in\NN_{0}^{n}$, the following
+operations:
+\begin{itemize}
+\item Componentwise sum and difference: $\alpha\pm\beta=(\alpha_{1}\pm\beta_{1},\dots,\alpha_{n}\pm\beta_{n})$
+\item Componentwise monus: $\alpha\monus\beta=(\alpha_{1}\monus\beta_{1},\dots,\alpha_{n}\monus\beta_{n})$
+\item Partial order $\alpha\leq\beta$ iff $\alpha_{i}\leq\beta_{i}$
+\item Sum of components: $|\alpha|=\alpha_{1}+\cdots+\alpha_{n}$
+\item Factorial: $\alpha!=\alpha_{1}!\cdot\alpha_{2}!\cdots\alpha_{n}!$
+\item If $R$ is a structure with multiplication, and $x\in R^{n}$ is a
+  tuple $x=(x_{1},\dots,x_{n})$, then we
+  could define $x^{\alpha} = x_{1}^{\alpha_{1}}x_{2}^{\alpha_{2}}(\cdots)x_{n}^{\alpha_{n}}$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Informal definition of polynomial ring]
+Let us review the informa definition for the polynomial ring.
+Let $R$ be a ring. We define the \emph{Ring of Polynomials} with
+coefficients in $R$ and in the unknowns $X_{1},\dots,X_{n}$ to be the
+ring $R[X_{1},\dots,X_{n}]$ consisting of linear combinations of
+monomials $X_{1}^{m_{1}}\cdots X_{n}^{m_{n}}$ which we often just
+write out using multi-index notation as
+\begin{equation}
+p(X_{1},\dots,X_{n}) = \sum_{|\alpha|\leq N} c_{\alpha}X^{\alpha}
+\end{equation}
+where $N$ is the degree of $p$,
+and $c_{\alpha}=c_{\alpha_{1},\dots,\alpha_{n}}$,
+and $X^{\alpha} = X_{1}^{\alpha_{1}}(\cdots)X_{n}^{\alpha_{n}}$. 
+\end{remark}
+
+\begin{definition}[Bags]\mml{pre_poly}
+Let $X$ be a set.
+
+A \define{Bag} of $X$ is a function $b\colon X\to\NN_{0}$
+of finite support. We interpret this as a multi-index.
+
+We define the \define{Empty Bag} of $X$ to be the constant function
+$e\colon X\to\ZZ$ such that $e(x)=0$ for all $x\in X$.
+
+Furthermore, we may define the set $\Bags(X)$ to be the set of all bag
+of $X$.
+\end{definition}
+
+\begin{remark}[Integer-valued bags]
+We could generalize the notion of a bag to functions $b\colon X\to\ZZ$
+provided they have finite support. This allows us to discuss formal
+Laurent series and formal Laurent polynomials (and, for Vertex
+Operator Algebraists, formal distributions). But for formal power
+series and formal polynomials, we need bags to be non-negative valued.
+\end{remark}
+
+\begin{definition}[Partial order of bags]\mml{pre_poly:def 14}
+Let $X$ be an ordered set.
+Let $p$ and $q$ be bags of $X$.
+\begin{enumerate}
+\item We have $p < q$ whenever there exists a $k$ such that
+$p(X_{k})<q(X_{k})$ and for all $l<k$ we have $p(X_{l})=q(X_{l})$.
+\item We have $p\leq q$ whenever $p<q$ or $p=q$.
+\item We say $p$ \define{Divides} $q$ if for each $X_{k}\in X$ we have
+  $p(X_{k})\leq q(X_{k})$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Divisors of a bag]\mml{pre_poly:def 16}
+Let $X$ be an ordered set, let $b$ be a bag of $X$. We want to define
+a notion of ``divisors of $b$'', but it requires first introducing a
+provisional notion of an ``initial segment of bags''.
+
+Let $B$ be a non empty finite subset of $\Bags(X)$.
+We want to define the \define{Initial Segment} of bags of $B$ to be
+the finite sequence $S$ of bags of $X$ such that $\rng(S)=B$ and also
+for all natural numbers $m$ and $n$ with $m < n$ we have the bags $S_{m}<S_{n}$.
+
+We define the \define{Divisors} of $b$ to be the finite sequence of
+$\Bags(X)$ satisfying
+there exists a non empty finite subset $D$ of $\Bags(X)$ such that
+the set of divisors equals the initial segment of bags of $S$ and for
+$p$ being a bag of $X$ we have $p\in S$ if and only if $p$ divides $b$.
+So the divisors of $b$ is the finite sequence of all possible bags
+which divides $b$.
+\end{definition}
+
+\begin{definition}[Decomposition of a bag]\mml{pre_poly:def 17}
+Let $X$ be an ordered set, let $b$ be a bag of $X$.
+We define the \define{Decomposition} of $b$ to be the finite sequence $d$
+of ordered pairs on $\Bags(X)$ such that
+$\dom(d)=\dom({\rm divisors}(b))$ and
+for each natural number $i\in\dom({\rm decomp}(b))$ and for each bag
+$p$ of $X$ such that $p=({\rm divisors}(b))_{i}$ we have
+${\rm decomp}(b)_{i} = (p, b \monus p)$.
+
+Again, when viewed as monomials, this gives us the possible
+factorization of a monomial as the product of two monomials. This is
+necessary to define the Cauchy product of series and polynomials.
+\end{definition}
+
+\begin{definition}[Formal power series and formal polynomial]\mml{polynom1}
+Let $X = \{X_{1},\dots,X_{n}\}$ be $n$ unknowns.
+Let $R$ be a 1-sorted structure.
+We define a \define{Formal Power Series} with coefficients in $R$ and unknowns
+in $X$ to be a function $f\colon\Bags(X)\to R$. This is usually
+written as
+\begin{equation}
+f(X_{1},\dots,X_{n}) = \sum_{b\,\in\Bags(X)}f(b)X^{b}
+\end{equation}
+where $X^{b} = X_{1}^{b_{1}}X_{2}^{b_{2}}(\cdots)X_{n}^{b_{n}}$ where
+we abuse notation abbreviating $b_{i}=b_{X_{i}}$.
+
+We then define a \define{Formal Polynomial} with coefficients in $R$
+and unknowns in $X$ to be a formal power series with finite support.
+\end{definition}
+
+\begin{definition}[Addition of formal power series]\mml{polynom1:def 6}
+Let $X$ be a set of unknowns, let $L$ be a nonempty additive magma.
+Let $p$ and $q$ be formal power series with coefficients in $L$ and
+unknowns in $X$.
+We define the \define{Sum} of $p$ and $q$ to be the formal power
+series $p+q$ (with coefficients in $L$ and unknowns in $X$) is such
+that % $\dom(p+q)=\dom(p)\cap\dom(q)$ and
+for $\alpha\in\dom(p+q)$ we
+have $(p+q)_{\alpha} = p_{\alpha} + q_{\alpha}$.
+
+This notion extends to the sum of formal polynomials.
+\end{definition}
+
+\begin{definition}[Negation and subtraction of formal power series]
+Let $X$ be a set of unknowns, let $L$ be a nonempty additive magma.
+Let $p$ be a formal power series with coefficients in $L$ and
+unknowns in $X$.
+
+We define the \define{Negation} of $p$ to be the formal power series $-p$ such that for each bag
+$b\in\dom(p)$ we have $(-p)_{b}=-(p_{b})$ (i.e., the coefficients are
+all negated).
+
+Let $q$ be another formal power series in unknowns $X$ and
+coefficients in $R$.
+We define the \define{Subtraction} of $p$ with $q$ to be the formal
+power series $p - q$ equal to $p + (-q)$.
+\end{definition}
+
+\begin{definition}[Product of formal power series]\mml{polynom1:def 10}
+Let $X$ be a set of unknowns, let $L$ be a double loop which is an
+additive group, let $p$ and $q$ be formal power series
+of $X$.
+
+We define the \define{(Cauchy) Product} of $p$ with $q$ to be the
+formal power series $pq$ in unknowns $X$ and coefficients $L$ such
+that for $b$ being a bag of $X$ and $s$ being a finite sequence of $L$
+such that $(pq)_{b}=\sum s$ and $|s|=|{\rm decomp}(b)|$ and for $k$
+being a natural number such that $k\in\dom(s)$ there exists bags
+$b_{1}$ and $b_{2}$ of $X$ such that
+$({\rm decomp}(b))_{k}=(b_{1},b_{2})$ and $s_{k}=p_{b_{1}}q_{b_{2}}$.
+
+Observe this extends to formal polynomials in the obvious way.
+\end{definition}
+
+\begin{theorem}[Distributivity of Cauchy product over addition]\mml{polynom1:26}
+Let $X$ be a set of unknowns, let $R$ be a ring. Let $p$, $q$, $r$ be
+formal power series in unknowns $X$ and coefficients in $R$. Then
+$p(q+r)=(pq) + (pr)$.
+\end{theorem}
+
+\begin{theorem}[Associativity of Cauchy product]\mml{polynom1:27}
+Let $X$ be a set of unknowns, let $R$ be a ring. Let $p$, $q$, $r$ be
+formal power series in unknowns $X$ and coefficients in $R$. Then
+$(pq)r=p(qr)$.
+\end{theorem}
+
+\begin{theorem}[Unit and absorption laws for Cauchy product]\mml{polynom1:28,29}
+Let $X$ be a set of unknowns, let $R$ be a ring. Let $p$ be a
+formal power series in unknowns $X$ and coefficients in $R$. 
+\begin{enumerate}
+\item If $0$ is the formal power series with zeroes for all its
+  coefficients, then $p0=0$
+\item If $1$ is the formal power series with zeroes for all its
+  nonconstant coefficients and $1_{R}$ for its constant coefficient,
+  then $1p=p$ and $p1=p$.
+\end{enumerate}
+\end{theorem}
+
+
+\section{Ideals}
+
+\begin{definition}[Ideals of a ring]\mml{ideal_1}
+Let $R$ be a ring. Let $J$ be a subset of $R$.
+
+We call $J$ a \define{Left ideal} of $R$ if
+\begin{itemize}
+\property{Contains zero} $0\in J$ and
+\property{Closed under addition} for any $x\in J$ and $y\in J$ we have
+  $x+y\in J$
+\property{Closed under left multiplication} $RJ\subset J$ (when we multiply any
+element $j\in J$ on the left by an element $r\in R$ we obtain $rj\in J$).
+\end{itemize}
+
+%\medbreak%
+\noindent%
+We call $J$ a \define{Right ideal} of $R$ if
+\begin{itemize}
+\property{Contains zero} $0\in J$ and
+\property{Closed under addition} for any $x\in J$ and $y\in J$ we have
+  $x+y\in J$
+\property{Closed under right multiplication} $JR\subset J$ (when we
+  multiply any element $j\in J$ on the right by an element $r\in R$ we obtain $jr\in J$).
+\end{itemize}
+
+%\medbreak%
+\noindent%
+We call $J$ a \define{Two-sided ideal} of $R$ if it is both a right
+ideal of $R$ and a left ideal of $R$.
+\end{definition}
+
+\begin{theorem}[Left ideals are right ideals over commutative rings]
+Let $R$ be a commutative ring.
+\begin{enumerate}
+\item Every left ideal $J$ of $R$ is also a right ideal of $R$.
+\item Every right ideal $J$ of $R$ is also a left ideal of $R$.
+\end{enumerate}
+Therefore, we will just speak of \define{Ideals} of a commutative ring.
+\end{theorem}
+

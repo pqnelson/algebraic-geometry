@@ -1,0 +1,277 @@
+%%
+%% pmbook.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-28T10:15:54-0700
+%% Last update 2025-07-28T10:15:54-0700
+%% 
+
+%% Poor man's "book class" macros
+
+\input {pmlmac}
+\makeatletter
+
+
+%% Poor man's \emph
+\newif\if@emph \@emphfalse
+\def\em{\it} % because sometimes it may be necessary to switch to \sl
+\def\toggle@emph{\if@emph\@emphfalse\else\@emphtrue\fi}
+\def\emph#1{{\if@emph\rm\else\em\fi\toggle@emph #1\/}}
+
+% usual font manipulations
+\def\textit#1{{\it #1\/}}
+\def\textsl#1{{\sl #1\/}}
+\def\textbf#1{{\bf #1}}
+\def\texttt#1{{\tt #1}}
+\def\textrm#1{{\rm #1}}
+\font\tensf=cmss10
+\def\textsf#1{{\tensf #1}}
+\def\mathcal#1{{\cal #1}}
+
+
+\font\sften=cmss10
+\font\sfseven=cmss7
+\font\sffive=cmss5
+\newfam\sffam
+\textfont\sffam=\sften
+\scriptfont\sffam=\sfseven
+\scriptscriptfont\sffam=\sffive
+\def\sf{\fam\sffam\sften}
+\def\textsf#1{{\sf#1}}
+\def\text#1{{\rm #1}}
+
+%% \font\sstext=ecss1000
+%% \font\sssub=ecss1000 at 7pt
+%% \font\sssubsub=ecss1000 at 5pt
+
+%% \newfam\ssfam
+%% \textfont\ssfam=\sstext
+%% \scriptfont\ssfam=\sssub
+%% \scriptscriptfont\ssfam=\sssubsub
+
+%% \def\sf{\fam\ssfam\sstext} % usually \sf as \ss is ß
+%% \def\textsf#1{{\sf #1}}
+
+
+% blackboard bold https://tex.stackexchange.com/a/156303/14751
+\newfam\bbbfam
+\font\bbbten=msbm10
+\font\bbbseven=msbm7
+\font\bbbfive=msbm5
+\textfont\bbbfam=\bbbten
+\scriptfont\bbbfam=\bbbseven
+\scriptscriptfont\bbbfam=\bbbfive
+\def\bbb{\fam=\bbbfam}
+\def\mathbb#1{{\bbb#1}}
+
+
+%%
+%% Table of contents
+
+\def\tableofcontents{\begingroup\openin15=toc.tex
+  \ifeof15\else\input{toc.tex}\fi\endgroup}
+
+\newwrite\tocfile
+\immediate\openout\tocfile={toc2.tex}
+
+\immediate\write\tocfile{\noexpand\chapter*{Contents}\noexpand\begingroup\baselineskip 15pt plus 5pt}
+
+\def\contentsline#1#2#3#4{\csname l@#1\endcsname {#2}{#3}}
+
+\def\addcontentsline#1#2#3#4{\toks0={{#1}{#2}{#3}{#4}}%
+\immediate\write\tocfile{\noexpand\contentsline\noexpand{#1\noexpand}\noexpand{#2\noexpand}\noexpand{#3\noexpand}\noexpand{#4\noexpand}}}
+
+\def\l@chapter#1#2{\line{\rm#2\diamondleaders\hfil\hbox to 2em{\hss#1}}}
+\def\l@section#1#2{\line{\qquad\rm#2\diamondleaders\hfil\hbox to 2em{\hss#1}}}
+
+
+\countdef\counter=255
+\gdef\diamondleaders{\global\advance\counter by 1
+  \ifodd\counter \kern-10pt \fi
+  \leaders\hbox to 20pt{\ifodd\counter \kern13pt \else\kern3pt \fi
+    .\hss}}
+
+\def\thepage{\folio}
+
+\def\bye{\immediate\write\tocfile{\noexpand\endgroup}%
+  \immediate\closeout\tocfile%
+  \par\vfill\supereject\@@end}
+
+%%
+%% Sections
+%%
+\newif\iffront\frontfalse
+\let\og@advancepageno\advancepageno
+\def\frontmatter{\def\folio{\romannumeral\pageno}\fronttrue\gdef\thesection{\arabic{section}}}
+
+\def\mainmatter{\global\frontfalse\gdef\thesection{\thechapter.\arabic{section}}\gdef\advancepageno{\og@advancepageno\gdef\folio{\number\pageno}
+\global\let\advancepageno\og@advancepageno}}
+
+%\def\mainmatter{\gdef\folio{\number\pageno}\frontfalse}
+
+\newcounter{chapter}
+\newcounter{section}
+\newcounter{subsection}
+\@addtoreset{section}{chapter}
+\@addtoreset{subsection}{section}
+\def\thesection{\thechapter.\fi\arabic{section}}
+\def\thesubsection{\thesection\Alph{subsection}}
+% number equations within each chapter
+\@addtoreset{equation}{chapter}
+\def\theequation{\thechapter.\arabic{equation}}
+
+
+\def\s@chapter#1{\vfill\eject%\refstepcounter{chapter}
+    \leftline{\twelvess \spaceskip=10pt \def\\{\kern1pt}\phantom{Chapter}}
+    \vskip 4pc
+    \rightline{\titlefont #1}
+    \def\\{}
+    \ifx\rhead\omitrhead\else{\ninepoint\xdef\rhead{\uppercase{#1}}}\fi
+    \addcontentsline{chapter}{\thepage}{\hbox to 1.5em{\hfil}\enspace #1}{}%
+    \vskip 2pc plus 1 pc minus 1 pc
+}
+
+\def\@chapter#1{\vfill\eject\iffront\else\refstepcounter{chapter}\fi
+    \leftline{\twelvess \spaceskip=10pt \def\\{\kern1pt}\iffront\phantom{Chapter}\else Chapter \thechapter\fi}
+    \vskip 4pc
+    \rightline{\titlefont #1}
+    \def\\{}
+    \ifx\rhead\omitrhead\else{\ninepoint\xdef\rhead{\uppercase{#1}}}\fi
+    \addcontentsline{chapter}{\thepage}{\hbox to 1.5em{\hfil\iffront\else\thechapter\fi}\enspace #1}{}%
+    \vskip 2pc plus 1 pc minus 1 pc
+}
+
+\def\chapter{\@ifstar\s@chapter\@chapter}
+%{\iffront\s@chapter\@chapter\fi}}
+
+\def\starred{}
+\def\starit{\def\starred{\llap{*}}}
+
+\newif\ifrunon\runonfalse 
+\newdimen\spaceleft
+
+% Theorem "slogans" should not appear on one page, and then the rest
+% of the theorem on the next.
+\def\theorembreak{%
+  \spaceleft=\vsize%
+  \advance\spaceleft by-\pagetotal%
+  \ifdim\spaceleft<1in%
+    \vfill\eject%
+  \else%
+    \smallbreak%
+  \fi%
+}
+
+
+% if there's less than 2 inches left on the page, just skip to the
+% next page to start the section
+\def\sectionbreak{%
+  \spaceleft=\vsize%
+  \advance\spaceleft by-\pagetotal%
+  \ifdim\spaceleft<2in%
+    \vfill\eject%
+  \else%
+    \bigbreak%\vskip 2pc plus 1pc minus 5pt%\vskip 1 cm plus 1 pc minus 5 pt%
+  \fi%
+}
+
+\def\common@section#1#2{%\mark{\currentsection \noexpand\else #1}
+  \sectionbreak%
+    \refstepcounter{#2}%
+    %% \ifrunon \runonfalse\vskip 1 cm plus 1 pc minus 5 pt
+    %% \else \vfill\eject
+    %%   {\output{\setbox0=\box255}\null\vfill\eject} % set \topmark for sure
+    %% \fi
+    %\tenpoint
+    \leftline{\tenssbx\starred\csname the#2\endcsname. \uppercase{#1}}
+    \addcontentsline{section}{\thepage}{\starred\csname the#2\endcsname\enspace #1}{}%
+    \def\starred{}%
+    \mark{#1\noexpand\else #1}%
+    \def\currentsection{#1}%
+    %{\ninepoint\xdef\rhead{\uppercase{#2}}}
+    \nobreak\smallskip\noindent}
+
+\def\section#1{\common@section{#1}{section}}
+\def\subsection#1{\common@section{#1}{subsection}}
+
+%% Poor man's amsthm proof environment
+\def\@addpunct#1{\ifnum \spacefactor >\@m \else #1\fi}
+\def\openbox{\leavevmode
+  \hbox to.77778em{%
+  \hfil\vrule
+  \vbox to.675em{\hrule width.6em\vfil\hrule}%
+  \vrule\hfil}}
+\def\qedsymbol{\openbox}
+
+
+\def\qed{%
+  \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
+  \quad\hbox{\qedsymbol}%
+}
+
+\let\QED@stack\@empty
+\let\qed@elt\relax
+
+\def\pushQED#1{%
+  \toks@{\qed@elt{#1}}\@temptokena\expandafter{\QED@stack}%
+  \xdef\QED@stack{\the\toks@\the\@temptokena}%
+}
+
+\def\popQED@elt#1#2\relax{#1\gdef\QED@stack{#2}}
+\def\popQED{%
+  \begingroup\let\qed@elt\popQED@elt \QED@stack\relax\relax\endgroup
+}
+\def\proofname{Proof}
+% knuth uses \it for his proofheadfont
+\def\proofheadfont{\tensc}
+
+\def\x@proof[#1]{\pushQED{\qed}\smallbreak%\par
+  %\ifdim\lastskip<\medskipamount \removelastskip\penalty55\medskip\fi%\medskip%
+  \noindent{\proofheadfont #1\@addpunct{.}} \ignorespaces%
+}
+\def\@proof{\x@proof[\proofname]}
+
+\def\proof{\@ifnextchar[\x@proof\@proof}
+\def\endproof{\popQED}
+
+% \iff is defined to be "\;\Longleftrightarrow\;"
+%\def\;{\mskip\thickmuskip}
+%\thickmuskip=5mu plus 5mu, 5mu = 5/18 of an em
+\ifx\implies\@undefined
+  \def\implies{\;\Longrightarrow\;}
+\fi
+\ifx\impliedby\@undefined
+  \def\impliedby{\;\Longlefhtarrow\;}
+\fi
+
+%%
+%% Lists
+%%
+%\newenvironment{itemize}{\def\item{\par}}{\par}
+\def\itemize{\smallbreak%
+  %\advance\leftskip\parindent%
+  %\def\item{\par\noindent$\bullet$\enspace\@ignoretrue\ignorespaces}%
+  \def\@item[##1]{\par\noindent\hang\textindent{##1}}%
+  \def\@@item{\@item[$\bullet$]}%
+  \def\item{\@ifnextchar[\@item\@@item}%\par\noindent\hang\textindent{$\bullet$}}%
+}
+\def\enditemize{\@ignoretrue\smallbreak}%\noindent\ignorespaces}
+
+\newcounter{enumi}
+\def\enumerate{\smallbreak\setcounter{enumi}{0}%
+  \def\item{\par\refstepcounter{enumi}\noindent\hang\textindent{(\theenumi)}}%
+}
+\def\endenumerate{\@ignoretrue\smallbreak}%\noindent}
+
+\def\textsc#1{{\tensc #1}}
+\def\property#1{\item\textsc{#1\@addpunct{:}}}
+
+
+
+  
+\usepackage{url}
+
+\makeatother
+\endinput

@@ -1,0 +1,142 @@
+%%
+%% structures.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-29T10:17:12-0700
+%% Last update 2025-07-29T10:17:12-0700
+%% 
+
+\chapter{Structures}
+
+\begin{remark}[Metamathematical concerns about ``structures'']
+We often run into definitions like ``A \emph{monoid} is a triple
+$(M,\star,e)$ where $M$ is a set, $\star\colon M\times M\to M$ is a
+binary operator on $M$, and $e\in M$ is an identity element, which
+satisfies associativity for the operator
+$x\star(y\star z)=(x\star y)\star z$ for all $x,y,z\in M$
+and $e$ is an identity element, i.e., $e\star x=x\star e=x$ for all
+$x\in M$''. In this example, where does the triple $(M,\star,e)$ live?
+
+Metamathematically, we have a tower of logics and set theories. On
+floor $N$, we have a set theory which we assert \emph{is}
+``mathematical reality''. All ``real'' mathematical objects live in
+the set theory on floor $N$. We then use this to build a first-order
+logic on floor $N+1$ which is the \emph{ambient logic} used to write
+down proofs in Working Mathematics. Not only that, we write down an
+axiomatic set theory using the ambient logic, and this produces floor
+$N+2$. This is the \emph{ambient set theory}.
+
+The triple $(M,\star,e)$ lives on floor $N$, but is not distinguished
+from triples from floor $N+2$. At least, not in Working Mathematics,
+not historically. Bourbaki's disinterest in the foundations of
+mathematics should be blamed for this. \textbf{We will break from tradition}
+and use angled brackets writing $\structure{M,\star,e}$ to indicate
+that we have a structure and not some tuple.
+\end{remark}
+
+\begin{remark}[Notation about structures]
+We will abuse notation and write for structures $S=\structure{U,\dots}$
+elements of the underlying set as $x\in S$ instead of $x\in U$.
+Similarly, we abuse language referring to $S$ as empty (or nonempty)
+if its underlying set $U$ is empty (resp., nonempty), and so on.
+
+Furthermore, we will freely write an instance of a structure using the
+same notation. For example, a 1-sorted structure looks like
+$S=\structure{U}$ consisting of an underlying set $U$ called its
+\emph{carrier}. An example of this would be $\structure{\RR}$ where
+the underlying set is the real numbers $\RR$. We could also write this
+as $\structure{U = \RR}$ to indicate the component $U$ is equal to
+$\RR$ for this structure.
+\end{remark}
+
+\begin{remark}[Inheritance and structures]
+We will avoid using tuples to describe structures, instead we will use
+finite maps in ``Mathematical Reality'' where the keys are the names
+of the fields. This allows us to describe \emph{inheritance} of
+structures, so that a monoid $\structure{U,\cdot,1}$ \emph{really is}
+a magma $\structure{U,\cdot}$.
+\end{remark}
+
+\begin{definition}[One-sorted and Pointed structures]\mml{struct_0}
+We define a \define{One-Sorted} structure to be a structure
+$S=\structure{U}$ with an underlying set $U$ called its \define{Carrier}.
+
+We have pointed one-sorted structures. For example, a \define{One Structure}
+to be a one-sorted structure equipped with an extra element
+$O=\structure{U,1_{U}}$ where the \define{One} is the element $1_{U}\in U$.
+We include the identifier/variable used for the underlying set as a
+subscript of the one element just for clarity.
+
+A \define{Zero Structure} is a one-sorted structure
+$Z=\structure{U,0_{U}}$ equipped with a \define{Zero} element $0_{U}\in U$.
+We call an element $z$ of $Z$ \define{Zero} if $z=0_{U}$.
+
+We also have a \define{Zero-One Structure} $W=\structure{U,0_{U},1_{U}}$ which
+is both a one structure and a zero structure.
+\end{definition}
+
+\begin{remark}[Abusing language]
+We will abuse language (and/or notation) as follows:
+
+Let $S$ be a 1-sorted structured. We call it \define{Empty} if the
+carrier of $S$ is empty. Furthermore, we will refer to an
+\define{Element of $S$} as shorthand for an Element of the carrier of $S$,
+a \define{Subset of $S$} is a Subset of the carrier of $S$, and a
+\define{Subset-Family of $S$} is a Subset-Family of the carrier of $S$.
+
+Let $X$ be a set. We will speak of a \define{Function} of $S$ to $X$
+as a Function of the carrier of $S$ to $X$, and similarly a
+\define{Function} of $X$ to $S$ is a Function of $X$ to the carrier of $S$.
+Similarly, we may speak of \emph{Partial Functions} from $S$ to $X$
+(or from $X$ to $S$).
+
+Now, let $T$ be a 1-sorted structure. We define a \define{Function}
+from $S$ to $T$ to be a Function from the carrier of $S$ to the
+carrier of $T$. Similarly, we may speak of \emph{Partial Functions}
+from $S$ to $T$. So we may speak of binary operators of $S$ and unary
+operators of $S$ (and $n$-ary operators of $S$) as analogous operators
+on the underlying set of $S$.
+
+A \define{Finite Sequence} of $S$ is a Finite Sequence of the carrier
+of $S$. A \define{Sequence} of $S$ is a sequence of the carrier of $S$.
+A \define{Many-Sorted Set} of $S$ is a Many-Sorted Set of the
+carrier of $S$.
+
+We also write $\id_{S}$ for the Function from $S$ to $S$ equal to
+$\id$ on the carrier of $S$.
+
+Let $x$ be an object. We will write ``$x\in S$'' as an abuse of
+notation for ``$x\in U$'' where $U$ is the carrier of $S$.
+
+We will call $S$ \define{Finite} if the carrier underlying $S$ is
+finite. Similarly, $S$ is \define{Infinite} if the carrier underlying
+$S$ is infinite.
+
+We also speak of a \define{Cover} of $S$, when we mean a cover of the
+underlying set of $S$.
+
+We will also speak of the \define{Cardinality} of $S$ to be the
+cardinality of the underlying set of $S$.
+
+Let $x$ be an object. We will write ``$x(\in S)$'' to stress that $x$ is
+an element of $S$.
+\end{remark}
+
+\begin{definition}[Degenerate zero-one structures]\mml{struct_0:def 8}
+Let $D$ be a zero-one structure. We define an attribute, calling
+$D$ \define{Degenerate} if $0_{D}=1_{D}$ its one is equal to
+zero. Otherwise we call $D$ \define{Nondegenerate}.
+\end{definition}
+
+\begin{definition}[2-sorted structures]
+We define a \define{2-sorted} structure to be a structure
+$T=\structure{U,U'}$ where $U$ is the carrier of $T$ (i.e., $T$ is a
+1-sorted structure) and $U'$ is another set (sometimes called the
+``carrier'\thinspace'' of $T$).
+
+These structures appear in category theory, where a category structure consists
+of a set of objects and a set of morphisms equipped with some extra
+structure. 
+\end{definition}

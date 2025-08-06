@@ -1,0 +1,676 @@
+%%
+%% set-theory.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-29T10:51:12-0700
+%% Last update 2025-07-29T10:51:12-0700
+%% 
+
+\chapter{Set Theory}
+
+\begin{remark}[Choice of axioms]
+There are a variety of different axiomatic set theories. Loosely
+speaking, the Working Mathematician operates with some variant of
+Zermelo set theory, so we will follow in this vein of thought.
+
+The ``floor model'' among axiomatic set theories would be \ZFpmC/ set
+theory (Zermelo--Fraenkel set theory, possibly with the axiom of
+choice). The axioms specify the behaviour of the predicate $\in$. \ZF/
+set theory's ontological committment amounts to axiom zero ``Every
+object is a set''.
+
+We cannot have the set of all sets, which motivates \emph{proper classes}.
+The conservative extension of \ZF/ set theory to describe classes is
+Neumann--Bernays--G\"{o}del axiomatic set theory (written \NBG/). This
+changes \ZF/'s ``axiom zero'' to be ``Every object is a class''. We
+just distinguish \emph{proper classes} (which are not members of
+another class) from \emph{sets} (which belongs to at least one other class).
+\NBG/ also limits quantifiers to range over sets. When we allow
+\NBG/'s quantifiers to range over all classes, then we arrive at
+Morse--Kelley set theory (written \MK/).
+
+We could also iterate the \NBG/ construction to form ``bigger
+species'' of collections. When we allow a countably infinite sequence
+of ``bigger species of collections'', we effectively have
+Tarski--Grothendieck set theory (written \TG/). Or we can phrase it
+differently, saying \TG/ is \ZF/ + ``Every set $X$ is contained in
+some Grothendieck universe $\mathcal{U}$'' (where, informally, a
+\emph{Grothendieck universe} ``looks like'' a proper collection $\hbox{coll}^{+}$
+of collections $\hbox{coll}$). 
+
+Since all these different axiomatic set theories are built atop \ZF/
+set theory, it makes sense we should review Zermelo--Fraenkel before
+exploring its variants.
+\end{remark}
+
+\section{Zermelo--Fraenkel Axioms}
+
+\begin{remark}[``Axiom 0'': Everything is a set]\mml{tarski:1}
+Every set theoretic foundations to mathematics has an implicit axiom
+which only Bourbaki's \emph{Theory of Sets} mentions in passing: for
+any object $x$ we have $x$ is a set.
+\end{remark}
+
+\begin{axiom}[Extensionality. Set equality]\label{defn:set-theory:extensionality}\mml{tarski:2}
+Let $X$ and $Y$ be sets. We say $X = Y$ if for any object $x$ we have
+$x\in X$ iff $x\in Y$.
+
+This is the ``extensionality axiom'' of \ZF/ set theory.
+\end{axiom}
+
+\begin{definition}[Subset and proper subset predicates]\mml{tarski:def 3, xboole_0:def 8}
+Let $X$ and $Y$ be sets. We define the predicate $X\subset Y$ to mean:
+for all objects $x$ we have $x\in X$ implies $x\in Y$.
+
+We define the predicate $X\propersubset Y$ (and say ``$X$ is a
+\define{Proper Subset} of $Y$'') to mean $X\subset Y$ and $X\neq Y$.
+\end{definition}
+
+\begin{axiom}[Regularity]\mml{tarski:3}
+Let $X$ be an arbitrary set. For any object $x\in X$ there exists a
+set $Y$ such that $Y\in X$ and there does not exist an object $y$ such
+that $y\in X$ and $y\in Y$.
+
+In other words, for any nonempty set $X$ there exists a set $Y$ such
+that $Y\in X$ and $Y\cap X=\emptyset$.
+\end{axiom}
+
+\begin{axiom}[Union of a family of sets]\mml{tarski:def 4}
+Let $X$ be a set. We define $\Union X$ to be the set such that for $x$
+being an object we have $x\in\Union X$ if and only if there exists a
+set $Y$ such that $x\in Y$ and $Y\in X$.
+
+This is stipulated to be well-defined by the \ZF/ axioms.
+\end{axiom}
+
+\begin{axiom-scheme}[Replacement]\mml{tarski:sch 1}
+Let $\mathcal{P}[-,-]$ be a binary predicate of objects, let $A$ be a set.
+Suppose for all objects $x$, $y$, $z$, if $\mathcal{P}[x,y]$ and
+$\mathcal{P}[x,z]$, then $y = z$.
+
+Then there exists a set $Y$ such that for all objects $y$ we have
+$y\in Y$ iff there exists an object $x\in A$ such that $\mathcal{P}[x,y]$.
+\end{axiom-scheme}
+
+The \ZF/ axioms stipulate this holds.
+
+\begin{scheme}[Separation]\label{scheme:set-theory:separation}\mml{xboole_0:sch 1}
+Let $A$ be a set, let $\mathcal{P}[-]$ be a unary predicate of objects.
+There exists a set $X$ such that for all objects $x$ we have $x\in X$
+iff $x\in A$ and $\mathcal{P}[x]$.
+\end{scheme}
+
+Some presentations of \ZF/ axioms include the Scheme of separation as
+an axiom schema, but it is not necessary.
+
+Also note: this justifies using set-builder notation
+$\{x\in A\mid\mathcal{P}[x]\}$
+to describe a well-defined set.
+
+\begin{proof}
+Let us define a binary predicate of objects $\mathcal{Q}[x,y] := (x=y)\land\mathcal{P}[y]$.
+
+Now our first claim is that for any objects $x$, $y$, and $z$ such
+that $\mathcal{Q}[x,y]$ and $\mathcal{Q}[x,z]$ we have $y=z$. Then by
+the replacement scheme, we can consider the set $X$ such that for all
+objects $x$ we have
+\begin{equation}\label{eq:set-theory:spec:step}
+x\in X\iff\exists y\in A\ldotp\mathcal{Q}[y,x].
+\end{equation}
+We claim $X$ is the set we're looking for. Let $x$ be an arbitrary
+object.
+
+One direction: assume $x\in X$. Then there exists an object $y\in Y$
+such that $\mathcal{Q}[y,x]$ by
+Eq~\eqref{eq:set-theory:spec:step}. Hence the claim.
+
+The other direction: assume $x\in A$ and $\mathcal{P}[x]$. Then there
+exists an object $y$ such that $y\in A$ and $Q[y,x]$. Hence $x\in X$
+by Eq~\eqref{eq:set-theory:spec:step}.
+\end{proof}
+
+\begin{definition}[Empty set]\mml{xboole_0:def 1}
+Let $X$ be a set. We call $X$ \define{empty} if there is no object $x$
+such that $x\in X$.
+
+We may define a new term $\emptyset$ to be the empty set.
+\end{definition}
+
+\begin{proof}[Proof (well-definedness of $\emptyset$)]
+We need to prove the existence of one empty set. Then extensionality Axiom~\ref{defn:set-theory:extensionality}
+establishes it is unique.
+
+We introduce the unary predicate of objects $\mathcal{P}[x]$ which is
+constantly false. Let $A$ be a set chosen by the axiom of choice.
+Consider the set $Y$ such that for all objects $x$ we have
+\begin{equation}\label{eq:set-theory:well-definedness-of-empty-set}
+x\in Y\iff x\in A\land\mathcal{P}[x]
+\end{equation}
+by the scheme of separation. We take $Y$ as the candidate for being an
+empty set. But by Eq~\eqref{eq:set-theory:well-definedness-of-empty-set},
+this means there does not exist an object $x$ such that $x\in Y$.
+Hence the result by definition of ``empty'' sets.
+\end{proof}
+
+\begin{axiom}[Unordered pair]\mml{tarski:def 2}
+Let $y$ and $z$ be objects. We define the \define{Unordered Pair} is
+the set $\{y,z\}$ such that for any object $x$ we have $x\in\{y,z\}$
+iff $x=y$ or $x=z$.
+
+We should prove this is well-defined, but \ZF/ axioms stipulate this.
+\end{axiom}
+
+\begin{axiom}[Infinity]
+Let us denote by $S(w)=w\cup\{w\}$ for any set $w$.
+The axiom of infinity states there exists a set $W$ such that 
+\begin{enumerate}
+\item there exists a set $e$ such that $e\in W$ and for every object
+  $x$ we have $x\notin e$; and
+\item for all sets $y\in W$ we have $S(y)\in W$.
+\end{enumerate}
+The axioms of \ZF/ stipulates this is well-defined.
+\end{axiom}
+
+\begin{axiom}[Powerset]\mml{zfmisc_1:def 1}
+Let $X$ be a set. We define its \define{Powerset} to be the set
+$\powerset{X}$ such that for any set $Z$ we have $Z\in\powerset{X}$
+iff $Z\subset X$.
+
+We should prove this is well-defined (prove existence and uniqueness),
+but \ZF/ axioms stipulate it is well-defined.
+\end{axiom}
+
+\begin{theorem}[Powerset of emptyset]\mml{zfmisc_1:3}
+We see $\powerset{\emptyset}=\{\emptyset\}$.
+\end{theorem}
+
+\begin{definition}[Ordered pair]\mml{tarski:def 5}
+Let $x$ and $y$ be objects. We define their \define{Ordered Pair} to
+be the set denoted $(x,y)$ equal to $\{\{x,y\},\{y\}\}$.
+\end{definition}
+
+(This concludes all the axioms needed for \ZF/ set theory.)
+
+\begin{definition}[Cartesian product]\mml{zfmisc_1:def 2,3}
+Let $X_{1}$, $X_{2}$ be sets. 
+We define their \define{Cartesian product} to be the set denoted
+$X_{1}\times X_{2}$ to be such that
+for any object $z$ we have $z\in X_{1}\times X_{2}$ if and only if
+there exists objects $x_{1}$ and $x_{2}$ such that $x_{1}\in X_{1}$
+and $x_{2}\in X_{2}$ and $z=(x_{1},x_{2})$.
+
+Let $X_{3}$ be another set. We define the Cartesian product
+$X_{1}\times X_{2}\times X_{3}$ to be equal to $(X_{1}\times X_{2})\times X_{3}$.
+
+Let $X_{4}$ be another set. We define the Cartesian product
+$X_{1}\times X_{2}\times X_{3}\times X_{4}$ to be equal to
+$(X_{1}\times X_{2}\times X_{3})\times X_{4}$.
+\end{definition}
+
+\begin{theorem}[Cartesian product of empty set is empty]
+Let $X$ be any set. Then $\emptyset\times X=\emptyset$ and
+$X\times\emptyset=\emptyset$. 
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+This follows by the definitions of empty sets and the Cartesian
+product, and the extensionality Axiom~\ref{defn:set-theory:extensionality}.
+\end{proof}
+
+\begin{definition}[Binary union operator of sets]\mml{xboole_0:def 3}
+Let $X$ and $Y$ be sets. We define the \define{Union} of $X$ and $Y$
+to be the set denoted $X\cup Y$ such that for all objects $x$ we have
+$x\in X\cup Y$ if and only if $x\in X$ or $x\in Y$.
+
+(This is well-defined by noticing: it exists because
+$X\cup Y=\Union\{X,Y\}$, and it's obvious unique by extensionality Axiom~\ref{defn:set-theory:extensionality}.)
+\end{definition}
+
+\begin{definition}[Binary intersection operator of sets]\mml{xboole_0:def 4}
+Let $X$ and $Y$ be sets. We define the \define{Intersection} of $X$
+and $Y$ to be the set $X\cap Y$ such that for all objects $x$ we have
+$x\in X\cap Y$ iff $x\in X$ and $x\in Y$.
+
+(Well-definedness follows from existence by the scheme of separation,
+uniqueness by extensionality Axiom~\ref{defn:set-theory:extensionality}.)
+\end{definition}
+
+\begin{definition}[Set difference]\mml{xboole_0:def 5}
+Let $X$ and $Y$ be sets.
+We define the \define{Set difference} of $X$ with $Y$ to be the set
+$X\setminus Y$ such that for all objects $x$ we have $x\in X\setminus Y$
+iff $x\in X$ and $x\notin Y$.
+
+(Existence follows from the scheme of separation, uniqueness by
+extensionality Axiom~\ref{defn:set-theory:extensionality}.)
+\end{definition}
+
+\begin{definition}[Symmetric difference of sets]\mml{xboole_0:def 6}
+Let $X$ and $Y$ be sets. We define their \define{Symmetric Difference}
+to be the set $X\symdiff Y$ equal to $(X\setminus Y)\cup(Y\setminus X)$.
+\end{definition}
+
+\begin{definition}[Disjoint sets]\mml{xboole_0:def 7}
+Let $X$ and $Y$ be sets. We say $X$ and $Y$ are \define{Disjoint} if
+$X\cap Y=\emptyset$. We also say ``$X$ misses $Y$'' if they are disjoint.
+
+When $X$ and $Y$ are nondisjoint, we say $X$ \define{Intersects} $Y$
+(or ``$X$ \emph{meets} $Y$'').
+\end{definition}
+
+\section{Relations and Functions}
+
+\begin{definition}[Relation]\mml{relat_1:def 1}
+Let $R$ be a set. We say $R$ is a \define{Relation} if for all objects
+$x\in R$ ther eexists objects $y$ and $z$ such that $x = (y,z)$.
+\end{definition}
+
+\begin{definition}[Domain of a relation]\mml{xtuple_0:def 12}
+Let $R$ be a relation. We define the \define{Domain} of $R$ to be the
+set $\dom(R)$ such that for all objects $x$ we have $x\in\dom(R)$ if
+and only if there exists an object $y$ such that $(x,y)\in R$.
+\end{definition}
+
+\begin{definition}[Range of a relation]\mml{xtuple_0:def 13}
+Let $R$ be a relation. We define the \define{Range} of $R$ to be the
+set $\rng(R)$ such that for all objects $x$ we have $x\in\rng(R)$ iff
+there exists an object $y$ such that $(y,x)\in R$.
+\end{definition}
+
+\begin{definition}[Restriction of a relation]\mml{relat_1:def 11}
+Let $R$ be a relation, let $X$ be a set.
+We define the \define{Restriction} of $R$ to $X$ to be the relation
+$R|_{X}$ such that for all objects $x$ and $y$ we have $(x,y)\in R|_{X}$
+iff $x\in X$ and $(x,y)\in R$.
+\end{definition}
+
+\begin{definition}[$X$-defined and $X$-valued relations]\mml{relat_1:def 18,19}
+Let $X$ be a set, let $R$ be a relation.
+
+We call $R$ \define{$X$-defined} when $\dom(R)\subset X$.
+
+We call $R$ \define{$X$-valued} when $\rng(R)\subset X$.
+\end{definition}
+
+\begin{definition}[Binary relation of sets]\mml{relset_1}
+Let $X$ and $Y$ be sets. We define a \define{Binary Relation} of $X$
+and $Y$ to be any subset of $X\times Y$.
+\end{definition}
+
+\begin{definition}[Total relations]\mml{partfun1:def 2}
+Let $X$ be a set. Let $f$ be an $X$-defined relation.
+We call $f$ \define{Total} if $\dom(f)=X$.
+\end{definition}
+
+\begin{definition}[Composing binary relations]\mml{relat_1:def 8}
+Let $P$ and $R$ be relations. We define the \define{Composition} of
+$P$ with $R$ to be the relation $P\composeRelation R$ such that
+for all objects $x$ and $z$ we have $(x,z)\in P\composeRelation R$
+iff there exists an object $y$ such that $(x,y)\in P$ and $(y,z)\in R$.
+
+\textbf{Caution:} this is the ``reverse'' convention of composing functions.
+\end{definition}
+
+\begin{definition}[Function-like relations]\mml{funct_1:def 1,2}
+Let $F$ be a relation. We say $F$ is \define{Function-like} if for all
+objects $x$, $y_{1}$, and $y_{2}$ such that $(x,y_{1})\in F$ and
+$(x,y_{2})\in F$ we have $y_{1}=y_{2}$. In this case, we just call $F$
+a \define{Function}.
+
+When $F$ is a function and $x\in\dom(F)$ is an object, we use the
+notation $F(x)$ for the object such that $(x, F(x))\in F$.
+\end{definition}
+
+\begin{definition}[Partial functions]\mml{partfun1}
+Let $X$ and $Y$ be sets. We define a \define{Partial Function} from
+$X$ to $Y$ (denoted $f\colon X\pto Y$) to be a function-like binary relation
+of $X$ and $Y$.
+
+Observe, for such a partial function $f\colon X\pto Y$, we have
+$\dom(f)\subset X$ be where $f$ is defined.
+\end{definition}
+
+\begin{definition}[Range of a function]\mml{funct_1:def 3}
+Let $f$ be a function. We define the \define{Range} of $f$ to be the
+set $\rng(f)$ such that for all objects $y$ we have $y\in\rng(f)$ iff
+there exists an object $x\in\dom(f)$ such that $y=f(x)$.
+
+In particular, this means $x\in\dom(f)\implies f(x)\in\rng(f)$.
+
+Observe this is compatible with the notion of the range of a relation.
+\end{definition}
+
+\begin{definition}[Function between two sets]\mml{funct_2}
+Let $X$ and $Y$ be sets. We define a \define{Function} from $X$ to $Y$
+to be a set $f\colon X\to Y$ such that
+\begin{enumerate}
+\item for all objects $x$ we have if $x\in X$, then there exists an
+  object $y\in Y$ such that $(x,y)\in f$
+\item the set $f$ is function-like.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Empty set is initial object]
+For any set $X$, there exists a unique function $f\colon\emptyset\to X$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+This follows directly from the definition, and because
+$\emptyset\times X=\emptyset$.
+\end{proof}
+
+\begin{theorem}[Singleton is terminal object]
+Let $x$ be any object. Then for each set $X$ there exists a unique
+function $f\colon X\to\{x\}$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+This follows from the definition of a function, the definition of a
+singleton, and the extensionality Axiom~\ref{defn:set-theory:extensionality}.
+\end{proof}
+
+\begin{definition}[Identity function]\mml{relat_1:def 10}
+Let $X$ be a set. We define the \define{Identity Function} of $X$ to
+be the function $\id_{X}\colon X\to X$ such that for all $x\in X$ we
+have $\id_{X}(x)=x$.
+\end{definition}
+
+\begin{definition}[Diagonal function]\label{defn:set-theory:diagonal-function}\mml{funct_3:def 6}
+Let $X$ be a set. We define the \define{Diagonal Function}
+$\Delta\colon X\to X\times X$ by $\Delta(x)=(x,x)$ for each $x\in X$.
+
+This is unique by extensionality Axiom~\ref{defn:set-theory:extensionality}. It exists by the separation Scheme~\ref{scheme:set-theory:separation}.
+\end{definition}
+
+\begin{definition}[Composing functions]\mml{funct_1:13}
+Let $X$, $Y$, $Z$ be sets. Let $f\colon X\to Y$ and $g\colon Y\to Z$
+be functions. We define the \define{Composition} of $f$ followed by
+$g$ to be the function $g\circ f\colon X\to Z$ such that for all
+objects $x\in X$ we have $(g\circ f)(x)=g(f(x))$.
+\end{definition}
+
+\begin{theorem}[Equality of functions]\mml{funct_2:12}
+Let $f\colon X\to Y$ and $g\colon X\to Y$ be functions.
+Then $f=g$ if and only if for each object $x\in X$ we have $f(x)=g(x)$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+This follows directly from the Extensionality Axiom~\ref{defn:set-theory:extensionality}.
+\end{proof}
+
+\begin{theorem}[Identity function as unit of composition]\mml{funct_2:17}
+Let $f\colon X\to Y$ be a function.
+Then $\id_{Y}\circ f=f$ and $f\circ\id_{X}=f$.
+\end{theorem}
+
+\begin{theorem}[Composing functions is associative]\mml{relat_1:36}
+Let $f\colon W\to X$, $g\colon X\to Y$, and $h\colon Y\to Z$ be functions.
+Then $(h\circ g)\circ f=h\circ(g\circ f)$.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Let $w$ be an arbitrary object. Assume $w\in W$. Then
+$((h\circ g)\circ f) = (h\circ g)(f(w)) = h(g(f(w)))$ by definition of composing
+functions, and $(h\circ(g\circ f))(w)=h(g(f(w)))$. Hence the result.
+\end{proof}
+
+\begin{definition}[Injective functions]\mml{funct_1:def 4}
+Let $f\colon X\to Y$ be a function. We call $f$ \define{Injective} if
+for all objects $x_{1}\in X$ and $x_{2}\in X$ we have
+$f(x_{1})=f(x_{2})$ implies $x_{1}=x_{2}$.
+
+We sometimes use the notation $f\colon X\into Y$ to indicate $f$ is an
+injective function.
+\end{definition}
+
+\begin{theorem}[Composing injective functions yields an injective function]\mml{funct_1:24}
+Let $f\colon X\to Y$ and $g\colon Y\to Z$ be injective functions.
+Then $g\circ f\colon X\to Z$ is an injective function.
+\end{theorem}
+
+\begin{theorem}[Identity function is injective]
+Let $X$ be a set. Then $\id_{X}\colon X\to X$ is injective.
+\end{theorem}
+
+\begin{definition}[Surjective function]\mml{funct_2:def 3}
+Let $f\colon X\to Y$ be a function. We call $f$ \define{Surjective}
+(or \emph{onto}) if for each object $y\in Y$ there exists (at least
+one) object $x\in X$ such that $f(x)=y$.
+
+Sometimes we write $f\colon X\onto Y$ to indicate $f$ is a surjective
+function. 
+\end{definition}
+
+\begin{definition}[Bijective function]\mml{funct_2:def 4}
+Let $f\colon X\to Y$ be a function. We call $f$ \define{Bijective} if
+it is both surjective and injective. We sometimes call $f$ a
+\emph{bijection} to indicate it is a bijective function.
+\end{definition}
+
+\begin{definition}[Inverse function]\mml{funct_1:def 5}
+Let $f\colon X\to Y$ be a bijective function. We define the
+\define{Inverse Function} of $f$ to be the function $f^{-1}\colon Y\to X$
+such that if $(x,y)\in f$ we have $(y,x)\in f^{-1}$.
+\end{definition}
+
+\section{Grothendieck and Tarski Universes}\label{sec:set-theory:universes}
+
+Much of this can be found formalized using Mizar in
+Bancerek~\cite{bancerek1990tarski},
+Nowak and Bancerek~\cite{nowak1990universal},
+Pak~\cite{pak2020grothendieck},
+and Coghetto~\cite{Coghetto2022nontrivial,Coghetto2024usmall}. 
+
+\begin{definition}[Grothendieck universes]\mml{classes3}
+A \define{Grothendieck Universe} is a set $\mathcal{U}$ such that
+\begin{itemize}
+\property{Transitivity} for all $X\in\mathcal{U}$ and $x\in X$, we
+have $x\in\mathcal{U}$
+\property{Powerset-closed} for all $X\in\mathcal{U}$, we have the power set
+$\powerset{X}\in\mathcal{U}$
+\property{Family-Unions-closed} for all $I\in\mathcal{U}$ and functions $X\colon I\to\mathcal{U}$,
+  we have $\Union X\in\mathcal{U}$.
+\end{itemize}%
+Note that some people require $\emptyset\in\mathcal{U}$ to exclude the
+empty set from being a Grothendieck universe. Other people require
+$\omega\in\mathcal{U}$ to exclude hereditarily finite sets from being
+a Grothendieck universe.
+\end{definition}
+
+\begin{definition}[Smallest Grothendieck universe containing a given set]
+Let $A$ be a set. We define the term $\GrothendieckUniverse{A}$ to be
+the smallest Grothendieck universe containing $A$ in the sense that:
+for any Grothendieck universe $U$ such that $A\in U$ we have
+$\GrothendieckUniverse{A}\subset U$. (Equivalently,
+$\GrothendieckUniverse{A}$ is the intersection of all the Grothendieck
+universes containing $A$.)
+\end{definition}
+
+\begin{definition}[Tarski Universe]\label{defn:set-theory:tarski-universe}
+A \define{Tarski Universe} is a set $\mathcal{U}$ such that
+\begin{itemize}
+\property{Subset-closed} for $X$ and $Y$ being sets such that $X\in\mathcal{U}$ and $Y\subset X$,
+  we have $Y\in\mathcal{U}$
+\property{Powerset-closed} for $X$ be a set such that $X\in\mathcal{U}$ we have $\powerset{X}\in\mathcal{U}$
+\property{Tarski-universe-like} for $X$ be a set, we have $X\subset\mathcal{U}$ implies $X\in\mathcal{U}$ or $X$
+  is equipotent with $\mathcal{U}$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Grothendieck universes are Tarski universes]\mml{classes3:17}
+If $U$ is a Grothendieck universe, then $U$ is a Tarski universe.
+\end{theorem}
+
+\begin{definition}[Tarski-class of a set]\mml{classes1}
+Let $A$ and $B$ be sets. We say $B$ is a Tarski-class of $A$ if
+\begin{enumerate}
+\item $A\in B$
+\item $B$ is a Tarski universe.
+\end{enumerate}
+Now, furthermore, if $B$ is the smallest Tarski-class of $A$ in the
+sense that if $D$ is another Tarski-class of $A$ we have $B\subset D$,
+then we call $B$ the \define{Tarski-Class} of $A$. We generically
+write $\TarskiClass{A}$ for the smallest Tarski-Class of $A$.
+\end{definition}
+
+\begin{theorem}[Smallest Tarski universe is contained in Grothendieck universe]\mml{classes3:18}
+Let $X$ be a set. Let $G$ be any Grothendieck universe containing $X\in G$.
+Then $\TarskiClass{X}\subset G$.
+\end{theorem}
+
+\begin{theorem}[Smallest Tarski universe of transitive set is also smallest Grothendieck universe]\mml{classes3:22}
+Let $X$ be a transitive set. Then $\TarskiClass{X} = \GrothendieckUniverse{X}$.
+\end{theorem}
+
+\begin{definition}[Tarski-Class of empty set]\mml{classes2}
+We define the constant $\FinSETS$ to be the set equal to
+\begin{equation}
+\FinSETS = \TarskiClass{\emptyset}.
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Tarski-Class of empty set is the collection of hereditarily finite sets]\mml{classes2:71}
+We see $\FinSETS = \VonNeumannUniverse_{\omega}$.
+\end{theorem}
+
+\begin{definition}[Tarski-Class of $\FinSETS$]\mml{classes2}
+We define the constant $\SETS$ to be the set equal to
+\begin{equation}
+\SETS = \TarskiClass{\FinSETS}.
+\end{equation}
+\end{definition}
+
+\begin{definition}[Sequence of Tarski-Classes]\mml{classes2:def 5}
+Let $A$ be a set.
+We can define the $A$-th entry in sequence of Tarski-Classes
+$\UNIVERSE{A}$ to be the term such that:
+there exists a sequence $L$ such that $\UNIVERSE{A}$ is the last
+member of $L$, and $\dom(L) = \succ(A)$, and $L_{0} = \FinSETS$,
+and for each ordinal $C$ such that $\succ(C)\in\succ(A)$ we have
+$L_{\succ C} = \TarskiClass{L_{C}}$, and
+for each ordinal $C\in\succ(A)$ such that $C\neq0$ is a limit ordinal
+we have $L_{C} = \TarskiClass{\Union (L|_{C})}$.
+
+That is to say, we iterate $\TarskiClass{-}$ as many times as $|A|$, and
+this is precisely $\UNIVERSE{A}$.
+\end{definition}
+
+\begin{theorem}[Results about iterating minimal Tarski-class]\mml{classes2:75-77}
+We have the following results:
+\begin{enumerate}
+\item $\UNIVERSE{\emptyset} = \FinSETS$ 
+\item $\UNIVERSE{\succ(A)}=\TarskiClass{\UNIVERSE{A}}$
+\item When ${\bf 1} = \succ(\emptyset)$, we have $\UNIVERSE{\bf 1}=\SETS$.
+\end{enumerate}
+In other words, the choice of notation ``makes sense''.
+\end{theorem}
+
+\begin{theorem}[$\SETS$ is a Grothendieck universe]\mml{classes4:74-5}
+We see the smallest Grothendieck universe containing $\omega$ is
+precisely $\GrothendieckUniverse{\omega} = \SETS$.
+
+Similarly, we find $\TarskiClass{\omega} = \SETS$.
+\end{theorem}
+
+\begin{remark}[$\SETS$ as a natural choice of ``small'' sets]
+We can see that $\SETS$ is the smallest Grothendieck universe which is a
+model for \ZFC/. Informally we may think of $\SETS$ as the collection
+of all \ZF/-sets in Tarski--Grothendieck set theory.
+
+If we were trying to find a natural candidate for the collection of
+all ``small collections'', then $\SETS$ would be the first candidate
+to spring to mind. (There is also an argument for
+$\VonNeumannUniverse_{\omega+\omega}$ since HOL has formalized almost
+all Working Mathematics.) This is the same spirit as Mac~Lane's
+foundations of \ZFpmC/ plus a single Grothendieck universe no smaller
+than $\SETS$.
+
+Similarly, there are variants of \MK/ which extend it with the notion
+of a ``conglomerate'' (the collection of all proper classes). We could
+facilitate this by having the proper classes which are not
+conglomerates be elements of $\TarskiClass{\SETS}$, and the
+conglomerates are elements of $\TarskiClass{\TarskiClass{\SETS}}$. As
+we need larger collections, we just iterate $\TarskiClass{-}$ on these
+collections. Without the machinery of Grothendieck universes, this is
+necessary for us to do Category Theory (see, e.g., Adamek, Herrlich, and Strecker~\cite{adamek1990abstract}
+as well as Herrlich and Strecker~\cite{horst2007category}). Some
+constructions in Category Theory requires \emph{even bigger}
+collections (the next largest kind of collections are called
+\emph{cosmos}). 
+\end{remark}
+
+\begin{definition}[$U$-sets]
+Let $U$ be a nonempty set, let $x$ be an object. We define an
+attribute, calling $x$ an \define{$U$-set} if $x\in U$.
+
+We can equally define a new type, \define{Set of $U$} which is a set $Y$
+such that $Y\in U$ (i.e., $Y$ is an $U$-set).
+\end{definition}
+
+\begin{definition}[$U$-classes]
+Let $U$ be a universe, let $x$ be an object. We define an attribute,
+saying $x$ is \define{$U$-Class} if $x\in\powerset{U}$ and $x\notin U$.
+
+We could equally define a new type, \define{class of $U$}, which
+describes a $U$-Class.
+\end{definition}
+
+\section{Tarski--Grothendieck Axioms}
+
+Following Andrzej Trybulec's ``Axioms of Tarski Grothendieck Set
+Theory''~\cite{trybulec1990tarski}, we present the axioms as follows:
+
+\begin{axiom}[Everything is a set]
+For any object $x$, we have $x$ is a set.
+\end{axiom}
+
+\begin{axiom}[Extensionality]
+Let $X$ and $Y$ be sets. 
+Suppose for any object $x$ we have $x\in X$ iff $x\in Y$.
+Then $X = Y$.
+\end{axiom}
+
+\begin{axiom}[Pair]
+Let $x$ and $y$ be objects.
+There exists a set $z$ such that for all objects $a$ we have $a\in z$ iff
+$a=x$ or $a=y$.
+\end{axiom}
+
+\begin{axiom}[Union]
+Let $X$ be a set.
+There exists a set $Z$ such that
+for any object $x$ we have $x\in Z$ iff there exists a set $Y$ such
+that $x\in Y$ and $Y\in X$.
+\end{axiom}
+
+\begin{axiom}[Regularity]
+Let $X$ be any set.
+If there exists an object $x\in X$ (i.e., if $X$ is nonempty),
+then there exists a set $Y$ such that $Y\in X$ and there does not exist
+any object $y$ such that $y\in X$ and $y\in Y$ (i.e., $Y\cap X=\emptyset$).
+\end{axiom}
+
+\begin{axiom-scheme}[Replacement (Fraenkel)]
+Let $\mathcal{A}$ be a set, let $\mathcal{P}[-,-]$ be a binary
+predicate of objects.
+Assume for all objects $x$, $y$, $z$, if $\mathcal{P}[x,y]$ and $\mathcal{P}[x,z]$,
+then $y=z$.
+Then there exists a set $X$ such that for all objects $x$ we have
+$x\in X$ iff there exists an object $y\in\mathcal{A}$ and $\mathcal{P}[y,x]$.
+\end{axiom-scheme}
+
+\begin{axiom}[Tarski's universe]
+Let $N$ be an arbitrary set. There exists a set $M$ such that
+\begin{enumerate}
+\item for any set $X\in M$ and for any set $Y\subset X$, we have
+  $Y\in M$; and
+\item for any set $X\in M$ there exists a set $Z\in M$ such that for
+  every set $Y\subset X$ we have $Y\in Z$; and
+\item for any set $X$, if $X\subset M$, then either $X$ is equipotent
+  with $M$ or else $X\in M$.
+\end{enumerate}
+Or, using Definition~\ref{defn:set-theory:tarski-universe}, there
+exists a Tarski universe $M$ containing $N$.
+\end{axiom}

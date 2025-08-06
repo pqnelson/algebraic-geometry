@@ -1,0 +1,447 @@
+%%
+%% pmlmac.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-19T10:37:32-0700
+%% Last update 2025-07-19T10:37:32-0700
+%% 
+
+%% Poor man's LaTeX in plain TeX
+
+\def\makeatletter{\catcode`\@11\relax}
+
+\def\makeatother{\catcode`\@12\relax}
+
+\makeatletter
+
+\newtoks\@temptokena
+
+\def\@empty{}
+
+\def\@ifundefined#1#2#3{%
+  \expandafter\ifx\csname#1\endcsname\relax%
+    #2%
+  \else%
+    #3%
+  \fi}
+
+\def\@namedef#1{\expandafter\def\csname#1\endcsname}
+
+% HACK: this allows you to \usepackage for some packages
+\let\protect\relax
+\let\ProcessOptions\relax
+\def\DeclareOption#1#2{}
+\def\@makeother#1{\catcode`#112\relax}
+\def\usepackage#1{\makeatletter
+  \input #1.sty}
+
+%% L%% print an L
+%% \kern -.36em%% add a negative kern
+%% {%% open a group
+%%   \sbox \z@ T%% load box 0 with a T
+%%   \vbox to\ht \z@ {%% start a vertical box as high as box 0
+%%     \hbox {% start a horizontal box
+%%       \check@mathfonts%% ensure the math fonts sizes are set up at the current font size
+%%       \fontsize \sf@size \z@%% use the established font size for sub/superscripts
+%%       \math@fontsfalse%% don't bother setting up all the math fonts for the new current size
+%%       \selectfont%% select the font
+%%       A%% print an A
+%%     }%% finish the horizontal box
+%%     \vss%% fill up the stated height
+%%   }%% finish the \vbox
+%% }%% end the group
+%% \kern -.15em%% add a negative kern
+%% \TeX%% print the TeX logo
+
+\newdimen\z@ \z@=0pt % can be used both for 0pt and 0
+\newcount\@tempcnta % needed for url.sty
+
+\long\def\LaTeX{L\kern-.36em%
+  {\sbox{\z@}T%
+    \vbox to\ht \z@{\hbox{\sevenrm A}%
+      \vss}%
+  }%
+  \kern-.15em%
+  \TeX}
+
+
+\def\LaTeX{L\kern-.26em \raise.6ex\hbox{\sevenrm A}%
+   \kern-.15em\TeX}%
+
+%% \def\LaTeX{L\kern-.26em \raise.6ex\hbox{\fiverm A}%
+%%    \kern-.15em TeX}%
+\def\AMSTeX{$\cal A\kern-.1667em \lower.5ex\hbox{$\cal M$}%
+   \kern-.125em S$-\TeX}%
+\def\BibTeX{{\rm B\kern-.05em {\sevenrm I\kern-.025em B}%
+   \kern-.08em T\kern-.1667em \lower.7ex\hbox{E}%
+   \kern-.125emX}}%
+\font\mflogo = logo10
+\def\MF{{\mflogo META}{\tenrm \-}{\mflogo FONT}}%
+
+\def\color@begingroup{\begingroup}
+\def\color@setgroup{\color@begingroup}
+\def\color@endgroup{\endgraf\endgroup}
+\long\def\sbox#1#2{\setbox #1\hbox {\color@begingroup #2\color@endgroup}}
+
+%%%
+%%% Environments
+%%%
+
+% Redefine \bye to use \@@end, so we can redefine \end
+\let\@@end\end
+
+% `\enddocument` needs to have an \endgroup to fix
+% "semi simple group (level 1) entered at line N (\begingroup)"
+\def\bye{\par\vfill\supereject\@@end}
+\def\document{}
+\def\enddocument{\endgroup\par\bye}
+
+
+% define environment syntax
+% \newif\if@ignore\@ignorefalse does not define things properly
+\def\@ignorefalse{\global\let\if@ignore\iffalse}
+\def\@ignoretrue {\global\let\if@ignore\iftrue}
+\@ignorefalse
+
+\long\def\begin#1{\begingroup\csname#1\endcsname}
+
+\long\def\end#1{\csname end#1\endcsname\endgroup%
+  \if@ignore\@ignorefalse\noindent\ignorespaces\fi}
+
+\def\newenvironment#1#2#3{%
+  \expandafter\gdef\csname #1\endcsname{#2}%
+  \expandafter\gdef\csname end#1\endcsname{#3}%
+}
+
+%%%
+%%% Counters
+%%%
+% TODO: support "\theH<counter>"?
+\def\stepcounter#1{%
+    \expandafter\global\expandafter\advance\csname c@#1\endcsname by1%
+    \begingroup%
+      \let\@elt\@stpelt%
+      \csname cl@#1\endcsname%
+    \endgroup%
+}
+
+\def\@currentcounter{}
+
+\def\refstepcounter#1{%
+  \stepcounter{#1}%
+  \xdef\@currentcounter{\csname the#1\endcsname}%
+}
+
+\def\label#1{%
+  \expandafter\ifx\csname r@#1\endcsname\relax\else%
+    \message{Label already defined: #1}%
+  \fi%
+  % The "r@foo" macros should look like "\def\r@foo{{<\thefoo>}{\thepage}}".
+  % The "\noexpand" are inserted to keep "{" and "}" from expanding
+  \expandafter\xdef\csname r@#1\expandafter\endcsname\expandafter{%
+    \expandafter\noexpand{\@currentcounter\noexpand}%
+    \noexpand{\folio\noexpand}%
+  }%
+\ignorespaces}
+
+\def\ref#1{%
+  \ifx\csname r@#1\endcsname\relax%
+    \message{Warning: reference #1 on page \folio undefined}{\bf??}%
+  \else%
+    \expandafter\expandafter\expandafter\@firstoftwo\csname r@#1\endcsname%
+  \fi}
+
+\def\eqref#1{(\ref{#1})}
+
+\def\pageref#1{%
+  \ifx\csname r@#1\endcsname\relax%
+    \message{Warning: reference #1 on page \folio undefined}%
+  \else%
+    \expandafter\expandafter\expandafter\@secondoftwo\csname r@#1\endcsname%
+  \fi}
+
+\def\setcounter#1#2{
+    \expandafter\global\csname c@#1\endcsname=#2
+}
+
+% @stpelt{<counter>} sets <counter> equal to -1, then invokes
+% \stepcounter{<counter>} to propagate resetting
+\def\@stpelt#1{%
+  \setcounter{#1}{-1}%
+  \stepcounter{#1}%
+}
+
+% HACK: TeX defines "\newcount" to be outer, which breaks \@definecount
+% so we just remove the "\outer" prefix
+\def\newcount{\alloc@0\count\countdef\insc@unt}
+
+% Constructs `\cl@<counter>` which is of the form `\@elt <counter1>
+% \@elt <counter-2> ... \@elt <counter-N>`
+\def\@definecounter#1{\expandafter\newcount\csname c@#1\endcsname
+  \setcounter{#1}{0}
+  \global\expandafter\let\csname cl@#1\endcsname\@empty
+  \expandafter
+  \gdef\csname the#1\expandafter\endcsname\expandafter
+     {\expandafter\number\csname c@#1\endcsname}
+}
+
+\let\newcounter\@definecounter
+
+% linked list operations
+\def\@cons#1#2{\begingroup\let\@elt\relax\xdef#1{#1\@elt #2}\endgroup}
+\def\@car#1#2\@nil{#1}
+\def\@cdr#1#2\@nil{#2}
+
+% \@addtoreset{<foo>}{<bar>} will reset <foo> when <bar> is stepped
+\def\@addtoreset#1#2{\expandafter\@cons\csname cl@#2\endcsname {{#1}}}
+
+% ASSUME: #1 and #2 are both counters
+\def\@removefromreset#1#2{
+  \begingroup
+    \expandafter\let\csname c@#1\endcsname\@removefromreset
+    \def\@elt##1{%
+      \expandafter\ifx\csname c@##1\endcsname\@removefromreset
+      \else
+        \noexpand\@elt{##1}%
+      \fi}%
+    \expandafter\xdef\csname cl@#2\endcsname
+      {\csname cl@#2\endcsname}%
+  \endgroup%
+}
+
+%% Pretty printing counters
+\def\arabic#1{\expandafter\number\csname c@#1\endcsname}
+
+\def\roman#1{\expandafter\romannumeral\csname c@#1\endcsname}
+
+\def\@slowromancap#1{\ifx @#1\else \if i#1I\else \if v#1V\else \if x#1X\else \if l#1L\else \if c#1C\else \if d#1D\else \if m#1M\else #1\fi \fi \fi \fi \fi \fi \fi \expandafter \@slowromancap \fi}
+\def\@Roman#1{\expandafter\@slowromancap\romannumeral#1@}
+\def\Roman#1{\expandafter\@Roman\csname c@#1\endcsname}
+
+\def\@alph#1{\ifcase #1\or a\or b\or c\or d\or e\or f\or g\or h\or i\or j\or k\or l\or m\or n\or o\or p\or q\or r\or s\or t\or u\or v\or w\or x\or y\or z\else \@ctrerr \fi}
+\def\alph#1{\expandafter\@alph\csname c@#1\endcsname}
+
+\def\@Alph#1{\ifcase #1\or A\or B\or C\or D\or E\or F\or G\or H\or I\or J\or K\or L\or M\or N\or O\or P\or Q\or R\or S\or T\or U\or V\or W\or X\or Y\or Z\else \@ctrerr \fi}
+\def\Alph#1{\expandafter\@Alph\csname c@#1\endcsname}
+
+% TODO: fnsymbol
+
+\def\value#1{\csname c@#1\endcsname}
+
+%%%%
+%%%% Math related stuff
+%%%%
+
+%%
+%% Equation environments
+%%
+\let\normalfont\relax
+\let\normalcolor\relax
+\@definecounter{equation}
+\def\equation{$$\refstepcounter{equation}}
+\def\endequation{\eqno \hbox{\@eqnnum}$$\@ignoretrue}
+\def\@eqnnum{{\normalfont \normalcolor (\theequation)}}
+
+\expandafter\def\csname equation*\endcsname{%
+  \relax\ifmmode
+      \@badmath
+  \else
+      \ifvmode
+         \nointerlineskip
+         \makebox[.6\linewidth]{}%
+      \fi
+      $$%                   %  amsthm tries to patch this and expects a $
+                            %  will be adjusted when amsthm changes
+  \fi
+}
+\expandafter\def\csname endequation*\endcsname{%
+   \relax\ifmmode
+      \ifinner
+         \@badmath
+      \else
+         $$
+      \fi
+   \else
+      \@badmath
+   \fi
+   \ignorespaces\@ignoretrue
+}%
+
+%% fractions
+\def\frac#1#2{{\begingroup#1\endgroup\over#2}}
+
+\def\stackrel#1#2{\mathrel{\mathop{#2}\limits^{#1}}}
+
+%%%
+%%% @ifnextchar
+\long\def\@firstoftwo#1#2{#1}
+\long\def\@secondoftwo#1#2{#2}
+
+\let\og@colon\:
+\def\:{\let\@sptoken= } \:  % this makes \@sptoken a space token
+\def\:{\@xifnch} \expandafter\def\: {\futurelet\@let@token\@ifnch}
+\let\:\og@colon
+
+\def\@ifnch{%
+  \ifx\@let@token\@sptoken
+    \let\reserved@c\@xifnch
+  \else
+    \ifx\@let@token\reserved@d
+      \let\reserved@c\reserved@a
+    \else
+      \let\reserved@c\reserved@b
+    \fi
+  \fi
+  \reserved@c}
+
+\long\def\@ifnextchar#1#2#3{%
+  \let\reserved@d=#1%
+  \def\reserved@a{#2}%
+  \def\reserved@b{#3}%
+  \futurelet\@let@token\@ifnch%
+}
+
+\def\@ifstar#1{\@ifnextchar*{\@firstoftwo{#1}}}
+
+
+%% Fonts
+\font\tensc=cmcsc10 % caps and small caps
+\font\twelverm=cmr12
+\font\eightrm=cmr8
+\font\sixrm=cmr6 \font\fiverm=cmr5
+\font\eighti=cmmi8
+\font\ninei=cmmi9  \skewchar\ninei='177
+\font\eighti=cmmi8  \skewchar\eighti='177
+\font\sixi=cmmi6  \skewchar\sixi='177
+
+\font\tenbi=cmmib10  \skewchar\tenbi='177
+\font\ninebi=cmmib9  \skewchar\ninebi='177
+
+\font\ninesy=cmsy9  \skewchar\ninesy='60
+\font\eightsy=cmsy8  \skewchar\eightsy='60
+\font\sixsy=cmsy6  \skewchar\sixsy='60
+
+\font\tenbsy=cmbsy10  \skewchar\tenbsy='60
+\font\sevenbsy=cmbsy7  \skewchar\sevenbsy='60
+\font\fivebsy=cmbsy5  \skewchar\fivebsy='60
+
+\font\elevenex=cmex10 scaled\magstephalf
+\font\nineex=cmex9
+\font\eightex=cmex8
+\font\sevenex=cmex7
+
+\font\ninebf=cmbx9
+\font\eightbf=cmbx8
+\font\sixbf=cmbx6
+
+\font\tenthinbf=cmb10
+\font\ninethinbf=cmb10 at 9.25pt
+\font\eightthinbf=cmb10 at 8.5pt
+
+\font\twelvett=cmtt12  \hyphenchar\twelvett=-1  % inhibit hyphenation in tt
+\font\tensltt=cmsltt10  \hyphenchar\tensltt=-1
+\font\ninett=cmtt9  \hyphenchar\ninett=-1
+\font\ninesltt=cmsltt10 at 9pt  \hyphenchar\ninesltt=-1
+\font\eighttt=cmtt8  \hyphenchar\eighttt=-1
+\font\seventt=cmtt8 scaled 875  \hyphenchar\seventt=-1
+
+\font\ninesl=cmsl9
+\font\eightsl=cmsl8
+
+\font\nineit=cmti9
+\font\eightit=cmti8
+
+\font\eightss=cmssq8
+\font\eightssi=cmssqi8
+\font\sixss=cmssq8 scaled 800
+\font\tenssbx=cmssbx10
+
+\def\footnotesize{\def\rm{\fam0\eightrm}%
+  %\clearance=3.9125 pt
+  \textfont0=\eightrm \scriptfont0=\sixrm \scriptscriptfont0=\fiverm
+  \textfont1=\eighti \scriptfont1=\sixi \scriptscriptfont1=\fivei
+  \textfont2=\eightsy \scriptfont2=\sixsy \scriptscriptfont2=\fivesy
+  \textfont3=\eightex \scriptfont3=\sevenex \scriptscriptfont3=\sevenex
+  \def\it{\fam\itfam\eightit}%
+  \textfont\itfam=\eightit
+  \def\sl{\fam\slfam\eightsl}%
+  \textfont\slfam=\eightsl
+  \def\bf{\fam\bffam\eightbf}%
+  \textfont\bffam=\eightbf \scriptfont\bffam=\sixbf
+   \scriptscriptfont\bffam=\fivebf
+  \def\tt{\fam\ttfam\eighttt}%
+  \let\sltt=\error
+  \textfont\ttfam=\eighttt
+  \def\oldstyle{\fam\@ne\eighti}%
+  \normalbaselineskip=9pt
+  \def\bigfences{\textfont3=\nineex}%
+  \let\big=\eightbig
+  \let\Big=\eightBig
+  \let\bigg=\eightbigg
+  \let\Bigg=\eightBigg
+  \setbox\strutbox=\hbox{\vrule height7pt depth2pt width\z@}%
+  \setbox0=\hbox{$\partial$}%\setbox\ush=\hbox{\rotu0}%
+  %\bitmapsize=8pt
+  \let\adbcfont=\sixrm
+  \let\mc=\sevenrm % for slightly smaller caps
+  \let\boldit=\error
+  \let\ii=\eightii
+  \def\MF{{\manfnt opqr}\-{\manfnt stuq}}%
+  \normalbaselines\rm}
+
+
+%%%
+%%% Title
+%%%
+\def\title#1{\gdef\@title{#1}}
+\def\author#1{\gdef\@author{#1}}
+\long\def\date#1{\gdef\@date{#1}}
+\font\cmman=cmssbx12 scaled\magstep5 
+\font\inchhigh=cminch
+%\font\foofont=cminch scaled\magstephalf1
+\def\@maketitleaddenda{}
+\def\@maketitle{\vskip2em%
+  %% \edef\@@title{\uppercase{\@title}}
+  %% \centerline{\foofont \@@title}%
+  \centerline{\cmman \@title}%
+  \vskip1.5em\centerline{\twelverm\@author}% author
+  \ifx\@date\relax\else\vskip 1em\centerline{\twelverm \@date }\par\fi% date
+  \vskip 1.5em%
+}
+\def\maketitle{\@maketitle
+  \mbox{ }\par
+  %\vfil\@maketitleaddenda
+  \gdef\@maketitle{}
+  \mbox{ }\vfill
+  \@maketitleaddenda
+  \eject}
+
+\def\mbox#1{\leavevmode\hbox{#1}}
+
+%%%
+%%% aligned, taken from amstex.tex
+%%%
+\def\strut@{\copy\strutbox@}
+\newbox\strutbox@
+
+\newif\ifinany@
+\def\Let@{\relax\iffalse{\fi\let\\=\cr\iffalse}\fi}
+\def\aligned{\null\,\vcenter\aligned@}
+\def\vspace@{\def\vspace##1{\crcr\noalign{\vskip##1\relax}}}
+\def\aligned@{\bgroup\vspace@\Let@
+ \ifinany@\else\openup\jot\fi\ialign
+ \bgroup\hfil\strut@$\m@th\displaystyle{##}$&
+ $\m@th\displaystyle{{}##}$\hfil\crcr}
+\def\endaligned{\crcr\egroup\egroup}
+
+
+\def\center{\centering}
+\def\endcenter{}
+
+% graphics
+\input epsf
+\def\includegraphics{\epsfbox}
+
+\makeatother

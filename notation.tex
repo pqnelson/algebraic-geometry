@@ -1,0 +1,165 @@
+%%
+%% notation.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-19T19:48:26-0700
+%% Last update 2025-07-19T19:48:26-0700
+%%
+\makeatletter
+
+% \Def\macro will raise error if \macro is already defined
+\newtoks\tokscheck
+\def\isalreadydefined#1{\tokscheck={#1}%
+  \expandafter\if\expandafter\relax\tokscheck\relax\else\error\fi}
+
+\def\Def#1{\isalreadydefined{#1}%
+  \def#1}
+
+% Bourbaki-style "future topic" earmuffs
+\Def\future@start{*}%\smash{\raise0.25ex\hbox{*}}}
+\Def\future@end{\smash{\raise-1.0ex\hbox{*}}} % -1.3ex
+\Def\future#1{\leavevmode\future@start #1\future@end}
+
+% definiens are defined using the \define{...} macro
+\Def\define#1{{\rm\bf``#1''}}
+
+% \needs is just a "note to self"
+\Def\needs#1{}
+
+% Latin phrases should be italicized
+\Def\Latin#1{\textit{#1}}
+\Def\French#1{\textit{#1}}
+
+%% Constants like e, etc.
+\Def\I{{\rm i}}
+\Def\E{{\rm e}}
+
+%% Sets
+\Def\CC{\mathbb{C}}
+\Def\FF{\mathbb{F}}
+\Def\HH{\mathbb{H}}
+\Def\NN{\mathbb{N}}
+\Def\QQ{\mathbb{Q}}
+\Def\Reals{\RR}
+\Def\RR{\mathbb{R}}
+\Def\ZZ{\mathbb{Z}}
+\Def\Integers{\ZZ}
+\Def\FinSETS{\textbf{U}_{0}}
+\Def\SETS{\textbf{U}_{1}}
+\Def\TarskiClass#1{{\bf T}(#1)}
+\Def\GrothendieckUniverse#1{{\bf G}(#1)}
+\Def\VonNeumannUniverse{{\bf V}}
+\Def\UNIVERSE#1{\mathop{\bf U}\nolimits_{#1}}
+\Def\succ{\mathop{\rm succ}\nolimits}
+
+%% Set operations
+\let\Union\bigcup
+\let\Intersects\bigcap
+\let\propersubset\subset
+\let\og@subset\subset
+\let\subset\subseteq
+\ifLaTeX
+\usepackage{amssymb}
+\else
+\input amssym.tex
+\fi
+\Def\powerset#1{\mathcal{P}\left(#1\right)}
+\Def\symdiff{\mathbin{\Delta}}
+
+%% Relations
+\Def\composeRelation{\mathbin{;}}
+\Def\rng{\mathop{\rm rng}\nolimits}
+\Def\dom{\mathop{\rm dom}\nolimits}
+
+%% partial functions
+\Def\pto{\rightharpoonup}
+
+%% functions
+\Def\id{\mathop{\rm id}\nolimits}
+\Def\into{\hookrightarrow}
+\Def\onto{\twoheadrightarrow}
+% \preimage{f}{A} = f^{-1}(A) for the preimage of A under f
+\Def\preimage#1#2{#1^{-1}(#2)}
+
+%% Topology
+\Def\closure#1{\mathop{\rm Cl}\nolimits(#1)}
+
+%% Category theory
+\Def\cod{\mathop{\rm cod}\nolimits}
+\Def\op#1{#1^{\text{op}}}
+\Def\cat#1{{\bf#1}} %\mathop{\bf #1} vertically lowers #1
+\Def\Ob{\mathop{\rm Ob}\nolimits}
+\Def\hom{\mathop{\rm Hom}\nolimits}
+\Def\Hom{\hom}
+\Def\Mor{\mathop{\rm Mor}\nolimits}
+\Def\End{\mathop{\rm End}\nolimits}
+\Def\delooping#1{\cat{B}#1}
+
+% natural transformations
+\Def\To{\Rightarrow}
+
+% particular categories
+\Def\Cat{\cat{Cat}} % category of all small categories
+\Def\CAT{\cat{CAT}}
+\Def\Ens{\cat{Ens}}
+\Def\Grp{\cat{Grp}} % category of groups
+\Def\Set{\cat{Set}} % category of sets
+\Def\Top{\cat{Top}} % category of topological spaces
+
+%% Ring Theory
+\Def\UnitGroup#1{#1^{\times}}
+\Def\Bags{\mathop{\rm Bags}\nolimits}
+\Def\EmptyBag{e}
+% See (48) in https://tug.org/TUGboat/tb35-3/tb111wermuth.pdf
+\Def\monus{\mathbin{\mathop{\kern0pt \smash{-}}%
+\limits^{\raise.55ex\hbox{$\textstyle.$}}}}
+
+
+
+%% Logos
+%\def\logo#1{\hbox{\textsf{#1}}}
+\Def\logo#1{\hbox{\textsf{#1}}}
+
+\Def\HOL/{\logo{HOL}}
+\Def\Mizar/{\logo{Mizar}}
+\Def\MK/{\logo{MK}}
+\Def\NBG/{\logo{NBG}}
+\Def\PRA/{\logo{PRA}}
+\Def\TG/{\logo{TG}}
+\Def\Z/{\logo{Z}}
+\Def\ZF/{\logo{ZF}}
+\Def\ZFC/{\logo{ZFC}}
+\Def\ZFpmC/{\logo{ZF{\rm(}C{\rm)}}}
+
+%% Notation
+\Def\structure#1{\langle\!\langle#1\rangle\!\rangle}
+
+\font\sidenotefont=cmti8
+
+% https://tex.stackexchange.com/a/86088/14751
+% See also exercise 14.28 of the TeXbook
+\long\def\sidenote#1{%
+  \vadjust{\llap{\smash{\vtop{%
+    \parindent=0pt
+    %\hsize=0.85in %1.7in
+    \hsize=1in
+    \advance\hsize by-1em
+    \parfillskip=0pt
+    \leftskip=0pt plus1fil
+    \baselineskip=10pt\sidenotefont\vglue-\ht\strutbox #1}}\kern1em}}}
+
+% \mml is used to refer to locations in the Mizar Mathematical Library
+\def\mml{\catcode`\_11\relax\@mml}
+\ifLaTeX
+  \usepackage[fulladjust]{marginnote}
+  %  \marginparwidth=1in
+  \renewcommand*{\marginfont}{\small\upshape\ttfamily}
+  \def\@mml#1{\marginnote{#1}\catcode`\_8\ignorespaces}
+\else
+  \def\@mml#1{{\font\sidenotefont=cmtt8\sidenote{#1}}\catcode`\_8\ignorespaces}
+\fi
+
+\makeatother
+\endinput

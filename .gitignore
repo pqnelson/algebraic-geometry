@@ -1,0 +1,12 @@
+*~
+*.aux
+*.log
+*.toc
+*.dvi
+*.pdf
+# PM LaTeX
+toc.tex
+toc2.tex
+# Bibtex stuff
+*.blg
+*.bbl

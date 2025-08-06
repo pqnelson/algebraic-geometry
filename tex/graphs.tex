@@ -1,0 +1,38 @@
+%%
+%% graphs.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-08-05T10:04:20-0700
+%% Last update 2025-08-05T10:04:20-0700
+%% 
+
+\chapter{Graph Theory}
+\needs{pboole.tex}
+
+\begin{definition}[Graph structure]\label{def:graphs:graph-structure}\mml{altcat_1}
+We define a \define{Graph Structure} to extend a 1-sorted structure
+$G=\structure{U,A}$ consisting of an underlying set $U$ (as we do with
+a 1-sorted structure) and a many-sorted set of \emph{edges} or
+\emph{arrows} $A$ indexed by $U\times U$
+(\S\ref{def:pboole:many-sorted-set}).
+\end{definition}
+
+\begin{remark}[First-class structure]
+Lee and Rudnicki~\cite{lee2007alternative} have observed formalizing
+graph theory in \Mizar/ is more natural when working with ``first
+class structures''. That is to say, instead of working with structures
+as model theorists describe them (finite maps in the metatheory), it
+is more natural for graphs to be described using finite maps
+\emph{in the object theory!}
+\end{remark}
+
+\begin{definition}[Multigraph structure]\mml{graph_1}
+A \define{Multigraph Structure} extends a 2-sorted structure
+$M=\structure{U,U_{1},s,t}$ where $U$ is the underlying set of $M$
+called its carrier (inherited from 1-sorted structures) and $U_{1}$ is
+the set inherited from 2-sorted structures, $s\colon U_{1}\to U$ is a
+function called the \emph{Source} mapping, and $t\colon U_{1}\to U$
+is a function called the \emph{Target} mapping.
+\end{definition}

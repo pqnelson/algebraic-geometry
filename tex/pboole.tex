@@ -1,0 +1,53 @@
+%%
+%% pboole.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-08-05T10:11:03-0700
+%% Last update 2025-08-05T10:11:03-0700
+%% 
+
+\chapter{Many-sorted sets}
+
+\begin{definition}[Many-sorted sets]\label{def:pboole:many-sorted-set}\mml{pboole}
+Let $I$ be a set (usually called the \emph{Indexing Set} or 
+\emph{Set of Indices}, sometimes called the set of \emph{Sorts}).
+We define the type \define{Many-Sorted Set of $I$} to be an
+$I$-defined total function.
+
+In other words, $f$ is a Many-sorted set of $I$ iff $f$ is a total
+function-like relation such that $\dom(f)=I$. The convention is to use
+subscript notation, e.g., if $i\in I$ then we write $f_{i}$ instead of $f(i)$.
+
+Sometimes people call a ``many-sorted set of $I$'' an ``$I$-sorted set''.
+\end{definition}
+
+\begin{remark}[History of many-sorted sets]
+Wang~\cite{wang1952logic} popularized the adjective ``many-sorted'',
+thanking Church in a footnote saying it is a translation of
+Arnold Schmidt's~\cite{schmidt1938deduktive} term ``\textit{mehrsortig}'' translated as ``many-sorted'' in
+Langford's review~\cite{langford1939arnold} of Schmidt's paper. The
+notion of ``many-sorted'' stuff was revisited a few times (e.g., Paul
+Gilmore's 1958 paper on many-sorted logic) but was largely left
+dormant for 15 years, until Feferman~\cite{feferman1967lectures}
+discussed it further. The focus during this period was on syntactic
+proofs in many-sorted logic. The notion of many-sorted sets emerged in
+the 1980s when the attention shifted to the \emph{semantics} of
+many-sorted logic.
+\end{remark}
+
+\begin{definition}[Membership and subset predicates]\mml{pboole:def 1,2}
+Let $I$ be a set, let $X$ and $Y$ be many-sorted sets of $I$.
+
+We define the predicate $X\in Y$ to mean for every object $i\in I$
+we have $X_{i}\in Y_{i}$.
+
+We define the predicate $X\subset Y$ to mean for every object $i\in I$
+we have $X_{i}\subset Y_{i}$
+\end{definition}
+
+\begin{definition}[Many-sorted function]\label{def:pboole:many-sorted-function}\mml{pboole}
+Let $I$ be a set. We define a \define{Many-sorted function of $I$}
+to be a function-yielding many-sorted set of $I$.
+\end{definition}

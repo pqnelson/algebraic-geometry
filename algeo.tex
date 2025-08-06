@@ -1,0 +1,103 @@
+%%
+%% algeo.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-07-19T10:37:24-0700
+%% Last update 2025-07-19T10:37:24-0700
+%% 
+
+\newif\ifLaTeX
+\expandafter\ifx\csname LaTeX\endcsname\relax
+  \message{ifLaTeX is false}
+  \LaTeXfalse
+\else
+  \message{ifLaTeX is true}
+  \LaTeXtrue
+\fi
+
+\ifLaTeX
+  \documentclass{book}
+  \usepackage{macros}
+\else
+  \input{macros}
+  \input{btxmac}
+  \def\thebibliography#1{%
+  % #1 is the widest label.
+  % We set (new dimen) \biblabelwidth based on the widest label
+    \setbox0 = \hbox{\biblabelcontents{#1}}%
+    \biblabelwidth = \wd0
+  }
+  \def\bblhook{\footnotesize\parskip = 2pt plus1pt minus1pt} %1.5ex plus .5ex minus .5ex}
+\fi
+
+\def\k#1{#1}
+\input{notation}
+
+%% %% if you want to hide the references to the MML, just uncomment the
+%% %% following:
+%% \def\mml#1{}
+
+\subjclass[2020]{14--01}
+
+\title{Algebraic Geometry}
+\author{Alex Nelson}
+\date{July 19, 2025}
+
+\begin{document}
+
+\frontmatter
+\maketitle
+
+\input{tex/preface}
+
+\tableofcontents
+
+\mainmatter
+
+\input{tex/set-theory}
+
+\input{tex/pboole}
+
+\input{tex/structures}
+
+\input{tex/graphs}
+
+\input{tex/cat}
+
+\input{tex/ring}
+
+\input{tex/topology}
+
+\chapter{Algebraic Geometry}
+
+This is not \LaTeX, but plain \TeX.
+\begin{equation}\label{eq:mass-shell}
+p^{\mu}p_{\mu} = \frac{-E^{2}}{c^{2}}+\vec{p}\cdot\vec{p}
+\end{equation}
+This implies the famous result in the Newtonian limit:
+\begin{equation*}
+E \approx mc^{2}
+\end{equation*}
+That's neat.
+
+\begin{theorem}[Quasiaffine varieties are abstract varieties]
+Every quasiaffine variety is an abstract variety.
+\end{theorem}
+
+The proof is obvious. Look at equation (\ref{eq:mass-shell}).
+
+\begin{proof}
+  Just follow the definitions.
+\end{proof}
+
+
+
+
+\chapter*{References}
+\bibliographystyle{elements}
+\bibliography{math}
+
+%\bye
+\end{document}

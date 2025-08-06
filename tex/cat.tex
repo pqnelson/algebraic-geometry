@@ -1,0 +1,396 @@
+%%
+%% cat.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-08-05T09:47:03-0700
+%% Last update 2025-08-05T09:47:03-0700
+%% 
+
+\chapter{Category Theory}
+\needs{graph.tex}
+
+\section{Basic Definitions}
+
+\begin{remark}[Category is a cryptomorphic notion]
+There are at least three different ways to axiomatize the notion of a
+``category'', each with a different structure. But they are equivalent
+in the sense that we can translate one axiomatization faithfully into
+another. This quality (having multiple distinct axiomatizations which
+are not obviously equivalent) is called \define{Cryptomorphism}.
+\end{remark}
+
+\begin{definition}[Category structure with one collection of morphisms]\mml{cat_1}
+A \define{Category Structure} extends a multigraph structure $C=\structure{U,U_{1},s,t,\cdot,1}$ where
+\begin{itemize}
+\item the underlying set $U$ is considered to be the set of objects,
+\item $U_{1}$ is the set of morphisms,
+\item $s\colon U_{1}\to U$ is the \emph{source map} 
+or \emph{dom-map},
+\item $t\colon U_{1}\to U$ is the \emph{target map} or
+\emph{cod-map} giving us the codomain of a morphism,
+\item $\cdot\colon U_{1}\times U_{1}\pto U_{1}$ is a partial function
+  of morphisms called \emph{composition}, and
+\item $1\colon U\to U_{1}$ is the identity morphism.
+\end{itemize}
+Usually we write $\Ob(C)$ for the set of objects (as a synonym for $U$
+of $C$), and either $\Mor(C)$ or $\Hom(C)$ for the set of morphisms.
+
+When we have $f\in U_{1}$ such that $s(f)=a\in U$ and $t(f)=b\in U$,
+we will indicate this by saying ``$f\colon a\to b$ is a morphism of $C$''.
+The set of all such morphisms is written $\hom(a,b)\subset U_{1}$. Specifically,
+$\hom(a,b)=\{f\in U_{1}\mid s(f)=a\land t(f)=b\}$.
+
+In this case, we define a \define{Category} to consist of a category
+structure $\cat{C}$ such that
+\begin{itemize}
+\property{Category-like} for any morphism $f\in U_{1}$ and $g\in U_{1}$,
+  we have $(g,f)\in\cdot$ iff $s(g)=t(f)$
+\property{transitive} for any morphism $f\in U_{1}$ and $g\in U_{1}$
+  such that $s(g)=t(f)$, we have $s(g\cdot f)=s(f)$ and $t(g\cdot f)=t(g)$
+\property{Composition is associative} for any morphism $f\in U_{1}$ and $g\in U_{1}$
+  and $h\in U_{1}$
+  such that $s(h) = t(g)$ and $s(g)=t(f)$,
+  we have $h\cdot(g\cdot f)=(h\cdot g)\cdot f$.
+\property{reflexive} for any object $x\in U$, there exists a morphism
+  from $x$ to $x$.
+\property{with identities} for any object $a\in U$ there exists a
+  morphism $i\in U_{1}$ such that for any object $b\in U$ we have
+  (i) if there is a morphism from $a$ to $b$, then every morphism
+  $g\colon a\to b$ satisfies $g\cdot i=g$, and\hfill\break
+  (ii) if there is a morphism from $b$ to $a$, then every morphism
+  $f\colon b\to a$ satisfies $i\cdot f=f$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}
+The preceding definition is in the same spirit as Mac~Lane~\cite{maclane1998categories}. It may be traced back
+to Grothendieck~\cite[\S4]{grothendieck1961techniques}. This has the
+advantage that the definition generalizes to the notion of an
+\emph{internal category} object. In fact, when we have a notion of the
+category of sets, an internal category object in the category of sets
+is precisely the same as the previous definition.
+\end{remark}
+
+\begin{remark}[Collections or sets]
+We are lying a bit here, because we should define a category to
+consist of a ``collection'' of objects and a ``collection'' of
+morphisms. These colections may each separately be proper classes or sets.
+But it depends on the axiomatic set theory we are working with to
+describe mathematics.
+
+This comment is also applicable to the next formalization of a category.
+\end{remark}
+
+\begin{definition}[Category structure with a family of collection of morphisms]\mml{altcat_1}
+We can define a \define{Category Structure} to extend a graph
+structure (\S\ref{def:graphs:graph-structure}) $C=\structure{U,A,\cdot}$
+where $U$ is the underlying set (called the \emph{carrier} of $C$),
+$A$ is a many-sorted set (\S\ref{def:pboole:many-sorted-set}) called
+the \emph{arrows} of $C$, and
+the \emph{composition} $\cdot$ is a many-sorted function (\S\ref{def:pboole:many-sorted-function}) from
+$A\times A$ to $A$.
+
+When $a\in U$ and $b\in U$, we write $\Hom(a,b)$ as another way of
+writing $A_{a,b}$.
+
+We will write $\Ob(C)$ as a synonym for the carrier $U$ of $C$.
+
+We define a \define{Category} to consist of a category structure
+$\cat{C}$ such that
+\begin{itemize}
+\property{transitive} for any objects $a\in U$, $b\in U$, and $c\in U$,
+  if $\hom(a,b)\neq\emptyset$ and $\hom(b,c)\neq\emptyset$, then
+  necessarily $\hom(a,c)\neq\emptyset$ (namely, the composition of
+  $f\colon a\to b$ with $g\colon b\to c$ gives us a morphism
+  $g\cdot f\colon a\to c$)
+\property{associative} if the composition of $\cat{C}$ is associative,
+i.e, for any objects $a\in U$ and $b\in U$ and $c\in U$ and $d\in U$, for any
+morphisms $f\colon a\to b$ and $g\colon b\to c$ and $h\colon c\to d$,
+we have $(h\cdot g)\cdot f=h\cdot(g\cdot f)$
+\property{with units} for any objects $a\in U$ there exists a morphism
+$i\in\hom(a,a)$ such that for any object $b\in U$,
+ (i) for any morphism $g\colon a\to b$, we have $g\cdot i=g$, and\hfill\break
+ (ii) for any morphism $f\colon b\to a$, we have $i\cdot f=f$
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[The two formalizations are equivalent]
+For each category $\cat{C}$ with one collection of morphisms, there
+exists a unique category $\cat{C}_{2}$ with a family of collections of
+morphisms such that $\Ob(\cat{C})=\Ob(\cat{C}_{2})$ and
+$\hom_{\cat{C}}(a,b)=\hom_{\cat{C}_{2}}(a,b)$ for all objects
+$a\in\cat{C}$ and $b\in\cat{C}$ $b\in C$,  and the composition of morphisms agrees.
+\end{theorem}
+
+This is actually a \emph{metatheorem} since there is no set theoretic
+function within our axiomatic set theory describing this one-to-one
+correspondence.
+
+\begin{remark}
+Without loss of generality, we will simply refer to a category without
+worrying about which definition to use.
+\end{remark}
+
+\begin{definition}[Common notation]
+Let $\cat{C}$ be a category.
+
+Let $x$ be any object.
+We will write $x\in\cat{C}$ as an abbreviation for $x\in\Ob(\cat{C})$.
+
+When $x\in\cat{C}$, we will write $\id_{x}\colon x\to x$ for the
+identity morphism.
+
+We will also write $\circ$ for the composition of morphisms of $\cat{C}$.
+
+We may write $\hom_{\cat{C}}(a,b)$ or $\cat{C}(a,b)$ for the
+collection of morphisms in $\cat{C}$ from $a\in\cat{C}$ to $b\in\cat{C}$.
+If $\cat{C}$ is clear from context, we write $\hom(a,b)$ without fear
+of ambiguity.
+\end{definition}
+
+\begin{definition}[Domain and codomain notation]
+Let $\cat{C}$ be a category, let $f\colon a\to b$ be a morphism in
+$\cat{C}$. We abuse notation and write $\dom(f)=a=s(f)$ for the source of
+$f$, and similarly $\cod(f)=b=t(f)$ for the codomain of $f$.
+\end{definition}
+
+\begin{definition}[Large, small, and locally-small categories]
+  Let $\cat{C}$ be a category.
+
+  (1) When both the collection of objects of $\cat{C}$ forms a proper
+  class and the collection of all morphisms of $\cat{C}$ forms a
+  proper class, then $\cat{C}$ is called \define{Large}. If both
+  collections are sets, then we call it \define{Small}.
+
+  (2) When the collection of morphisms $\hom(a,b)$ is a set for all
+  objects $a\in\cat{C}$ and $b\in\cat{C}$, then we call the category
+  $\cat{C}$ \define{Locally-Small}. (It's not hard to see that all
+  small categories are also locally-small.)
+
+  (3) If $\mathcal{U}$ is a Grothendieck universe, we call $\cat{C}$
+  \define{$\mathcal{U}$-Small} if $\Ob(\cat{C})\in\mathcal{U}$.
+
+These notions depend on the particular foundations chosen for
+mathematics, see Shulman~\cite{shulman2008set} for some details.
+\end{definition}
+
+\begin{example}[Some finite categories]
+We may define the category $\cat{0}$ to consist of the empty
+collection of objects and the empty collection of morphisms. This is
+usually called the \define{Empty Category}.
+
+We may define the category $\cat{1}$ to consist of a singleton set
+denoted $\{*\}$ as its collection of objects, and only the identity
+morphism $\id_{*}\colon *\to *$ as its only morphism.
+\end{example}
+
+\begin{example}[Delooping a group]
+\future{Let $G$ be a group. Then the delooping of $G$ is a category
+  $\delooping{G}$ consisting of a single arbitrary object $*$, and
+  each $g\in G$ becomes a morphism $g\colon *\to *$. The identity
+  element $e\in G$ becomes the identity morphism $\id_{*}$. The
+  multiplication operator of $G$ becomes the composition operator of
+  $\delooping{G}$.}
+\end{example}
+
+\begin{example}[Category of sets]
+The category of all sets $\Set$ has its collection of objects be the
+proper class of all sets $\Ob(\Set)=\VonNeumannUniverse$, and the
+morphisms are functions between sets. This is a locally-small
+category, since $\hom(a,b)$ is a set in $\Set$. Note that this also
+means that $\hom(a,b)\in\Ob(\Set)$.
+
+This definition is a little ambiguous, because it depends on the exact
+axiomatic set theory used. Zermelo set theory \Z/ has
+$\Ob(\Set)=\VonNeumannUniverse_{2\omega}$ for example. It also depends
+on whether classical logic or intuitionistic logic is used in the
+axiomatization, whether the axiom of choice holds or not, whether we
+demand predicative mathematics or impredicative mathematics, if the
+logic is first-order or higher-order, and so on.
+\end{example}
+
+\begin{example}[Category of Ensembles]
+Let $U$ be a nonempty set. We define the category $\Ens_{U}$ whose
+objects are the elements of $U$, i.e., $\Ob(\Ens_{U})=U$. Let
+$a\in\Ens_{U}$ and $b\in\Ens_{U}$, then the set of morphisms from $a$
+to $b$ coincides with the set of all functions $\Ens_{U}(a,b)=\Set(a,b)$.
+
+As discussed in Section~\ref{sec:set-theory:universes}, we could
+interpret $\SETS$ as all \ZF/ sets in Tarski--Grothendieck set theory,
+so we could interpret $\Ens_{\SETS}$ ``as if'' it were really $\Set$.
+\end{example}
+
+\begin{example}[Category of small categories]
+\future{We may form a category $\Cat$ whose objects are all small categories
+and whose morphisms are all functors between categories found in $\Cat$.}
+
+\future{We could form a ``very large'' category $\CAT$ whose objects are all
+(small or large) categories and whose morphisms are all functors
+between categories found in $\CAT$. We have $\CAT\notin\CAT$ to avoid
+Russell-like paradoxes.}
+\end{example}
+
+\begin{definition}[Opposite category]
+Let $\cat{C}$ be a category. We define the \define{Opposite} of
+$\cat{C}$ to be the category $\cat{C}^{\text{op}}$ such that
+\begin{enumerate}
+\item $\Ob(\cat{C})=\Ob(\op{\cat{C}})$ it has the same objects as $\cat{C}$
+\item The composition operator is the same in both categories $\circ_{\op{\cat{C}}}=\circ_{\cat{C}}$
+\item The identity-assignment mapping is the same in both categories.
+\item The source and target maps are switched, i.e.,
+  $\dom_{\op{\cat{C}}}=\cod_{\cat{C}}$ and $\cod_{\op{\cat{C}}}=\dom_{\cat{C}}$.
+\end{enumerate}
+In particular, this means if $f\colon a\to b$ is a morphism in
+$\cat{C}$, then $f\in\op{\cat{C}}(b,a)$.
+\end{definition}
+
+\subsection{Functors}
+
+\begin{definition}[Covariant functor]
+Let $\cat{C}$ and $\cat{D}$ be categories.
+We define a \define{(Covariant) Functor} $F\colon\cat{C}\to\cat{D}$
+consists of (i) a function of objects $F_{0}\colon\Ob(\cat{C})\to\Ob(\cat{D})$ 
+and (ii) a functor of morphisms $F_{1}\colon\Hom(a,b)\to\Hom(F_{0}(a),F_{0}(b))$
+such that
+\begin{itemize}
+\property{Preserves composition} $F_{1}(g\circ f)=F_{1}(g)\circ F_{1}(f)$
+when $g\colon b\to c$ and $f\colon a\to b$ are morphisms in $\cat{C}$,
+\property{Preserves identity morphisms} For each object $a\in\cat{C}$,
+we have $F_{1}(\id_{a})=\id_{F_{0}(a)}$.
+\end{itemize}
+Note that it is common to drop subscripts on functors, and simply
+write $F(a)$ instead of $F_{0}(a)$, and $F(f\colon a\to b) = F_{1}(f)$.
+
+The two properties defining a covariant functor means that commutative
+diagrams are preserved by covariant functors.
+
+When $\cat{C}=\cat{D}$, we call $F\colon\cat{C}\to\cat{C}$ an
+\define{Endofunctor} of $\cat{C}$.
+\end{definition}
+
+\begin{example}[Identity functor]
+Let $\cat{C}$ be a category. We have the identity functor, denoted
+$\id_{\cat{C}}\colon\cat{C}\to\cat{C}$, defined on objects
+$a\in\cat{C}$ by $\id_{\cat{C}}(a)=a$ and on morphisms $f\colon a\to b$
+by $\id_{\cat{C}}(f)=f$.
+
+\begin{proof}[Proof sketch]
+This is a covariant functor. We will show it satisfies both properties
+of a covariant functor.
+
+Let $f\colon a\to b$ and $g\colon b\to c$ be morphisms in
+$\cat{C}$. Then $\id_{\cat{C}}(g\circ f)=g\circ f=\id_{\cat{C}}(g)\circ\id_{\cat{C}}(f)$.
+Hence composition is preserved.
+
+Let $a\in\cat{C}$. Then $\id_{\cat{C}}(\id_{a})=\id_{\id_{\cat{C}}(a)}=\id_{a}$.
+Hence identity morphisms are preserved.
+
+Hence the result.
+\end{proof}
+\end{example}
+
+\begin{definition}[Contravariant functor]
+Let $\cat{C}$ and $\cat{D}$ be categories.
+We define a \define{Contravariant Functor} $F\colon\cat{C}\to\cat{D}$
+to be a covariant functor
+$\cat{C}^{\text{op}}\to\cat{D}$. Specifically, this means for any
+morphisms $f\colon a\to b$ and $g\colon b\to c$ in $\cat{C}$, we have
+$F(g\circ f)=F(f)\circ F(g)$.
+\end{definition}
+
+\begin{example}[Hom-functors]
+Let $\cat{C}$ be a category. Let $a\in\cat{C}$ be a fixed object.
+Then $\hom(a,-)$ is a covariant functor with $\hom(a,f\colon b\to c)$
+sending $g\colon a\to b$ to $f\circ g$.
+
+We also have a contravariant functor $\hom(-,a)$ which sends
+$b\in\cat{C}$ to $\hom(b,a)$, and sends morphisms $h\colon b\to c$ to
+$\hom(h,a)\colon\hom(c,a)\to\hom(b,a)$ which are defined by sending
+$g\colon c\to a$ to $\hom(h,a)(g)=g\circ h$. Observe $g\circ h\colon b\to a$.
+
+In particular, when $\cat{C}=\Set$ we see that $\hom(-,\{0,1\})$ is
+the contravariant powerset functor. How it acts on functions describes
+continuous functions in topology (and measurable functions in measure
+theory). This is no coincidence.
+\end{example}
+
+\begin{definition}[Faithful and Full functors]
+Let $F\colon\cat{C}\to\cat{D}$ be a functor.
+
+Then $F$ is called \define{Full} if for
+all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\onto\cat{D}(F(x),F(y))$
+is a surjective function.
+
+We call $F$ \define{Faithful} if for
+all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\into\cat{D}(F(x),F(y))$
+is a injective function.
+\end{definition}
+
+\begin{definition}[Embedding of categories]
+Let $\cat{C}$ and $\cat{D}$ be categories.
+Then an \define{Embedding} of $\cat{C}$ into $\cat{D}$ is a functor
+$F\colon\cat{C}\to\cat{D}$ which is both injective on objects (i.e.,
+$F\colon\Ob(\cat{C})\into\Ob(\cat{D})$ is an injective function) and faithful.
+\end{definition}
+
+\begin{definition}[Composing functors]
+Let $F\colon\cat{C}\to\cat{D}$ and $G\colon\cat{D}\to\cat{E}$ be functors.
+We define the \define{Composition} operator of functors to give us the
+composition of $F$ followed by $G$ to be the functor $G\circ F\colon\cat{C}\to\cat{E}$
+such that for each object $x\in\cat{C}$ we have $(G\circ F)(x)=G(F(x))$,
+and for each morphism $f\colon x\to y$ in $\cat{C}$ we have
+$(G\circ F)(f\colon x\to y)=G(F(f))\colon G(F(x))\to G(F(y))$.
+\end{definition}
+
+\begin{definition}[Isomorphism and Autofunctor]
+Let $\cat{C}$ and $\cat{D}$ be categories.
+An \define{Isomorphism} of $\cat{C}$ into $\cat{D}$ is a functor
+$F\colon\cat{C}\to\cat{D}$ such that there exists a functor
+$G\colon\cat{D}\to\cat{C}$ such that $G\circ F=\id_{\cat{C}}$ and
+$F\circ G=\id_{\cat{D}}$. In this case, we write $G=F^{-1}$ and refer
+to $G$ as the \define{Inverse Functor} of $F$.
+
+We call an isomorphism $F\colon\cat{C}\to\cat{C}$ an
+\define{Autofunctor} or an \emph{Automorphic Functor}.
+\end{definition}
+
+\subsection{Natural Transformation}
+
+\begin{definition}[Natural transformation]
+Let $F$, $G\colon\cat{C}\to\cat{D}$ be functors.
+We define a \define{Natural Transformation} $\alpha\colon F\To G$
+assigns to each object $x\in\cat{C}$ a morphism $\alpha_{x}\colon F(x)\to G(x)$
+in $\cat{D}$ (called the \emph{component} or \emph{coordinates} of $\alpha$ at $x$) such
+that for any morphism $f\colon x\to y$ in $\cat{C}$, the following
+diagram commutes in $\cat{D}$
+\begin{equation}
+\vcenter{\xymatrix{
+F(x) \ar[r]^{F(f)}\ar[d]_{\alpha_{x}} & F(y)\ar[d]^{\alpha_{y}}\\ 
+G(x) \ar[r]_{G(f)} & G(y)
+}}
+\end{equation}
+A natural transformation is a morphism of functors.
+\end{definition}
+
+\begin{example}[Identity natural transformation]
+Let $F\colon\cat{C}\to\cat{D}$ be a functor. The identity natural
+transformation $\id_{F}\colon F\To F$ assigns to each object
+$x\in\cat{C}$ the identity morphism $\id_{F(x)}$ in $\cat{D}$.
+\end{example}
+
+\begin{definition}[Whiskering]
+Let $F,G\colon\cat{C}\to\cat{D}$ be functors, let $\alpha\colon F\To G$
+be a natural transformation.
+\begin{enumerate}
+\item Let $H\colon\cat{D}\to\cat{E}$ be a functor. Then
+\define{Whiskering} $H$ and $\alpha$ yields the natural transformation
+$H\alpha\colon(H\circ F)\to(H\circ G)$ (or $H\circ\alpha$) whose
+coordinates at $A$ is $H(\alpha_{A})$.
+\item Let $E\colon\cat{B}\to\cat{C}$ be a functor. Then
+\define{Whiskering} $\alpha$ and $E$ yields the natural transformation
+$\alpha E\colon(F\circ E)\to(G\circ E)$ (or $\alpha\circ E$) whose
+coordinate at $A$ is $\alpha_{F(A)}$. 
+\end{enumerate}
+\end{definition}
