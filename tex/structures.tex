@@ -19,21 +19,78 @@ $x\star(y\star z)=(x\star y)\star z$ for all $x,y,z\in M$
 and $e$ is an identity element, i.e., $e\star x=x\star e=x$ for all
 $x\in M$''. In this example, where does the triple $(M,\star,e)$ live?
 
-Metamathematically, we have a tower of logics and set theories. On
-floor $N$, we have a set theory which we assert \emph{is}
-``mathematical reality''. All ``real'' mathematical objects live in
-the set theory on floor $N$. We then use this to build a first-order
-logic on floor $N+1$ which is the \emph{ambient logic} used to write
-down proofs in Working Mathematics. Not only that, we write down an
-axiomatic set theory using the ambient logic, and this produces floor
-$N+2$. This is the \emph{ambient set theory}.
 
-The triple $(M,\star,e)$ lives on floor $N$, but is not distinguished
-from triples from floor $N+2$. At least, not in Working Mathematics,
+\parshape 7 %13
+%% 0pt \hsize 0pt \hsize 0pt \hsize 0pt \hsize
+%% 0pt \hsize 0pt \hsize 0pt \hsize 0pt \hsize
+%% .3\hsize .7\hsize .3\hsize .7\hsize .3\hsize .7\hsize .3\hsize .7\hsize
+%% .3\hsize .7\hsize .3\hsize .7\hsize .3\hsize .7\hsize .3\hsize .4\hsize
+%% .3\hsize .4\hsize .3\hsize .4\hsize 0pt .7\hsize 0pt .7\hsize
+0pt .7\hsize 0pt .7\hsize 0pt .7\hsize 0pt .7\hsize
+0pt .7\hsize 0pt .7\hsize 0pt .7\hsize
+%% .7\hsize 0pt .7\hsize 
+%% 0pt .7\hsize 0pt .7\hsize 0pt .7\hsize 0pt .7\hsize 
+%% 0pt \hsize
+\noindent
+\hbox to 0pt{\hskip.725\hsize
+\vbox to 0pt{%
+\vskip0\baselineskip%\vskip14\baselineskip
+\hskip-2pc\includegraphics{img/img.0}
+
+\noindent{\footnotesize {\bf Fig.~1.} Mathematical Platonism \hfill\break as a sky scraper.}
+\vss}\hss}%
+\indent Metamathematically, we have a tower of logics and
+set theories (see Figure 1). On floor $2N$ (usually $2N=2$), we have a set theory which
+we assert \emph{is} ``mathematical reality''. All ``real''
+mathematical objects live in the set theory on floor $2N$. We then use
+this to build a first-order logic on floor $2N+1$ which is the
+\emph{ambient logic} used to write down proofs in Working
+Mathematics. Not only that, we write down an axiomatic set theory
+using the ambient logic, and this produces floor $2N+2$. This is the
+\emph{ambient set theory}.
+
+\parshape 5
+0pt .7\hsize 0pt .7\hsize 0pt .7\hsize 0pt \hsize
+0pt \hsize 
+\indent
+The triple $(M,\star,e)$ lives on floor $2N$, but is not distinguished
+from triples from floor $2N+2$. At least, not in Working Mathematics,
 not historically. Bourbaki's disinterest in the foundations of
 mathematics should be blamed for this. \textbf{We will break from tradition}
 and use angled brackets writing $\structure{M,\star,e}$ to indicate
 that we have a structure and not some tuple.
+
+In Figure~1, the Working Mathematician develops mathematical theories
+in Logic \#3. Logic \#3 is purely syntactic for syntactic proofs, and
+Set Theory \#4 is purely syntactic constructed as axioms within Logic \#3.
+When we develop a theory of monoids, we state it using these syntactic
+levels. But when we consider \emph{models} (i.e., \emph{examples}) of
+monoids, we look for them in Set Theory \#2 (``mathematical reality'').
+
+However, the \emph{subject} of model theory requires building two more
+floors to the skyscraper, so we use logic \#3 to state and prove
+results concerning models of a theory stated in set theory \#6 using
+the sets from set theory \#4 as the models. However, model theory
+textbooks neglect this important point, so set theories \#4 and \#6
+are neither clearly delineated nor distinguished.
+
+(This is seldom discussed in the literature; see, e.g.,
+Hurkyl~\cite{hurkyl2012avoid}.) 
+\end{remark}
+
+\begin{remark}[Finitary metatheory is informal]
+The ``finitary metatheory'' foundations in Figure~1 underlying the
+``Platonic skyscraper'' is \emph{always} informal. This is because
+formal Logic (and formal Mathematics) is a level in the skyscraper.
+Roughly this ``finitary metatheory'' corresponds to the level of
+Mathematics taught to ten-year olds.
+
+Hilbert's programme first proposed using a finitary metatheory to
+build a formal logic (with which we formalize Mathematics), then use
+the finitary methods to prove consistency of Mathematics. Of course,
+G\"{o}del killed Hilbert's programme. But the general framework proved
+useful for discussing metamathematics (coincidentally, Hilbert coined
+the term ``Metamathematics'' while working on his research programme).
 \end{remark}
 
 \begin{remark}[Notation about structures]
@@ -49,8 +106,13 @@ $S=\structure{U}$ consisting of an underlying set $U$ called its
 the underlying set is the real numbers $\RR$. We could also write this
 as $\structure{U = \RR}$ to indicate the component $U$ is equal to
 $\RR$ for this structure.
+
+Note that Alan U.\ Kennington's book on differential geometry uses the
+notation $S\smt\structure{S,\dots}$ to refer to $S$ as the underlying
+set of a structure which we refer to by the same identifier $S$.
 \end{remark}
 
+%\DeclareMathSymbol{\QED}{\mathrel}{operators}{"D0}
 \begin{remark}[Inheritance and structures]
 We will avoid using tuples to describe structures, instead we will use
 finite maps in ``Mathematical Reality'' where the keys are the names
@@ -58,6 +120,8 @@ of the fields. This allows us to describe \emph{inheritance} of
 structures, so that a monoid $\structure{U,\cdot,1}$ \emph{really is}
 a magma $\structure{U,\cdot}$.
 \end{remark}
+
+\section{Basic Structures}
 
 \begin{definition}[One-sorted and Pointed structures]\mml{struct_0}
 We define a \define{One-Sorted} structure to be a structure
@@ -124,6 +188,12 @@ Let $x$ be an object. We will write ``$x(\in S)$'' to stress that $x$ is
 an element of $S$.
 \end{remark}
 
+\begin{definition}[Inclusion function of 1-sorted structures]\mml{yellow_9:def 1}\label{yellow_9:def 1}
+Let $R$ and $S$ be 1-sorted structures. Assume the carriers satisfy
+$U_{R}\subset U_{S}$. We define the \define{Inclusion} of $R$ into $S$
+to be the function $\incl\colon R\to S$ equal to $\iota:=\id_{U_{R}}$. 
+\end{definition}
+
 \begin{definition}[Degenerate zero-one structures]\mml{struct_0:def 8}
 Let $D$ be a zero-one structure. We define an attribute, calling
 $D$ \define{Degenerate} if $0_{D}=1_{D}$ its one is equal to
@@ -140,3 +210,217 @@ These structures appear in category theory, where a category structure consists
 of a set of objects and a set of morphisms equipped with some extra
 structure. 
 \end{definition}
+
+\section{Basic Algebraic Structures}
+
+\begin{definition}[Magmas]\mml{algstr_0}
+A (multiplicative) \define{Magma} is a one-sorted structure
+$\structure{U, \cdot}$ where $U$ is a set called its \define{Carrier}
+or \emph{Underlying Set}, and $\cdot\colon U\times U\to U$ is its
+\emph{binary operator} called its \define{Multiplication} operator
+(sometimes we will use $\star$ or $*$ or $\times$ for the binary
+operator). We will often drop the $\cdot$, writing $xy$ instead of
+$x\cdot y$.
+
+We call a magma $M$ \define{Commutative} if for all $x,y\in M$ we have
+$x\cdot y=y\cdot x$. In this case, it is common to use $+$ instead of
+$\cdot$ for the binary operator. In this case, we often refer to it as
+an \define{Additive Magma}.
+\end{definition}
+
+\begin{definition}[Cancelable elements of an additive magma]
+Let $A$ be an additive magma.
+\begin{enumerate}
+\item\mml{algstr_0:def 3} Let $x\in A$. We call $x$ \define{left additively-cancelable}
+  if for all $y$, $z\in A$ we have $x+y=x+z$ implies $y=z$.
+\item\mml{algstr_0:def 4} Let $x\in A$. We call $x$ \define{right additively-cancelable}
+  if for all $y$, $z\in A$ we have $y+x=z+x$ implies $y=z$.
+\item\mml{algstr_0:def 5} Let $x\in A$. We call $x$ \define{additively-cancelable}
+  when it is both left and right add-cancelable.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Cancelable additive magma]\label{defn:add-magma:add-cancelable}
+Let $A$ be an additive magma.
+\begin{enumerate}
+\item\mml{algstr_0:def 6} We call $A$ \define{left additively-cancelable}
+  if every element of $A$ is left add-cancelable.
+\item\mml{algstr_0:def 7} We call $A$ \define{right additively-cancelable}
+  if every element of $A$ is right add-cancelable.
+\item\mml{algstr_0:def 8} We call $A$ \define{additively-cancelable}
+  when it is both left and right add-cancelable.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Monoids]\label{defn:monoid}
+A (multiplicative) \define{Monoid} is a multiplicative Magma $M$ such that
+\begin{itemize}
+\property{Associativity}\mml{group_1:def 3} for all $x,y,z\in U$ we have $x(yz)=(xy)z$
+\property{Unital}\mml{group_1:def 1} there exists an element $e\in U$ such that for all
+  $x\in U$ we have $xe=x$ and $ex=x$
+\end{itemize}
+Furthermore, the unital element $e$ is unique, so we will write
+$1_{M}$ for the unital element of a monoid $M$ when the binary
+operator is multiplication (and $0_{M}$ when the binary operator is
+addition). 
+
+It is often more natural to work with monoids than magmas for a
+variety of reasons. (Later, we will see that a monoid is really the
+same thing as a category with a single object.)
+\end{definition}
+
+\begin{remark}[Ambiguity in structure of a monoid]
+There is some ambiguity regarding the exact structure of a
+monoid. Specifically, is it a double $M=\structure{U,\cdot}$ with this
+unital axiom? Then $1_{-}$ is a ``term constructor'' in the ambient
+logic (it eats in a magma $M$ and spits out an element $1_{M}\in M$).
+
+On the other hand, we could define a monoid to be a triple
+$M=\structure{U,\cdot,1_{U}}$ and have the extra element $1_{U}\in U$ obey the
+unital condition. What could go wrong here? Well, an ordered pair is
+not an ordered triple, so a monoid could not also be a magma (they are
+different objects in ``mathematical reality'').
+
+Thanks to the invention of proof assistants, we have much experience
+exploring which formalization reflects mathematical practice, and it
+appears the former should be preferred: using ``the smallest structure possible''
+has its benefits. Most relevant for us, every monoid \emph{really is}
+a magma.
+\end{remark}
+
+\begin{definition}[Groups and Inverse Operator]\mml{group_1}
+A \define{Group} is a Monoid $G$ such that
+\begin{itemize}
+\property{Invertibility}\mml{group_1:def 2} For each $x\in G$, there
+  exists a $y\in G$ such that $xy=1_{G}$ and $yx=1_{G}$.
+\end{itemize}
+Associativity makes the element $y$ unique, so we will write this as
+$x^{-1}$. The mapping on $G$ sending $x\mapsto x^{-1}$ is called the
+\define{Inverse Operator} of $G$.
+\end{definition}
+
+\begin{definition}[Loops Structure]\mml{algstr_0}
+Following the tradition of Polish logicians, we will define a
+\define{Multiplicative Loop Structure} is a multiplicative magma which
+is also a one structure $\structure{U,\cdot,1_{U}}$.
+
+An \define{Additive Loop Structure} is an additive magma which is also a zero
+structure $\structure{U,+,0_{U}}$.
+
+A (multiplicative) Loop is a (multiplicative) Loop Structure which is
+unital and invertible. The One field of the Loop Structure is the
+multiplicative identity element.
+\end{definition}
+
+\begin{remark}[Multiplicative loops should be deprecated]
+Multiplicative loops are not used by the Working Mathematician.
+Instead they work with unital multiplicative magmas (\S\ref{defn:monoid}).
+This is felt especially when working with rings and algebras, because
+not all algebras are unital (e.g., the Banach algebra of complex-valued
+continuous functions on a noncompact space).
+\end{remark}
+
+\begin{definition}[Complementable elements of additive loops]
+Let $A$ be an additive loop.
+\begin{enumerate}
+\item\mml{algstr_0:def 10} Let $y$ be an element of $A$. We call $y$
+  \define{Left complementable} whenever there exists a $y\in A$ such
+  that $x+y=0$;
+\item\mml{algstr_0:def 11} Let $x$ be an element of $A$. We call $x$
+  \define{Right complementable} whenever there exists a $y\in A$ such
+  that $x+y=0$;
+\item\mml{algstr_0:def 12} Let $x$ be an element of $A$. We call $x$
+  \define{Complementable} if $x$ is both left and right complementable.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Complementable additive loops]
+Let $A$ be an additive loop.
+\begin{enumerate}
+\item\mml{algstr_0:def 15} We call $A$ \define{Left complementable} whenever every element of $A$ is left complementable.
+\item\mml{algstr_0:def 16} We call $A$ \define{Right complementable} whenever every element of $A$ is right complementable.
+\item\mml{algstr_0:def 17} We call $A$ \define{Complementable}
+  whenever $A$ is both left and right complementable.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}\label{defn:loop:unital}
+Let $M$ be a nonempty multiplicative loop structure.
+\begin{enumerate}
+\item\mml{vectsp_1:def 4} We call $M$ \define{Right unital} if
+  for all $a\in M$ we have $a\star1=a$;
+\item\mml{vectsp_1:def 8} We call $M$ \define{Left unital} if
+  for all $a\in M$ we have $1\star a=a$;
+\item\mml{vectsp_1:def 6} We call $M$ \define{Well-unital} if for all
+  $x\in M$ we have $x\star 1=x$ and $1\star x=x$.
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Ringoid, double magma, and double loop structures]\mml{algstr_0}
+A \define{Double Magma Structure} is a structure $D=\structure{U,+,\cdot}$
+which is both a multiplicative magma and an additive magma.
+
+A \define{Ringoid Structure} 
+is a double magma structure and a zero structure $R=\structure{U,\cdot,+,0_{U}}$ which is
+a magma in $U$ and $\cdot$, adjoined with a binary operator $+\colon U\times U\to U$
+called \emph{Addition},
+and a ``zero element'' $0_{U}\in U$.
+
+A \define{Double Loop Structure} is a Ringoid which is also a multiplicative
+loop, i.e., it is a structure $\structure{U,\cdot,+,0_{U},1_{U}}$. 
+\end{definition}
+
+\begin{definition}\label{defn:double-loop:distributive}
+Let $R$ be a nonempty double \strikethrough{loop} magma structure.
+\begin{enumerate}
+\item\mml{vectsp_1:def 2} We call $R$ \define{Right-distributive} if
+  for all $a$, $b$, $c\in R$ we have $a(b+c)=(ab)+(ac)$;
+\item\mml{vectsp_1:def 3} We call $R$ \define{Left-distributive} if
+  for all $a$, $b$, $c\in R$ we have $(b+c)a=(ba)+(ca)$;
+\item\mml{vectsp_1:def 7} We call $R$ \define{Distributive} if for all
+  $a$, $b$, $c\in R$ we have both $a(b+c)=(ab)+(ac)$ and $(b+c)a=(ba)+(ca)$;
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Pointed and Absorption magmas and monoids]\mml{algstr_0}
+We define an \define{Magma with Zero} to consist of the structure
+$M=\structure{U,\cdot,0_{U}}$. We further call it an \define{Absorption Magma}
+if it is such that
+\begin{itemize}
+\property{Absorption property} for all $x\in M$, we have
+  $x\cdot0_{U}=0_{U}$ and $0_{U}\cdot x=0_{U}$.
+\end{itemize}
+We define a \define{Monoid with Zero} to be an associative unital
+magma with zero. Furthermore, an \define{Absorption Monoid} to be an
+absorption magma which is unital and associative.
+\end{definition}
+
+\begin{definition}[Left-zeroed and right-zeroed]\label{defn:add-loop:zeroed}
+Let $A$ be a nonempty additive loop.
+\begin{enumerate}
+\item\mml{algstr_1:def 2} We call $A$ \define{Left-zeroed} whenever every $a\in A$ satisfies $0+a=a$.
+\item\mml{rlvect_1:def 4} We call $A$ \define{Right-zeroed} whenever every $a\in A$ satisfies $a+0=a$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}\mml{binom:1}
+Let $R$ be a nonempty left-distributive right-zeroed double loop structure, and
+supposed it is left additively-cancelable {\rm(\S\ref{defn:add-magma:add-cancelable})}.
+Then for any $a\in R$, we have $0\star a=0$.
+\end{theorem}
+
+\begin{theorem}\mml{binom:2}
+Let $R$ be a nonempty right-distributive left-zeroed double loop structure, and
+supposed it is right additively-cancelable {\rm(\S\ref{defn:add-magma:add-cancelable})}.
+Then for any $a\in R$, we have $a\star 0=0$.
+\end{theorem}
+
+\begin{example}[Real numbers]
+The real numbers forms a one-sorted structure $\structure{U=\RR}$,
+a zero structure $\structure{U=\RR,0_{U}=0}$, a one structure
+$\structure{U=\RR,1_{U}=1}$, a zero-one structure, a multiplicative magma
+structure under multiplication, an additive magma structure under
+addition. Hence it also gives us a double magma, a double loop, a ringoid,
+a pointed magma, and every other structure we have defined so far.
+\end{example}
+

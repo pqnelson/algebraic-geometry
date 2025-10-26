@@ -60,11 +60,11 @@ $x\in X$ iff $x\in Y$.
 This is the ``extensionality axiom'' of \ZF/ set theory.
 \end{axiom}
 
-\begin{definition}[Subset and proper subset predicates]\mml{tarski:def 3, xboole_0:def 8}
+\begin{definition}[Subset and proper subset predicates]\mml{tarski:def 3}
 Let $X$ and $Y$ be sets. We define the predicate $X\subset Y$ to mean:
 for all objects $x$ we have $x\in X$ implies $x\in Y$.
 
-We define the predicate $X\propersubset Y$ (and say ``$X$ is a
+We\mml{xboole_0:def 8}\ define the predicate $X\propersubset Y$ (and say ``$X$ is a
 \define{Proper Subset} of $Y$'') to mean $X\subset Y$ and $X\neq Y$.
 \end{definition}
 
@@ -193,7 +193,7 @@ be the set denoted $(x,y)$ equal to $\{\{x,y\},\{y\}\}$.
 
 (This concludes all the axioms needed for \ZF/ set theory.)
 
-\begin{definition}[Cartesian product]\mml{zfmisc_1:def 2,3}
+\begin{definition}[Cartesian product]\mml{zfmisc_1:def 2}
 Let $X_{1}$, $X_{2}$ be sets. 
 We define their \define{Cartesian product} to be the set denoted
 $X_{1}\times X_{2}$ to be such that
@@ -201,15 +201,15 @@ for any object $z$ we have $z\in X_{1}\times X_{2}$ if and only if
 there exists objects $x_{1}$ and $x_{2}$ such that $x_{1}\in X_{1}$
 and $x_{2}\in X_{2}$ and $z=(x_{1},x_{2})$.
 
-Let $X_{3}$ be another set. We define the Cartesian product
+Let\mml{zfmisc_1:def 3}\ $X_{3}$ be another set. We define the Cartesian product
 $X_{1}\times X_{2}\times X_{3}$ to be equal to $(X_{1}\times X_{2})\times X_{3}$.
 
-Let $X_{4}$ be another set. We define the Cartesian product
+Let\mml{zfmisc_1:def 4}\ $X_{4}$ be another set. We define the Cartesian product
 $X_{1}\times X_{2}\times X_{3}\times X_{4}$ to be equal to
 $(X_{1}\times X_{2}\times X_{3})\times X_{4}$.
 \end{definition}
 
-\begin{theorem}[Cartesian product of empty set is empty]
+\begin{theorem}[Cartesian product of empty set is empty]\mml{finseqop:2}
 Let $X$ be any set. Then $\emptyset\times X=\emptyset$ and
 $X\times\emptyset=\emptyset$. 
 \end{theorem}
@@ -237,7 +237,7 @@ $x\in X\cap Y$ iff $x\in X$ and $x\in Y$.
 uniqueness by extensionality Axiom~\ref{defn:set-theory:extensionality}.)
 \end{definition}
 
-\begin{definition}[Set difference]\mml{xboole_0:def 5}
+\begin{definition}[Set difference]\mml{xboole_0:def 5}\label{xboole-0:def-5}
 Let $X$ and $Y$ be sets.
 We define the \define{Set difference} of $X$ with $Y$ to be the set
 $X\setminus Y$ such that for all objects $x$ we have $x\in X\setminus Y$
@@ -260,11 +260,74 @@ When $X$ and $Y$ are nondisjoint, we say $X$ \define{Intersects} $Y$
 (or ``$X$ \emph{meets} $Y$'').
 \end{definition}
 
+\section{Subsets}
+
+\begin{definition}[Element of a set]\mml{subset_1:def 1}
+Let $X$ be a set.
+We define the [soft type] \define{Element} of $X$ to be a set $x$ such
+that $x\in X$ if $X$ is nonempty.
+
+(If $X$ is empty, then for the sake of well-definedness, we could take $x=\emptyset$.)
+\end{definition}
+
+\begin{remark}[``Element'' is not a well-defined notion]
+We need ``Element of $X$'' to be defined \emph{for every set} $X$.
+In particular, for the empty set. But the empty set is defined as
+having no elements. So we either need to modify our definition to make
+$X$ be a nonempty set (which will make things really tedious), or we
+need to consider what to make an element of $\emptyset$. For the sake
+of simplicity, we will take ``Element of $\emptyset$'' to be $\emptyset$.
+\end{remark}
+
+\begin{definition}[Subset of a set]\mml{subset_1}
+Let $E$ be a set.
+We define the [soft type] \define{Subset} of $E$ to be an element of
+its powerset $\powerset{E}$. 
+\end{definition}
+
+\begin{definition}[Complement of a subset]\mml{subset_1:def 4}
+Let $E$ be a set. Let $A$ be a subset of $E$.
+We define the new term the \define{Complement} of $A$ to be the subset
+$\Complement{A}$ of $E$ equal to the set difference $E\setminus A$.
+\end{definition}
+
+\begin{theorem}[Empty set is always a subset of any set]\mml{subset_1:1}\label{subset_1:1}%
+Let $E$ be a set. Then $\emptyset$ is a subset of $E$.
+\end{theorem}
+
+\begin{definition}[Intersection of a family of sets]\mml{setfam_1:def 1}\label{setfam-1:def-1}
+Let $\mathcal{F}$ be a set. We define the \define{Intersection} of $\mathcal{F}$
+(or ``\emph{Meet\/}'' of $F$) to be the set $\Intersects\mathcal{F}$
+such that when $\mathcal{F}\neq\emptyset$ we have for any object $x$ we have $x\in\Intersects\mathcal{F}$ if
+and only if for each set $Y$ such that $Y\in X$ we have $x\in Y$;
+and when $\mathcal{F}=\emptyset$, we have $\Intersects\mathcal{F}=\emptyset$.
+\end{definition}
+
+\begin{theorem}[Intersection of a family is always contained in any family member]\mml{setfam_1:3}
+Let $\mathcal{F}$ be a set (viewed as a family of sets). Let $Z$ be a set.
+If $Z\in\mathcal{F}$, then $\Intersects\mathcal{F}\subset Z$.
+\end{theorem}
+
+This follows immediately from the definition of the intersection for a
+family of sets.
+
+\begin{theorem}[Intersection of a family containing an empty set is empty]\mml{setfam_1:4}\label{setfam_1:4}%
+Let $\mathcal{F}$ be a set (viewed as a family of sets).
+If $\emptyset\in\mathcal{F}$, then $\Intersects\mathcal{F}=\emptyset$.
+\end{theorem}
+
+This is an immediate consequence of the previous theorem.
+
+\begin{theorem}[Complement of intersection is union of member-wise complements]\mml{setfam_1:27}\label{setfam_1:27}
+Let $X$ be a set, let $\mathcal{F}$ be a family of subsets of $X$.
+Then $X\setminus\Intersects\mathcal{F}=\Union\{X\setminus F\mid F\in\mathcal{F}\}$.
+\end{theorem}
+
 \section{Relations and Functions}
 
 \begin{definition}[Relation]\mml{relat_1:def 1}
 Let $R$ be a set. We say $R$ is a \define{Relation} if for all objects
-$x\in R$ ther eexists objects $y$ and $z$ such that $x = (y,z)$.
+$x\in R$ there exists objects $y$ and $z$ such that $x = (y,z)$.
 \end{definition}
 
 \begin{definition}[Domain of a relation]\mml{xtuple_0:def 12}
@@ -286,12 +349,12 @@ $R|_{X}$ such that for all objects $x$ and $y$ we have $(x,y)\in R|_{X}$
 iff $x\in X$ and $(x,y)\in R$.
 \end{definition}
 
-\begin{definition}[$X$-defined and $X$-valued relations]\mml{relat_1:def 18,19}
+\begin{definition}[$X$-defined and $X$-valued relations]
 Let $X$ be a set, let $R$ be a relation.
 
-We call $R$ \define{$X$-defined} when $\dom(R)\subset X$.
+We call $R$ \mml{relat_1:def 18}\define{$X$-defined} when $\dom(R)\subset X$.
 
-We call $R$ \define{$X$-valued} when $\rng(R)\subset X$.
+We call $R$ \mml{relat_1:def 19}\define{$X$-valued} when $\rng(R)\subset X$.
 \end{definition}
 
 \begin{definition}[Binary relation of sets]\mml{relset_1}
@@ -352,7 +415,7 @@ to be a set $f\colon X\to Y$ such that
 \end{enumerate}
 \end{definition}
 
-\begin{theorem}[Empty set is initial object]
+\begin{theorem}[Empty set is initial object]\mml{PARTFUN1:73,74}
 For any set $X$, there exists a unique function $f\colon\emptyset\to X$.
 \end{theorem}
 
@@ -375,6 +438,8 @@ singleton, and the extensionality Axiom~\ref{defn:set-theory:extensionality}.
 Let $X$ be a set. We define the \define{Identity Function} of $X$ to
 be the function $\id_{X}\colon X\to X$ such that for all $x\in X$ we
 have $\id_{X}(x)=x$.
+
+This is unique by extensionality Axiom~\ref{defn:set-theory:extensionality}. It exists by the separation Scheme~\ref{scheme:set-theory:separation}.
 \end{definition}
 
 \begin{definition}[Diagonal function]\label{defn:set-theory:diagonal-function}\mml{funct_3:def 6}
@@ -601,19 +666,19 @@ collections (the next largest kind of collections are called
 \emph{cosmos}). 
 \end{remark}
 
-\begin{definition}[$U$-sets]
+\begin{definition}[$U$-sets]\mml{classes5:def 8}
 Let $U$ be a nonempty set, let $x$ be an object. We define an
 attribute, calling $x$ an \define{$U$-set} if $x\in U$.
 
-We can equally define a new type, \define{Set of $U$} which is a set $Y$
+We can equally define a new type, \mml{classes5:def 9}\define{Set of $U$} which is a set $Y$
 such that $Y\in U$ (i.e., $Y$ is an $U$-set).
 \end{definition}
 
-\begin{definition}[$U$-classes]
+\begin{definition}[$U$-classes]\mml{classes5:def 10}
 Let $U$ be a universe, let $x$ be an object. We define an attribute,
 saying $x$ is \define{$U$-Class} if $x\in\powerset{U}$ and $x\notin U$.
 
-We could equally define a new type, \define{class of $U$}, which
+We could equally define a new type, \mml{classes5:def 11}\define{class of $U$}, which
 describes a $U$-Class.
 \end{definition}
 

@@ -24,8 +24,9 @@ are not obviously equivalent) is called \define{Cryptomorphism}.
 \begin{definition}[Category structure with one collection of morphisms]\mml{cat_1}
 A \define{Category Structure} extends a multigraph structure $C=\structure{U,U_{1},s,t,\cdot,1}$ where
 \begin{itemize}
-\item the underlying set $U$ is considered to be the set of objects,
-\item $U_{1}$ is the set of morphisms,
+\item the underlying set $U$ is considered to be the set of objects
+  (usually written $\Ob(C)$),
+\item $U_{1}$ (usually written $\Mor(C)$) is the set of morphisms,
 \item $s\colon U_{1}\to U$ is the \emph{source map} 
 or \emph{dom-map},
 \item $t\colon U_{1}\to U$ is the \emph{target map} or
@@ -150,40 +151,47 @@ If $\cat{C}$ is clear from context, we write $\hom(a,b)$ without fear
 of ambiguity.
 \end{definition}
 
-\begin{definition}[Domain and codomain notation]
+\begin{definition}[Domain and codomain notation]\label{defn:cat:domain-and-codomain}
 Let $\cat{C}$ be a category, let $f\colon a\to b$ be a morphism in
-$\cat{C}$. We abuse notation and write $\dom(f)=a=s(f)$ for the source of
-$f$, and similarly $\cod(f)=b=t(f)$ for the codomain of $f$.
+$\cat{C}$. We abuse notation and language speaking of the
+\define{Domain} of $f$ as $\dom(f)=a=s(f)$ for the source of
+$f$, and similarly the \define{Codomain} of $f$ is $\cod(f)=b=t(f)$ for the codomain of $f$.
 \end{definition}
 
 \begin{definition}[Large, small, and locally-small categories]
   Let $\cat{C}$ be a category.
-
-  (1) When both the collection of objects of $\cat{C}$ forms a proper
+\begin{enumerate}
+\item When both the collection of objects of $\cat{C}$ forms a proper
   class and the collection of all morphisms of $\cat{C}$ forms a
   proper class, then $\cat{C}$ is called \define{Large}. If both
-  collections are sets, then we call it \define{Small}.
-
-  (2) When the collection of morphisms $\hom(a,b)$ is a set for all
+  collections are sets, then we call it
+  \define{Small}.
+\item When the collection of morphisms $\hom(a,b)$ is a set for all
   objects $a\in\cat{C}$ and $b\in\cat{C}$, then we call the category
-  $\cat{C}$ \define{Locally-Small}. (It's not hard to see that all
+  $\cat{C}$ \define{Locally-Small}. Note that locally-small categories
+  impose no constraint on the objects being a proper class or a proper
+  set. (Hence it's not hard to see that all
   small categories are also locally-small.)
-
-  (3) If $\mathcal{U}$ is a Grothendieck universe, we call $\cat{C}$
-  \define{$\mathcal{U}$-Small} if $\Ob(\cat{C})\in\mathcal{U}$.
-
+\item If $\mathcal{U}$ is a Grothendieck universe, we call $\cat{C}$
+  \define{$\mathcal{U}$-Small} if $\Ob(\cat{C})\in\mathcal{U}$.\mml{classes5:def 17}
+\end{enumerate}
 These notions depend on the particular foundations chosen for
 mathematics, see Shulman~\cite{shulman2008set} for some details.
+
+Also note that ``small objects'' (like Abelian groups, i.e.,
+\emph{sets} equipped with an Abelian group structure) can be used
+for $\hom(a,b)$ for the notion of ``locally small'' to still be
+applicable. 
 \end{definition}
 
-\begin{example}[Some finite categories]
+\begin{example}[Some finite categories]\mml{altcat_2:def 10}
 We may define the category $\cat{0}$ to consist of the empty
 collection of objects and the empty collection of morphisms. This is
 usually called the \define{Empty Category}.
 
-We may define the category $\cat{1}$ to consist of a singleton set
-denoted $\{*\}$ as its collection of objects, and only the identity
-morphism $\id_{*}\colon *\to *$ as its only morphism.
+We may define the category \mml{cat_1:def 11}$\cat{1}$ to consist of a
+singleton set denoted $\{*\}$ as its collection of objects, and only
+the identity morphism $\id_{*}\colon *\to *$ as its only morphism.
 \end{example}
 
 \begin{example}[Delooping a group]
@@ -211,7 +219,7 @@ demand predicative mathematics or impredicative mathematics, if the
 logic is first-order or higher-order, and so on.
 \end{example}
 
-\begin{example}[Category of Ensembles]
+\begin{example}[Category of Ensembles]\mml{altcat_1:def 14}
 Let $U$ be a nonempty set. We define the category $\Ens_{U}$ whose
 objects are the elements of $U$, i.e., $\Ob(\Ens_{U})=U$. Let
 $a\in\Ens_{U}$ and $b\in\Ens_{U}$, then the set of morphisms from $a$
@@ -232,7 +240,7 @@ between categories found in $\CAT$. We have $\CAT\notin\CAT$ to avoid
 Russell-like paradoxes.}
 \end{example}
 
-\begin{definition}[Opposite category]
+\begin{definition}[Opposite category]\mml{oppcat_1:def 1}
 Let $\cat{C}$ be a category. We define the \define{Opposite} of
 $\cat{C}$ to be the category $\cat{C}^{\text{op}}$ such that
 \begin{enumerate}
@@ -246,9 +254,17 @@ In particular, this means if $f\colon a\to b$ is a morphism in
 $\cat{C}$, then $f\in\op{\cat{C}}(b,a)$.
 \end{definition}
 
+\begin{remark}[Duality principle: ``stuff'' and ``co-stuff'']
+Any result or \emph{gadget} which may be formulated using $\cat{C}$ can also be
+formulated in $\op{\cat{C}}$. We refer to this ``opposite'' version of
+the gadget as a \emph{co}-gadget (i.e., we prefix the construction
+with ``co-''). For example: the \emph{codomain} of a morphism is the dual to the
+\emph{domain} of a morphism (\S\ref{defn:cat:domain-and-codomain}).
+\end{remark}
+
 \subsection{Functors}
 
-\begin{definition}[Covariant functor]
+\begin{definition}[Covariant functor]\mml{functor0:def 25}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 We define a \define{(Covariant) Functor} $F\colon\cat{C}\to\cat{D}$
 consists of (i) a function of objects $F_{0}\colon\Ob(\cat{C})\to\Ob(\cat{D})$ 
@@ -270,7 +286,7 @@ When $\cat{C}=\cat{D}$, we call $F\colon\cat{C}\to\cat{C}$ an
 \define{Endofunctor} of $\cat{C}$.
 \end{definition}
 
-\begin{example}[Identity functor]
+\begin{example}[Identity functor]\mml{functor0:def 29}
 Let $\cat{C}$ be a category. We have the identity functor, denoted
 $\id_{\cat{C}}\colon\cat{C}\to\cat{C}$, defined on objects
 $a\in\cat{C}$ by $\id_{\cat{C}}(a)=a$ and on morphisms $f\colon a\to b$
@@ -291,7 +307,7 @@ Hence the result.
 \end{proof}
 \end{example}
 
-\begin{definition}[Contravariant functor]
+\begin{definition}[Contravariant functor]\mml{functor0:def 27}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 We define a \define{Contravariant Functor} $F\colon\cat{C}\to\cat{D}$
 to be a covariant functor
@@ -319,11 +335,11 @@ theory). This is no coincidence.
 \begin{definition}[Faithful and Full functors]
 Let $F\colon\cat{C}\to\cat{D}$ be a functor.
 
-Then $F$ is called \define{Full} if for
+Then $F$ is called \mml{functor0:def 31}\define{Full} if for
 all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\onto\cat{D}(F(x),F(y))$
 is a surjective function.
 
-We call $F$ \define{Faithful} if for
+We call $F$ \mml{functor0:def 30}\define{Faithful} if for
 all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\into\cat{D}(F(x),F(y))$
 is a injective function.
 \end{definition}
@@ -344,7 +360,7 @@ and for each morphism $f\colon x\to y$ in $\cat{C}$ we have
 $(G\circ F)(f\colon x\to y)=G(F(f))\colon G(F(x))\to G(F(y))$.
 \end{definition}
 
-\begin{definition}[Isomorphism and Autofunctor]
+\begin{definition}[Isomorphism and Autofunctor]\mml{functor0:def 39}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 An \define{Isomorphism} of $\cat{C}$ into $\cat{D}$ is a functor
 $F\colon\cat{C}\to\cat{D}$ such that there exists a functor
@@ -358,7 +374,7 @@ We call an isomorphism $F\colon\cat{C}\to\cat{C}$ an
 
 \subsection{Natural Transformation}
 
-\begin{definition}[Natural transformation]
+\begin{definition}[Natural transformation]\mml{functor2:def 7}
 Let $F$, $G\colon\cat{C}\to\cat{D}$ be functors.
 We define a \define{Natural Transformation} $\alpha\colon F\To G$
 assigns to each object $x\in\cat{C}$ a morphism $\alpha_{x}\colon F(x)\to G(x)$
@@ -374,7 +390,7 @@ G(x) \ar[r]_{G(f)} & G(y)
 A natural transformation is a morphism of functors.
 \end{definition}
 
-\begin{example}[Identity natural transformation]
+\begin{example}[Identity natural transformation]\mml{functor2:def 3}
 Let $F\colon\cat{C}\to\cat{D}$ be a functor. The identity natural
 transformation $\id_{F}\colon F\To F$ assigns to each object
 $x\in\cat{C}$ the identity morphism $\id_{F(x)}$ in $\cat{D}$.
@@ -384,13 +400,203 @@ $x\in\cat{C}$ the identity morphism $\id_{F(x)}$ in $\cat{D}$.
 Let $F,G\colon\cat{C}\to\cat{D}$ be functors, let $\alpha\colon F\To G$
 be a natural transformation.
 \begin{enumerate}
-\item Let $H\colon\cat{D}\to\cat{E}$ be a functor. Then
+\item\mml{functor3:def 1} Let $H\colon\cat{D}\to\cat{E}$ be a functor. Then
 \define{Whiskering} $H$ and $\alpha$ yields the natural transformation
 $H\alpha\colon(H\circ F)\to(H\circ G)$ (or $H\circ\alpha$) whose
 coordinates at $A$ is $H(\alpha_{A})$.
-\item Let $E\colon\cat{B}\to\cat{C}$ be a functor. Then
+\item\mml{functor3:def 2} Let $E\colon\cat{B}\to\cat{C}$ be a functor. Then
 \define{Whiskering} $\alpha$ and $E$ yields the natural transformation
 $\alpha E\colon(F\circ E)\to(G\circ E)$ (or $\alpha\circ E$) whose
 coordinate at $A$ is $\alpha_{F(A)}$. 
 \end{enumerate}
 \end{definition}
+
+\section{Universal Properties}
+
+\begin{definition}[Zero object]\mml{altcat_3:def 11}
+Let $\cat{C}$ be a category. We define a \define{Zero Object}
+$Z\in\cat{C}$ to be such that for each object $X\in\cat{C}$ there
+exists a unique morphism $f\colon X\to Z$ (i.e., $Z$ is terminal) and
+there exists a unique morphism $g\colon Z\to X$ (i.e., $Z$ is initial).
+\end{definition}
+
+\begin{definition}[Zero morphism]\mml{altcat_3:def 12}
+Let $\cat{C}$ be a category, let $Z\in\cat{C}$ be a zero object.
+Let $A$ and $B$ be objects in $\cat{C}$.
+We define a \define{Zero Morphism} in $\cat{C}$ from $A$ to $B$ to be
+a morphism ${0^{A}}_{B}\colon A\to B$ such that
+\begin{equation}
+\vcenter{\xymatrix{
+    A \ar[rr]^{{0^{A}}_{B}} \ar@{.>}[rd]_{!} && B\\
+    & Z\ar@{.>}[ru]_{!} &
+}}
+\end{equation}
+commutes.
+\end{definition}
+
+\begin{definition}[Equalizer]
+Let $\cat{C}$ be a category. Let $X$, $Y\in\Ob(\cat{C})$ be objects in
+$\cat{C}$. Let $f$, $g\colon X\to Y$ be morphisms in $\cat{C}$. We
+define the \define{Equalizer} of $f$ and $g$ to consist of an object
+$E={\rm eq}(f,g)\in\cat{C}$ and a morphism $eq\colon E\to X$ such that for any
+object $W$ and morphism $m\colon W\to X$ in $\cat{C}$, if $f\circ m=g\circ m$,
+then there exists a unique morphism $u\colon W\to E$ such that
+$eq\circ u=m$; i.e., the following diagram commutes
+\begin{equation}
+\vcenter{
+\xymatrix{E \ar[r]^{eq} & X \ar@<0.5ex>[r]^{f} \ar@<-0.5ex>[r]_{g} & Y\\ %X\ar@<1ex>[r]^{f} \ar@<-1ex>[r]_{g} & Y\\
+W\ar@{.>}[u]\ar[ur]_{m} & &}
+}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Kernel]
+Let $\cat{C}$ be a category with a zero object. Let $A$, $B$ be
+objects in $\cat{C}$. Let $f\colon A\to B$ be a morphism in $\cat{C}$.
+We define a \define{Kernel} of $f$ to be an object $\ker(f)\in\cat{C}$
+with a map $k\colon\ker(f)\to A$ which is the equalizer of $f$ and
+the zero morphism ${0^{A}}_{B}$.
+
+These capture the intuition of a ``kernel'' that we encounter
+frequently in abstract algebra (with the kernel of a group morphism,
+the kernel of a ring morphism, etc.).
+\end{definition}
+
+\begin{theorem}
+Let $\cat{C}$ be a category with a zero object $Z$. Let $f\colon A\to B$
+be a morphism in $\cat{C}$. Then the kernel of $f$, $K = \ker(f)$, satisfies
+\begin{equation}
+\vcenter{\xymatrix{
+A\ar[dr]^{f} & \\
+K\ar[u]^{k}\ar[r]_{{0^{K}}_{B}} & B}}
+\end{equation}
+Moreover, it is unique (up to isomorphism) in the sense that if we had
+another object $K'$ and morphism $k'\colon K'\to A$, then there exists
+a unique $u\colon K'\to K$ such that
+\begin{equation}
+\vcenter{\xymatrix{
+ & A\ar[dr]^{f} & \\
+ & K\ar[u]^{k}\ar[r]_{{0^{K}}_{B}} & B\\
+K'\ar@/^1.5pc/[uur]^{k'}\ar@{.>}[ur]_{u}\ar@/_1.5pc/[urr]_{{0^{K'}}_{B}} & &
+}}
+\end{equation}
+commutes.
+\end{theorem}
+
+\begin{definition}[Coequalizer]
+Let $\cat{C}$ be a category. Let $f\colon X\to Y$ and $g\colon X\to Y$
+be morphisms in $\cat{C}$. We define a \define{Coequalizer} of $f$ and $g$
+to consist of an object $Q$ equipped with a morphism $q\colon Y\to Q$
+such that $q\circ f=q\circ g$ and for any other possible such object
+$Q'$ and morphism $q'\colon Y\to Q'$ which also satisfies $q'\circ f=q'\circ g$
+there exists a unique morphism $u\colon Q\to Q'$ such that $u\circ q=q'$.
+That is to say, the following diagram commutes
+\begin{equation}
+\vcenter{
+\xymatrix{
+X \ar@<0.5ex>[r]^{f} \ar@<-0.5ex>[r]_{g} & Y\ar[r]^{q}\ar[dr]_{q} & Q\ar@{.>}[d]^{u}\\
+                                         &                       & Q'
+}
+}
+\end{equation}
+\end{definition}
+
+\begin{definition}[Cokernel]
+Let $\cat{C}$ be a category with a zero object. Let $A$, $B$ be
+objects in $\cat{C}$. Let $f\colon A\to B$ be a morphism in $\cat{C}$.
+We define a \define{Cokernel} of $f$ to be an object $\coker(f)\in\cat{C}$
+with a map $c\colon B\to\coker(f)$ which is the coequalizer of $f$ and
+the zero morphism ${0^{A}}_{B}$.
+
+(See Mac~Lane, Chapter~III \S3 pg~64 and Chapter~VIII \S1)
+\end{definition}
+
+\begin{example}[Cokernel of group morphism]
+In $\Grp$, the cokernel of a group morphism $f\colon G\to H$ is the
+quotient of $H$ by the normal closure of the image of $f$. In the case
+of $\Ab$, this is just $\coker(f)=H/\im(f)$.
+\end{example}
+
+
+\begin{theorem}
+Let $\cat{C}$ be a category with a zero object. Let $f\colon A\to B$
+be a morphism in $\cat{C}$. A cokernel of $f$ in $\cat{C}$ is an
+object $Q$ and a morphism $q\colon B\to Q$ such that for any other
+object $Q'$ and morphism $q'\colon B\to Q'$ there exists a unique
+$u\colon Q\to Q'$ making the following diagram commute:
+\begin{equation}
+\vcenter{
+\xymatrix{
+             & B\ar[d]^{q}\ar@/^1.5pc/[ddr]^{q'} & \\
+A\ar[ur]^{f}\ar@/_1.5pc/[drr]_{{0^{A}}_{Q'}}\ar[r]_{{0^{A}}_{Q}} & Q \ar@{.>}[dr]_{u}      &\\
+            &                          & Q'}
+}
+\end{equation}
+\end{theorem}
+
+\section{Abelian Categories}
+
+\begin{remark}[Abelian categories is where we can do homology]
+``Abelian'' categories form the most general setting where we can do
+homological algebra. That's why we're interested in them!
+\end{remark}
+
+\begin{definition}[Preadditive categories]
+We call a category $\cat{C}$ \define{Preadditive} iff
+\begin{itemize}
+\property{$\Ab$-enriched:} for all objects
+$A\in\cat{C}$ and $B\in\cat{C}$, $\hom_{\cat{C}}(A,B)$ has the
+structure of an Abelian group; and
+\property{Composition is bilinear} for all morphisms $f\colon B\to C$ and $f'\colon B\to C$
+in $\cat{C}$ and for all $g\colon A\to B$ in $\cat{C}$, we have
+$(f+f')\circ g=(f\circ g)+(f'\circ g)$
+and for all $h\colon C\to D$ we have $h\circ(f+f')=(h\circ f)+(h\circ f')$.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+The category $\Ab$ is pre-additive.
+\end{example}
+
+\begin{definition}[Additive categories]
+A category $\cat{C}$ is called \define{Additive} iff all the following holds
+\begin{itemize}
+\property{Pre-additive} $\cat{C}$ is pre-additive, and
+\property{Zero-objects} $\cat{C}$ has zero objects, and
+\property{Finite products} $\cat{C}$ has finite products, and
+\property{Finite coproducts} $\cat{C}$ has finite coproducts.
+\end{itemize}
+Observe that pre-additive categories with zero objects implies every
+hom-set is nonempty.
+\end{definition}
+
+\begin{example}
+The category $\Ab$ of Abelian groups is an additive category. It's
+pre-additive. The trivial group is a zero object. Also products
+coincide with coproducts in $\Ab$.
+\end{example}
+
+\begin{definition}[Abelian categories]
+Mac~Lane's \emph{Categories for the Working Mathematician} (Ch.~VIII,
+\S3, pg.198) offers the following definition:
+
+An \define{Abelian} category $\cat{A}$ is an Ab-category satisfying
+the following conditions:
+\begin{enumerate}
+\item $\cat{A}$ has a null object
+\item $\cat{A}$ has binary biproducts
+\item Every arrow in $\cat{A}$ has a kernel and cokernel
+\item Every monid arrow is a kernel, and every epic arrow is a cokernel
+\end{enumerate}
+Equivalently, we can demand the following:
+\begin{itemize}
+\property{Additive} $\cat{A}$ is an additive category
+\property{Kernel} Every morphism $f\colon A\to B$ in $\cat{A}$ has a kernel
+\property{Cokernel} Every morphism $f\colon A\to B$ in $\cat{A}$ has a cokernel
+\property{Parallel morphisms are isomorphisms} For any morphism
+$f\colon A\to B$, the morphism $\phi\colon\coim(f)\to\im(f)$ parallel
+to $f$ is an isomorphism.
+\end{itemize}
+The first three properties define ``pre-Abelian'' categories.
+\end{definition}
+

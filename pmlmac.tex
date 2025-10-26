@@ -95,7 +95,7 @@
 % `\enddocument` needs to have an \endgroup to fix
 % "semi simple group (level 1) entered at line N (\begingroup)"
 \def\bye{\par\vfill\supereject\@@end}
-\def\document{}
+\def\document{\begingroup}
 \def\enddocument{\endgroup\par\bye}
 
 
@@ -134,6 +134,8 @@
   \xdef\@currentcounter{\csname the#1\endcsname}%
 }
 
+\def\labelhook#1{}
+
 \def\label#1{%
   \expandafter\ifx\csname r@#1\endcsname\relax\else%
     \message{Label already defined: #1}%
@@ -144,11 +146,15 @@
     \expandafter\noexpand{\@currentcounter\noexpand}%
     \noexpand{\folio\noexpand}%
   }%
+  \labelhook{#1}%
 \ignorespaces}
+
+\def\undefinedrefhandler#1{\message{Warning: reference #1 on page \folio undefined}{\bf??}}
+\let\defaultundefinedrefhandler\undefinedrefhandler
 
 \def\ref#1{%
   \ifx\csname r@#1\endcsname\relax%
-    \message{Warning: reference #1 on page \folio undefined}{\bf??}%
+    \undefinedrefhandler{#1}%
   \else%
     \expandafter\expandafter\expandafter\@firstoftwo\csname r@#1\endcsname%
   \fi}
@@ -237,7 +243,7 @@
 %%
 %% Equation environments
 %%
-\let\normalfont\relax
+\let\normalfont\rm
 \let\normalcolor\relax
 \@definecounter{equation}
 \def\equation{$$\refstepcounter{equation}}
@@ -391,6 +397,39 @@
   \def\MF{{\manfnt opqr}\-{\manfnt stuq}}%
   \normalbaselines\rm}
 
+%%%
+%%% Font commands
+\def\textsc#1{{\tensc #1}}
+
+%% Poor man's \emph
+\newif\if@emph \@emphfalse
+\def\em{\toggle@emph\if@emph\it\else\rm\fi} 
+\def\toggle@emph{\if@emph\@emphfalse\else\@emphtrue\fi}
+\def\emph#1{{\em #1\/}}
+
+% usual font manipulations
+\def\textit#1{{\it #1\/}}
+\def\textsl#1{{\sl #1\/}}
+\def\textbf#1{{\bf #1}}
+\def\texttt#1{{\tt #1}}
+\def\textrm#1{{\rm #1}}
+\def\mathcal#1{{\cal #1}}
+
+\font\sften=cmss10
+\font\sfseven=cmss7
+\font\sffive=cmss5
+\newfam\sffam
+\textfont\sffam=\sften
+\scriptfont\sffam=\sfseven
+\scriptscriptfont\sffam=\sffive
+\def\sf{\fam\sffam\sften}
+\def\textsf#1{{\sf#1}}
+
+\def\text#1{{\rm #1}}
+
+% KLUDGE for old style numbers
+\def\oldstylenums#1{\ifmmode{\oldstyle #1}\else${\oldstyle #1}$\fi}
+
 
 %%%
 %%% Title
@@ -398,14 +437,15 @@
 \def\title#1{\gdef\@title{#1}}
 \def\author#1{\gdef\@author{#1}}
 \long\def\date#1{\gdef\@date{#1}}
-\font\cmman=cmssbx12 scaled\magstep5 
-\font\inchhigh=cminch
-%\font\foofont=cminch scaled\magstephalf1
+% magstep5 = 2.48832 times larger
+% so 12pt magstep5 = 29.85984pt
+\font\titlefont=cmssbx12 scaled\magstep5 % ~ cmssbx25
+
 \def\@maketitleaddenda{}
 \def\@maketitle{\vskip2em%
   %% \edef\@@title{\uppercase{\@title}}
   %% \centerline{\foofont \@@title}%
-  \centerline{\cmman \@title}%
+  \centerline{\titlefont \@title}%
   \vskip1.5em\centerline{\twelverm\@author}% author
   \ifx\@date\relax\else\vskip 1em\centerline{\twelverm \@date }\par\fi% date
   \vskip 1.5em%
@@ -440,8 +480,28 @@
 \def\center{\centering}
 \def\endcenter{}
 
+%%
+%% Lists
+%%
+%\newenvironment{itemize}{\def\item{\par}}{\par}
+\def\itemize{\smallbreak%
+  %\advance\leftskip\parindent%
+  %\def\item{\par\noindent$\bullet$\enspace\@ignoretrue\ignorespaces}%
+  \def\@item[##1]{\par\noindent\hang\textindent{##1}}%
+  \def\@@item{\@item[$\bullet$]}%
+  \def\item{\@ifnextchar[\@item\@@item}%\par\noindent\hang\textindent{$\bullet$}}%
+}
+\def\enditemize{\@ignoretrue\smallbreak}%\noindent\ignorespaces}
+
+\newcounter{enumi}
+\def\enumerate{\smallbreak\setcounter{enumi}{0}%
+  \def\item{\par\refstepcounter{enumi}\noindent\hang\textindent{(\theenumi)}}%
+}
+\def\endenumerate{\@ignoretrue\smallbreak}%\noindent}
+
 % graphics
 \input epsf
 \def\includegraphics{\epsfbox}
 
 \makeatother
+\endinput

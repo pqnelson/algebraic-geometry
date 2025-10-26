@@ -21,6 +21,9 @@
   \documentclass{book}
   \usepackage{macros}
 \else
+  \input xy
+  \input{pmlmac}
+  \input{pmbook}
   \input{macros}
   \input{btxmac}
   \def\thebibliography#1{%
@@ -30,6 +33,7 @@
     \biblabelwidth = \wd0
   }
   \def\bblhook{\footnotesize\parskip = 2pt plus1pt minus1pt} %1.5ex plus .5ex minus .5ex}
+  \makeatother
 \fi
 
 \def\k#1{#1}
@@ -39,7 +43,7 @@
 %% %% following:
 %% \def\mml#1{}
 
-\subjclass[2020]{14--01}
+% \subjclass[2020]{14--01}
 
 \title{Algebraic Geometry}
 \author{Alex Nelson}
@@ -66,38 +70,14 @@
 
 \input{tex/cat}
 
+\input{tex/group}
+
 \input{tex/ring}
 
 \input{tex/topology}
-
-\chapter{Algebraic Geometry}
-
-This is not \LaTeX, but plain \TeX.
-\begin{equation}\label{eq:mass-shell}
-p^{\mu}p_{\mu} = \frac{-E^{2}}{c^{2}}+\vec{p}\cdot\vec{p}
-\end{equation}
-This implies the famous result in the Newtonian limit:
-\begin{equation*}
-E \approx mc^{2}
-\end{equation*}
-That's neat.
-
-\begin{theorem}[Quasiaffine varieties are abstract varieties]
-Every quasiaffine variety is an abstract variety.
-\end{theorem}
-
-The proof is obvious. Look at equation (\ref{eq:mass-shell}).
-
-\begin{proof}
-  Just follow the definitions.
-\end{proof}
-
-
-
 
 \chapter*{References}
 \bibliographystyle{elements}
 \bibliography{math}
 
-%\bye
 \end{document}

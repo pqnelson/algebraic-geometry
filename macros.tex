@@ -8,12 +8,17 @@
 %% Last update 2025-07-19T10:37:32-0700
 %% 
 
-\ifLaTeX\else
-  \input{pmbook}
-\fi
-
 \makeatletter
 
+%% Strikethrough
+%% https://tex.stackexchange.com/a/738717/14751
+\def\strikethrough#1{\leavevmode\strikethr@ugh#1 \relax}
+\def\strikethr@ugh#1 {\strike@word{#1}\futurelet\next\strike@next}
+\def\strike@next{\ifx\next\relax\else\strike@space\expandafter\strikethr@ugh\fi}
+\def\strike@word#1{\setbox0=\hbox{#1}\rlap{\strike@rule width\wd0}\box0}
+\def\strike@space{\leaders\strike@rule\sp@ce}
+\def\strike@rule{\vrule height2.4pt depth-2pt}
+\def\sp@ce{\hskip\fontdimen2\font plus\fontdimen3\font minus\fontdimen4\font}
 
 %% Date manipulation
 % ISO-8601 date looks like: yyyy-mm-dd
@@ -151,7 +156,6 @@
 \font\sixss=cmssq8 scaled 800
 \font\tenssbx=cmssbx10
 \font\twelvess=cmss12
-\font\titlefont=cmssbx10 scaled\magstep2
 
 
 \def\chapterquotes{
@@ -248,15 +252,82 @@
 \input xy
 \xyoption{all}
 \SelectTips{cm}{}
-\makeatother
 
 
 %%%
 %%% Plain TeX href, since LaTeX will have hyperref available
 %%%
 \ifLaTeX\else
-\def\href#1#2{\special{html:<a href="#1">}#2\special{html:</a>}}
+\def\href#1#2{\leavevmode\special{html:<a href="#1">}#2\special{html:</a>}}
+
+
+% Allen Kennington's macros for internal referencing
+% This \PreHatch macro to prefix a text string with a hatch character.
+{\catcode`\^=6 \catcode`\#=12 \gdef\PreHatch^1{#^1}}
+
+% Anchor points for cross-reference hyperlinks.
+\def\LinkNameText#1#2{%
+ \special{html:<a name="#1">}#2\special{html:</a>}}
+\def\LinkNamePRE#1{\special{html:<a name="#1">}}
+\def\LinkNamePOST{\special{html:</a>}}
+\def\LinkName#1{\LinkNameText{#1}{}}
+
+% Cross-reference hyperlinks to defined anchor points.
+\def\LinkHrefText#1#2{%
+ \special{html:<a href="\PreHatch{#1}">}#2\special{html:</a>}}
+
+% Pre-text and post-text macros.
+\def\LinkHrefPRE#1{\special{html:<a href="\PreHatch{#1}">}}
+\def\LinkHrefPOST{\special{html:</a>}}
+
+%\enablehyperlinks
+%\enablehyperlinks[dvipdfm]
+\iftrue%\expandafter\ifx\csname enablehyperlinks\endcsname\relax
+  \message{DEFINING HLDEST}
+  % This is the "plain PDF" solution
+%%   \def\hldest#1#2#3{\leavevmode\special{pdf: dest (#3)
+%% [@thispage /XYZ @xpos @ypos 0]}}
+  \def\hldest#1#2#3{\leavevmode\LinkNamePRE{#3}\LinkNamePOST{}}
+  \message{DEFINING HLSTART}
+  \def\hlstart#1#2#3{\LinkHrefPRE{#3}}
+  \message{DEFINING HLEND}
+  \def\hlend{\LinkHrefPOST}
+\else
+  \message{TURNING ON HYPERLINKS}
+  \enablehyperlinks[dvipdfm]
+  %\hldriver@dvipdfm
+  %% \hltype{xyz}
+  %% \hldesttype{xyz}
 \fi
+
+% create link anchors for labels
+\def\labelhook#1{\hldest{name}{}{#1}}
+%\LinkNamePRE{#1}\LinkNamePOST{}
+
+% create links when making references
+\let\ogref\ref
+
+%% \expandafter\ifx\csname hlstart\endcsname\relax
+%%   \message{DEFINING HLSTART}
+%%   \def\hlstart#1#2#3{\LinkHrefPRE{#3}}
+%%   \message{DEFINING HLEND}
+%%   \def\hlend{\LinkHrefPOST}
+%% \fi
+
+\def\ref#1{\leavevmode%
+  \hlstart{name}{}{#1}\ogref{#1}\hlend}
+
+
+\fi
+
+%% PDF metadata
+\special{pdf: docinfo <<
+/Author (Alex Nelson)
+/Title (Algebraic Geometry)
+/Subject (Algebraic Geometry)
+>>}
+
+\makeatother
 
 \endinput
 

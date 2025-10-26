@@ -17,6 +17,10 @@
 \def\Def#1{\isalreadydefined{#1}%
   \def#1}
 
+% iff proof
+\Def\forwardproof{$(\Longrightarrow)$}
+\Def\backwardproof{$(\Longleftarrow)$}
+
 % Bourbaki-style "future topic" earmuffs
 \Def\future@start{*}%\smash{\raise0.25ex\hbox{*}}}
 \Def\future@end{\smash{\raise-1.0ex\hbox{*}}} % -1.3ex
@@ -68,6 +72,8 @@
 \Def\powerset#1{\mathcal{P}\left(#1\right)}
 \Def\symdiff{\mathbin{\Delta}}
 
+\Def\Complement#1{#1^{\complement}}
+
 %% Relations
 \Def\composeRelation{\mathbin{;}}
 \Def\rng{\mathop{\rm rng}\nolimits}
@@ -78,17 +84,22 @@
 
 %% functions
 \Def\id{\mathop{\rm id}\nolimits}
+\Def\incl{\iota}
 \Def\into{\hookrightarrow}
 \Def\onto{\twoheadrightarrow}
 % \preimage{f}{A} = f^{-1}(A) for the preimage of A under f
 \Def\preimage#1#2{#1^{-1}(#2)}
+\Def\im{\mathop{\rm im}\nolimits} % image of a function, morphism, etc.
+\Def\coim{\mathop{\rm coim}\nolimits} % coimage of a morphism
 
 %% Topology
 \Def\closure#1{\mathop{\rm Cl}\nolimits(#1)}
+\Def\interior#1{\mathop{\rm Int}\nolimits(#1)}
 
 %% Category theory
 \Def\cod{\mathop{\rm cod}\nolimits}
 \Def\op#1{#1^{\text{op}}}
+\Def\coker{\mathop{\rm coker}\nolimits}
 \Def\cat#1{{\bf#1}} %\mathop{\bf #1} vertically lowers #1
 \Def\Ob{\mathop{\rm Ob}\nolimits}
 \Def\hom{\mathop{\rm Hom}\nolimits}
@@ -105,6 +116,7 @@
 \Def\CAT{\cat{CAT}}
 \Def\Ens{\cat{Ens}}
 \Def\Grp{\cat{Grp}} % category of groups
+\Def\Ab{\cat{Ab}}   % category of Abelian groups
 \Def\Set{\cat{Set}} % category of sets
 \Def\Top{\cat{Top}} % category of topological spaces
 
@@ -133,8 +145,18 @@
 \Def\ZFC/{\logo{ZFC}}
 \Def\ZFpmC/{\logo{ZF{\rm(}C{\rm)}}}
 
-%% Notation
+%% Notation for structures
 \Def\structure#1{\langle\!\langle#1\rangle\!\rangle}
+% poor man's U+AAA \smt symbol https://tex.stackexchange.com/a/712877/14751
+\def\angin@#1#2{
+    \vphantom{#2}%
+    \ooalign{$\m@th#1#2$\cr$\m@th#1-$\cr}%
+}
+% unicode-math package defines \smt; it's an acronym/abbreviation
+%``SMaller Than''
+% It shows up in the writings of Boole and Pierce
+% https://tex.stackexchange.com/q/482843/14751
+\def\smt{\mathrel{\mathpalette\angin@{<}}}
 
 \font\sidenotefont=cmti8
 
@@ -144,11 +166,11 @@
   \vadjust{\llap{\smash{\vtop{%
     \parindent=0pt
     %\hsize=0.85in %1.7in
-    \hsize=1in
+    \hsize=6.5pc%1in
     \advance\hsize by-1em
     \parfillskip=0pt
     \leftskip=0pt plus1fil
-    \baselineskip=10pt\sidenotefont\vglue-\ht\strutbox #1}}\kern1em}}}
+    \baselineskip=10pt\sidenotefont\vglue-\ht\strutbox #1}}\kern0.6667em}}}
 
 % \mml is used to refer to locations in the Mizar Mathematical Library
 \def\mml{\catcode`\_11\relax\@mml}
@@ -158,6 +180,7 @@
   \renewcommand*{\marginfont}{\small\upshape\ttfamily}
   \def\@mml#1{\marginnote{#1}\catcode`\_8\ignorespaces}
 \else
+  %\def\@mml#1{{\font\sidenotefont=cmtt10 scaled 800\sidenote{#1}}\catcode`\_8\ignorespaces}
   \def\@mml#1{{\font\sidenotefont=cmtt8\sidenote{#1}}\catcode`\_8\ignorespaces}
 \fi
 

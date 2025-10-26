@@ -70,9 +70,9 @@ Hence $A\cap B\in\tau$.
 \end{proof}
 \end{example}
 
-\begin{definition}[Closed subsets]
-Let $T$ be a topological space, let $P\subset T$ be a subset of $T$.
-We call $P$ \define{Closed} if $T\setminus P$ is an open subset of $T$.
+\begin{definition}[Closed subsets]\mml{pre_topc:def 3}
+Let $T$ be a topological space, let $F\subset T$ be a subset of $T$.
+We call $F$ \define{Closed} if $T\setminus F$ is an open subset of $T$.
 \end{definition}
 
 \begin{remark}[Variable $F$ used for closed subsets]
@@ -90,6 +90,8 @@ Then both $\emptyset$ and $U$ is a closed subset of $T$.
 In particular, this also means we can use ``closed'' as an adjective
 for subsets of topological spaces.
 
+(This is a registered fact in \texttt{pre\_topc}.)
+
 \begin{proof}[Proof sketch]
 We see $U$ is an open subset of $T$, therefore $T\setminus U=\emptyset$
 is closed in $T$
@@ -99,19 +101,217 @@ $T\setminus\emptyset=U$ is closed in $T$.
 \end{proof}
 \end{example}
 
-\begin{theorem}[Union of closed subsets is closed]\mml{tops_1}
+\begin{theorem}[Union of closed subsets is closed]\mml{tops_1:9, tops_2:21}
 Let $T$ be a topological space. Let $F_{1}$, $F_{2}$ be closed subsets
 of $T$. Then $F_{1}\cup F_{2}$ is a closed subset of $T$.
+
+More generally, if we have a finite family of closed subsets
+$\mathcal{F}=\{F_{i}\mid i=1,\dots,n\}$ of $T$, then their union $\bigcup\mathcal{F}$
+is a closed subset of $T$.
+\end{theorem}
+\begin{proof}
+We can prove this by induction on $n$.
+
+The base case is true for $n=0$ or $n=1$.
+
+The inductive hypothesis: Assume $F=F_{1}\cup\cdots\cup F_{n}$ is closed.
+
+The inductive case:
+We want to prove $F_{1}\cup\cdots\cup F_{n}\cup F_{n+1}$ is closed.
+But $F_{1}\cup\cdots\cup F_{n}\cup F_{n+1}=F\cup F_{n+1}$. We just
+need to prove this is true. We see $T\setminus(F\cup F_{n+1})=(T\setminus F)\cap(T\setminus F_{n+1})$
+by de Morgan, and the right-hand side is the intersection of two open
+sets (which is open). This implies that $T\setminus(F\cup F_{n+1})$ is open,
+hence $F\cup F_{n+1}$ is closed, as desired.
+\end{proof}
+
+\begin{theorem}[Intersection of closed subsets is closed]\mml{pre_topc:14, tops_2:22}\label{thm:topology:intersection-of-arbitrary-closed-sets-is-closed}%
+Let $T$ be a topological space. Let
+$\mathcal{F}=\{F_{\alpha}\}_{\alpha\in A}$ be an arbitrary family of
+subsets of $T$ such that $F_{\alpha}$ is closed for every $\alpha\in A$.
+Then $\bigcap\mathcal{F}$ is a closed subset of $T$.
 \end{theorem}
 
-\begin{theorem}[Intersection of closed subsets is closed]\mml{tops_1}
-Let $T$ be a topological space. Let $F_{1}$, $F_{2}$ be closed subsets
-of $T$. Then $F_{1}\cap F_{2}$ is a closed subset of $T$.
+\begin{proof}
+Let $\mathcal{F}=\{F_{\alpha}\}_{\alpha\in A}$ be an arbitrary family of
+subsets of $T$ such that $F_{\alpha}$ is closed for every $\alpha\in A$.
+Then by Theorem~\ref{setfam_1:27},
+\begin{equation}
+T\setminus\Intersects\mathcal{F}=\Union\{T\setminus F_{\alpha}\mid\alpha\in A\},
+\end{equation}
+but $T\setminus F_{\alpha}$ is open for each $\alpha$. So that means
+the right-hand side of the previous equation is the union of an
+arbitrary family of open sets, which we know is open. This proves
+$T\setminus\Intersects\mathcal{F}$ is open, which implies
+$\Intersects\mathcal{F}$ is closed.
+\end{proof}
+
+\begin{definition}[Closure of a subset]\mml{pre_topc:16}
+Let $T$ be a topological space. Let $E\subset T$ be any subset.
+We can define the \define{Closure} of $E$ to be the subset
+$\closure{E}$ of $T$
+equal to $\closure{E}:=\bigcap\{F\subset T\mid E\subset F, F\mbox{ is closed}\}$.
+
+This is an ``idempotent'' notion: $\closure{\closure{E}}=\closure{E}$.
+\end{definition}
+
+\begin{theorem}[Closure of a set contains the set]\mml{pre_topc:18}\label{pre-topc:18}
+Let $T$ be a topological space. Let $E\subset T$ be any subset.
+Then $E\subset\closure{E}$.
 \end{theorem}
+
+\begin{proof}
+We will prove $\forall x\ldotp x\in E\implies x\in\closure{E}$.
+Let $x$ be any arbitrary object. Assume $x\in E$.
+
+For every closed subset $F\subset T$ such that $E\subset F$, we see
+that $x\in F$ by definition of the subset predicate. Then we have
+$x\in\Intersects\{F\subset T\mid F\mbox{ is closed}, E\subset F\}$ by
+Definition~\ref{setfam-1:def-1} of the intersection of a family of sets. Hence
+$x\in\closure{E}$ by Definition of the closure.
+\end{proof}
+
+\begin{theorem}[Closure of empty set is empty]\mml{pcomps_1:2}
+Let $T$ be a topological space. Let $E$ be a subset of $T$.
+Then $\closure{E}\neq\emptyset$ if and only if $E\neq\emptyset$.
+\end{theorem}
+
+\begin{proof}
+\backwardproof\ Assume $E\neq\emptyset$. Then choose $x$ to be some
+element of $E$ by the axiom of choice. Since $E\subset\closure{E}$ by Theorem~\ref{pre-topc:18},
+we must have $x\in\closure{E}$. Hence $\closure{E}\neq\emptyset$.
+
+\forwardproof\ We will prove the contrapositive (``if $E=\emptyset$,
+then $\closure{E}=\emptyset$''). Assume $E=\emptyset$. Then
+$E\subset\emptyset$. In particular, since $\emptyset$ is always a
+closed set, this means that the closure is defined as the intersection
+of a family of subsets containing the empty set. This intersection is
+always empty by Theorem~\ref{setfam_1:4}. Hence $\closure{E}=\emptyset$.
+\end{proof}
+
+\begin{theorem}[Closure of a set is a closed set]\mml{pre_topc:22}\label{pre_topc:22}
+Let $T$ be a topological space. Let $E\subset T$ be any subset.
+Then $\closure{E}$ is a closed subset of $T$.
+\end{theorem}
+
+(This is also registered in \texttt{TOPS\_1}.)
+
+\begin{proof}
+Since $\closure{E}$ is the intersection of an arbitrary family of
+closed sets containing $E$, the result follows from Theorem~\ref{thm:topology:intersection-of-arbitrary-closed-sets-is-closed}.
+\end{proof}
+
+\begin{theorem}[Closure is smallest closed set]\mml{pre_topc:15}\label{pre-topc:15}%
+Let $T$ be a topological space. Let $E$ be a subset of $T$.
+Let $x$ be an element of $T$.
+
+Then $x\in\closure{E}$ if and only if for any closed subset $F$ of $T$
+such that $E\subset F$, we have $x\in F$.
+In particular, this means $\closure{E}\subset F$.
+\end{theorem}
+
+\begin{proof}
+\backwardproof\ Assume for any subset $F$ of $T$ which is closed and
+contains $E\subset F$, we have $x\in F$.
+But then $x\in\Intersects\{F\subset T\mid F\mbox{ is closed}, E\subset F\}$
+by Definition~\ref{setfam-1:def-1} of the intersection of family of sets.
+Hence the result by definition of the closure of $E$.
+
+\forwardproof\ Assume $x\in\closure{E}$.
+Then $x\in\Intersects\{F\subset T\mid F\mbox{ is closed}, E\subset F\}$.
+Then for each $F\subset T$ such that $F$ is closed and $E\subset F$,
+we have $x\in F$ by Definition of the intersection of family of sets.
+Hence the result.
+\end{proof}
+
+\begin{theorem}[Closure is subset order-preserving]\mml{pre_topc:19}
+Let $T$ be a topological space. Let $A$ and $B$ be subsets of $T$.
+If $A\subset B$, then $\closure{A}\subset\closure{B}$.
+\end{theorem}
+
+\begin{proof}
+Assume $A\subset B$.
+We will prove $\forall x\ldotp x\in\closure{A}\implies x\in\closure{B}$.
+Let $x$ be an arbitrary object.
+Assume $x\in\closure{A}$.
+% Thesis: $x\in\closure{B}$.
+
+We claim for any closed subset $D$ of $T$ such that $B\subset D$, we
+have $x\in D$. We assumed $A\subset B$, which means that $A\subset D$.
+Hence this means that $x\in D$ by Theorem~\ref{pre-topc:15}.
+
+Then $x\in\closure{B}$, again by Theorem~\ref{pre-topc:15}.
+\end{proof}
+
+\begin{definition}[Interior of a set]\mml{tops_1:def 1}\label{defn:topology:interior-of-set}%
+Let $T$ be a topological space. Let $E\subset T$ be a subset.
+We define the \define{Interior} of $E$ to be the subset $\interior{E}$ of $T$ equal
+to $\interior{E}:=T\setminus\closure{T\setminus E}$.
+
+This is an ``idempotent'' notion: $\interior{\interior{E}}=\interior{E}$.
+\end{definition}
+
+\begin{theorem}[Interior of topological space is the space itself]\mml{tops_1:15}
+Let $T$ be a topological space. Let $U_{T}$ be the underlying set of $T$.
+Then $\interior{U_{T}}=U_{T}$.
+\end{theorem}
+
+\begin{proof}
+We see that $\interior{U_{T}}=U_{T}\setminus\closure{U_{T}\setminus U_{T}}=U_{T}\setminus\closure{\emptyset}=U_{T}\setminus\emptyset=U_{T}$.
+Hence the result.
+\end{proof}
+
+\begin{theorem}[Interior of set is always a subset]\mml{tops_1:16}
+Let $T$ be a topological space. Let $E$ be a subset of $T$.
+Then $\interior{E}\subset E$.
+\end{theorem}
+
+\begin{proof}
+We will prove $\forall x\ldotp x\in\interior{E}\implies x\in E$.
+Let $x$ be any object. Assume $x\in\interior{E}$. We know $\Complement{E}\subset\closure{\Complement{E}}$
+by Theorem~\ref{pre-topc:18}. Since $x\in\interior{E}$, this means
+$x\notin\Complement{\closure{E}}$ and in particular $x\notin\Complement{E}$
+by Definition~\ref{xboole-0:def-5}.
+Hence $x\in E$, again by Definition~\ref{xboole-0:def-5}.
+\end{proof}
+
+\begin{theorem}[Interior of a set is an open set]\mml{tops_1}
+Let $T$ be a topological space. Let $E$ be a subset of $T$.
+Then $\interior{E}$ is an open subset of $T$.
+\end{theorem}
+
+This is a registered fact in \texttt{TOPS\_1}.
+
+\begin{proof}
+We see that $\closure{T\setminus E}$ is always a closed set by Theorem~\ref{pre_topc:22}.
+Then its complement is open.
+Hence the result by Definition~\ref{defn:topology:interior-of-set}.
+\end{proof}
+
+\begin{definition}[Neighborhood of a point]\mml{connsp_2:def 1}
+Let $T$ be a nonempty topological space. Let $x\in T$ be a point.
+We define a [soft type] \define{Neighborhood} of $x$ to be a subset
+$N_{x}$ of $T$ such that $x\in\interior{N_{x}}$.
+
+This defines a mode. We can check it's well-defined because the
+underlying set $U_{T}$ of $T$ is a neighborhood for every point of $T$.
+\end{definition}
+
+\begin{theorem}[Carrier of topological space is a neighborhood]\mml{topgrp_1:21}
+Let $T$ be a nonempty topological space. Let $x$ be a point of $T$.
+Then the carrier $U_{T}$ of $T$ is a neighborhood of $x$.
+\end{theorem}
+
+\begin{corollary}[Existence of an open non-empty neighborhood]\mml{topgrp_1}
+For any non-empty topological space $T$, for any point $x\in T$ there
+exists a neighborhood $N$ of $x$ such that $N$ is an open non-empty subset of $T$.
+\end{corollary}
+
+This is a registered fact in the Mizar article \texttt{TOPGRP\_1}.
 
 %%% SUBSPACES
 
-\begin{definition}[Subspaces]
+\begin{definition}[Subspaces]\mml{pre_topc:def 4}
 Let $T = \structure{U_{T},\tau_{T}}$ be a topological space.
 We define a \define{Subspace} of $T$ to be a topological space
 $S=\structure{U_{S},\tau_{S}}$ such that $U_{S}\subset U_{T}$ and also
@@ -124,11 +324,23 @@ $T|_{P}$ for the [strict] Subspace of $T$ whose underlying set is $P$.
 
 
 %%% CONTINUOUS
+\section{Continuous maps}
 
-\begin{definition}[Continuous functions]
+\begin{definition}[Function is continuous at a point]\mml{tmap_1:43}
+Let $S$, $T$ be nonempty topological spaces, let $f\colon S\to T$ be a function,
+let $x\in S$ be a point. We say $f$ \define{is Continuous at} $x$ if
+for each $V\subset T$ open such that $f(x)\in V$, there exists a
+$U\subset S$ open such that $x\in U$ and $f(U)\subset V$.
+
+This is a predicate, so it's already well-defined.
+\end{definition}
+
+\begin{definition}[Continuous functions]\mml{tops_2:43}
 Let $S$, $T$ be topological spaces. Let $f\colon S\to T$ be a function.
 We call $f$ \define{Continuous} if for every closed subset $P\subset T$
 we have $\preimage{f}{P}$ is closed in $S$.
+
+(Note: if $T$ is the empty space, then $S$ must be the empty space.)
 \end{definition}
 
 \begin{remark}[Intuition behind continuous functions]
@@ -149,14 +361,66 @@ perhaps pedagogically deficient.
 
 \begin{example}[Identity function is continuous]
 Let $T$ be a topological space. The identity function $\id_{T}\colon T\to T$
-is a continuous function.
+is a continuous function. (This is a registered fact in
+\texttt{tmap\_1} and \texttt{borsuk\_2}.)
+\end{example}
+
+\begin{example}[Inclusion map is continuous]\mml{tmap_1:87}\label{tmap_1:87}
+Let $T$ be a topological space.
+Let $S$ be a subspace of $T$.
+Then $\incl\colon S\into T$ is a continuous function.
 \end{example}
 
 \begin{example}[Constant function is continuous]
 Let $T$ and $T'$ be topological spaces, let $c\in T'$.
 The constant function $f\colon T\to T'$ sending $x\in T$ to $f(x)=c$
-is continuous.
+is continuous. (This is a fact registered in \texttt{topalg\_6}.)
 \end{example}
+
+\begin{theorem}[Continuous functions defined using open subsets]\mml{tops_2:43}
+Let $S$, $T$ be topological spaces. Let $f\colon S\to T$ be a function.
+Then $f$ is continuous if and only if for each open subset $V\subset T$,
+$\preimage{f}{V}$ is an open subset of $S$.
+\end{theorem}
+
+\begin{proof}
+\forwardproof\ Assume $f$ is continuous. Let $V\subset T$ be an open subset.
+Then $\Complement{V}$ is a closed subset. Then $\preimage{f}{\Complement{V}}$
+is closed in $S$. We see that
+$\preimage{f}{\Complement{V}}=(\preimage{f}{T})\setminus(\preimage{f}{V})$
+but since $f(S)\subset T$, we see $\preimage{f}{T}=S$, so we have
+$\preimage{f}{\Complement{V}}=S\setminus(\preimage{f}{V})=\Complement{\preimage{f}{V}}$.
+Hence $\preimage{f}{V}$ is open.
+
+\backwardproof\ Assume for every open subset $V\subset T$, we have
+$\preimage{f}{V}$ is an open subset of $S$. We will prove every closed
+subset $F\subset T$, $\preimage{f}{F}$ is open in $S$. Let $F\subset T$
+be closed. Then $\Complement{F}$ is open. Then $\preimage{f}{\Complement{V}}=(\preimage{f}{Y})\setminus(\preimage{f}{V})$
+and by similar reasoning as the forward direction proof, $\preimage{f}{\Complement{V}}=\Complement{\preimage{f}{V}}$,
+and so $\preimage{f}{V}$ is closed. Hence the result.
+\end{proof}
+
+\begin{theorem}[Continuous function is continuous at every point]\mml{tmap_1:44}
+Let $T$ and $T'$ be topological spaces, let $f\colon T\to T'$ be a function.
+Then $f$ is continuous if and only if for each $x\in T$, $f$ is
+continuous at $x$.
+\end{theorem}
+
+\begin{theorem}[Composing continuous functions yields a continuous function]\mml{tops_2:46}\label{tops_2:46}
+Let $T_{1}$, $T_{2}$, $T_{3}$ be topological spaces.
+Let $f\colon T_{1}\to T_{2}$ and $g\colon T_{2}\to T_{3}$ be
+continuous functions.
+Then $g\circ f\colon T_{1}\to T_{3}$ is a continuous function.
+\end{theorem}
+
+\begin{proof}
+Let $U\subset T_{3}$ be an open set.
+Then $\preimage{g}{U}\subset T_{2}$ is open by continuity of $g$,
+and $\preimage{f}{\preimage{g}{U}}\subset T_{1}$ is open by continuity
+of $f$.
+Then $\preimage{(g\circ f)}{U}\subset T_{1}$ is open.
+Hence $g\circ f$ is continuous.
+\end{proof}
 
 \begin{theorem}[Continuous function restricted to subspace is continuous]\mml{pre_topc:27}
 Let $T$ and $T'$ be topological spaces, let $S\subset T$ be a subspace
@@ -165,12 +429,11 @@ $$f|_{S}\colon S\to T',$$
 is a continuous function.
 \end{theorem}
 
-\begin{theorem}[Composing continuous functions yields a continuous function]
-Let $T_{1}$, $T_{2}$, $T_{3}$ be topological spaces.
-Let $f\colon T_{1}\to T_{2}$ and $g\colon T_{2}\to T_{3}$ be
-continuous functions.
-Then $g\circ f\colon T_{1}\to T_{3}$ is a continuous function.
-\end{theorem}
+\begin{proof}
+We see that $f|_{S}=f\circ\incl\colon S\to T'$, and since both $\incl$
+is continuous (by Example~\ref{tmap_1:87}) and $f$ is continuous, then
+$f\circ\incl$ is continuous by Theorem~\ref{tops_2:46}. Hence the result.
+\end{proof}
 
 \begin{remark}[Category of topological spaces]
 We can form the large category $\Top$ of topological spaces, specifically:
@@ -183,17 +446,13 @@ We can form a small category if we are given a set $U$ of topological
 spaces, which we denote by $\Top_{U}$.
 \end{remark}
 
-\begin{definition}[Homeomorphism and Homeomorphic spaces]
+\begin{definition}[Homeomorphism and Homeomorphic spaces]\mml{t_0topsp:def~1, tops_2:def~5, topgrp_1:def~3}
 Let $X$ and $Y$ be topological spaces. A \define{Homeomorphism} from
 $X$ to $Y$ is a continuous function $f\colon X\to Y$ such that there
 exists an inverse function $f^{-1}\colon Y\to X$ which is also a
 continuous function. That is to say, it is a bijection $f$ of the
 underlying sets such that $f$ is continuous and its inverse $f^{-1}$
 is continuous.
-
-When there exists a homeomorphism between $X$ and $Y$, we say that $X$
-and $Y$ are \define{Homeomorphic}. Importantly, this relation (``$X$
-and $Y$ are homeomorphic'') forms an equivalence relation.
 
 Caution: a continuous bijection \emph{is not necessarily a homeomorphism!}
 For example, consider the function $f\colon[0,1)\to S^{1}$ defined by
@@ -210,9 +469,131 @@ We could define a ``topological invariant'' to be an equivalence class
 of topological spaces (which share the same invariant or property).
 \end{remark}
 
+\begin{theorem}[Identity map is a homeomorphism]\mml{topgrp_1:20}\label{topgrp_1:20}
+Let $T$ be a topological space. Then the identity mapping $\id_{T}$ is
+a homeomorphism.
+\end{theorem}
+
+\begin{theorem}[Inverse of a homeomorphism is again a homeomorphism]\mml{tops_2:56}\label{tops_2:56}
+Let $S$, $T$ be topological spaces. Let $T$ be nonempty.
+If $f\colon S\to T$ is a homeomorphism, then $f^{-1}\colon T\to S$
+is a homeomorphism.
+\end{theorem}
+
+\begin{theorem}[Composing homeomorphisms yields a homeomorphism]\mml{tops_2:57}\label{tops_2:57}
+Let $T_{1}$, $T_{2}$, $T_{3}$ be nonempty topological spaces.
+If $f\colon T_{1}\to T_{2}$ and $g\colon T_{2}\to T_{3}$ are homeomorphisms,
+then $g\circ f\colon T_{1}\to T_{3}$ is a homeomorphism.
+\end{theorem}
+
+\begin{proof}
+We want to prove $g\circ f$ is continuous, $(g\circ f)^{-1}$ is continuous,
+and $g\circ f$ is a bijection.
+
+We know $f$ and $g$ are continuous. This establishes $g\circ f$ is continuous.
+
+We know $f$ and $g$ are bijections. Hence $g\circ f$ is a bijection.
+
+We know $(g\circ f)^{-1}=f^{-1}\circ g^{-1}$, and we know that
+$f^{-1}$ is continuous and $g^{-1}$ is continuous.
+Hence $(g\circ f)^{-1}$ is continuous.
+\end{proof}
+
+\begin{definition}[Predicate ``are homeomorphic'' among topological spaces]
+When there exists a homeomorphism between $X$ and $Y$, we say that $X$
+and $Y$ are \define{Homeomorphic}. Importantly, we will later prove
+this relation (``$X$ and $Y$ are homeomorphic'') forms an equivalence relation.
+\end{definition}
+
+\begin{theorem}[Homeomorphic is a reflexive relation]\mml{borsuk_3:lm1}
+Let $T$ be a topological space. Then $T$ is homeomorphic to $T$.
+\end{theorem}
+
+\begin{proof}
+This follows immediately from Theorem~\ref{topgrp_1:20}.
+\end{proof}
+
+\begin{theorem}[Homeomorphic is a symmetric relation among spaces]\mml{borsuk_3:lm2}
+Let $S$, $T$ be topological spaces. If $S$ is homeomorphic to $T$,
+then $T$ is homeomorphic to $S$.
+\end{theorem}
+
+\begin{proof}
+Let $f\colon S\to T$ be a homeomorphism. Then $f^{-1}\colon T\to S$ is
+a homeomorphism by Theorem~\ref{tops_2:56}. Hence the result.
+\end{proof}
+
+\begin{theorem}[Homeomorphic is a transitive relation among spaces]\mml{borsuk_3:3}
+Let $T_{1}$, $T_{2}$, $T_{3}$ be topological spaces.
+If $T_{1}$ is homeomorphic to $T_{2}$, and $T_{2}$ is homeomorphic to $T_{3}$,
+then $T_{1}$ is homeomorphic to $T_{3}$.
+\end{theorem}
+
+\begin{proof}
+Let $f\colon T_{1}\to T_{2}$ and $g\colon T_{2}\to T_{3}$ be homeomorphisms.
+Then $g\circ f\colon T_{1}\to T_{3}$ is a homeomorphism by
+Theorem~\ref{tops_2:57}. Hence the result.
+\end{proof}
+
+\begin{remark}[``Are homeomorphic'' is an equivalence relation of topological spaces]
+We have established in these previous three theorems that ``are
+homeomorphic'' is a symmetric, reflexive, transitive predicate of two
+topological spaces.
+\end{remark}
+
+\begin{definition}[Embedding of a space]\mml{compact1:def 7}
+Let $X$ and $Y$ be topological spaces.
+Let $f\colon X\to Y$ be a function.
+We say that $f$ is an \define{Embedding} if $f$ is a homeomorphism
+between $X$ and $f(X)$.
+\end{definition}
+
+\begin{theorem}[Inclusion mapping is an embedding]\mml{compact1:3}
+Let $X$ be a subspace of $Y$.
+Then the inclusion mapping (\S\ref{yellow_9:def 1}) $\incl\colon X\into Y$ is an embedding.
+\end{theorem}
+
+\section{Connected Spaces}
+
+\begin{definition}[Separated subsets of a topological space]\mml{connsp_1:def 1}
+Let $T$ be a topological space. Let $A$, $B$ be subsets of $T$.
+We say $A$ and $B$ \define{are separated} if $\closure{A}\cap B=\emptyset$
+and $A\cap\closure{B}=\emptyset$.
+\end{definition}
+
+\begin{theorem}[Separated open subsets]\mml{connsp_1:3}
+Let $T$ be a topological space.
+Let $A$, $B$ be open subsets of $T$.
+If they cover $T=A\cup B$ and are disjoint $A\cap B=\emptyset$,
+then $A$ and $B$ are separated.
+\end{theorem}
+
+\begin{definition}[Connected space]\mml{connsp_1:def 2}
+Let $T$ be a topological space.
+We say $T$ is \define{Connected} if for any subsets $A$ and $B$ of $T$
+which cover $T=A\cup B$ and also with $A$ and $B$ are separated, then
+either $A=\emptyset$ or $B=\emptyset$.
+
+If $T$ is not connected, then we say $T$ is \define{Disconnected} and
+we call $A$ and $B$ a \define{Separation Pair} of $T$. We can always
+describe $T$ as the union of connected disjoint subspaces called the
+\define{Connected Components} of $T$. (Connected spaces have one
+connected component.)
+\end{definition}
+
+\begin{remark}[Separation]
+We will often want to consider different ``degrees'' of
+``separation-ness'' for a topological space. For example, can any two
+disjoint points be contained by two disjoint open subsets?
+
+Or if we have a point $x$ and an open subset $U$ such that $x\notin U$,
+can we find open subsets $O_{1}$ and $O_{2}$ such that $x\in O_{1}$
+and $U\propersubset O_{2}$ and $O_{1}\cap O_{2}=\emptyset$?
+\end{remark}
+
 %%% Closures of a set
 
-\begin{definition}[Closure of a subset]
+\begin{definition}[Closure of a subset]\mml{pre_topc:def 7}
 Let $T$ be a topological space, let $A\subset T$ be a subset of $T$.
 We define the term the \define{Closure of $A$} to be the subset
 $\closure{A}$ of $T$ such that
@@ -225,14 +606,13 @@ Let $T$ be a topological space, let $A$ and $B$ be subsets of $T$.
 \begin{enumerate}
 \item\textsc{Projectivity:} We have $\closure{\closure{A}}=\closure{A}$.
 \item We have $\closure{A}$ be a closed subset of $T$.
-\item We have $A\subset\closure{A}$.
-\item If $A\subset B$, then $\closure{A}\subset\closure{B}$.
-\item We have $\closure{A\cup B}=\bigl(\closure{A}\bigr)\cup\bigl(\closure{B}\bigr)$.
-\item We have $\closure{A\cap B}=\bigl(\closure{A}\bigr)\cap\bigl(\closure{B}\bigr)$.
+\item\mml{pre_topc:18} We have $A\subset\closure{A}$.
+\item\mml{pre_topc:19} If $A\subset B$, then $\closure{A}\subset\closure{B}$.
+\item\mml{pre_topc:20} We have $\closure{A\cup B}=\bigl(\closure{A}\bigr)\cup\bigl(\closure{B}\bigr)$.
+\item\mml{pre_topc:21} We have $\closure{A\cap B}\subset\bigl(\closure{A}\bigr)\cap\bigl(\closure{B}\bigr)$.
 \item\mml{tops_1:5} If $B$ is closed and $A\subset B$, then $\closure{A}\subset B$.
 \end{enumerate}
 \end{theorem}
-
 
 \begin{definition}[$T_{0}$, $T_{1}$, $T_{2}$, regular, normal topological spaces]\mml{pre_topc:def 8-14}
 Let $T$ be a topological space.
@@ -279,7 +659,7 @@ nor do we see $T_{4}$ much either (we often see ``normal $T_{1}$'').
 \end{remark}
 
 \begin{example}[Empty topological space is $T_{0}$]
-The empty topological space is $T_{0}$.
+The empty topological space is $T_{0}$. (This is a fact registered in \texttt{pre\_topc}.)
 
 \begin{proof}[Proof sketch]
 Let $T$ be a topological space. Assume $T$ is empty.
@@ -290,7 +670,7 @@ contradiction), which implies the result by the explosion principle.
 \end{proof}
 \end{example}
 
-\begin{theorem}[Relation among these properties]
+\begin{theorem}[Relation among these properties]\mml{pre_topc}
 Let $T$ be a topological space. We see the following holds:
 \begin{enumerate}
 \item If $T$ is $T_{1}$, then $T$ is $T_{0}$.

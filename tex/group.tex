@@ -1,0 +1,113 @@
+%%
+%% group.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-08-07T08:16:35-0700
+%% Last update 2025-08-07T08:16:35-0700
+%% 
+
+\chapter{Group Theory}
+
+\section{Groups}
+
+\begin{definition}[Multiplicative magma]
+A \define{Multiplicative Magma} (or just \emph{Magma}) is a structure
+$M=\structure{U,\star}$ extending a 1-sorted structure with a
+\define{multiplication} operator $\star\colon U\times U\to U$.
+
+We will often write $ab$ instead of $a\star b$, or freely use variants
+like $a\cdot b$ or $a\bullet b$. We may also write the magma as a
+subscript to the binary operator (i.e., write $a\star_{M}b$ to stress
+$\star$ is the binary operator of $M$).
+\end{definition}
+
+\begin{definition}[Unital magmas]\mml{group_1:def 1}
+Let $M$ be a multiplicative magma. We call $M$ \define{Unital}
+when there exists an element $e\in M$ such that for all elements $h\in M$
+we have $h\star e=h$ and also $e\star h=h$.
+\end{definition}
+
+\begin{definition}[Group-like magmas]\mml{group_1:def 2}
+Let $M$ be a multiplicative magma. We call $M$ \define{Group-like}
+when there exists an element $e\in M$ such that for all elements $h\in M$
+we have
+\begin{enumerate}
+\item $h\star e=h$, and
+\item $e\star h=h$, and
+\item there exists an element $g\in M$ such that $h\star g=e$ and also
+  $g\star h=e$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Associative magmas]\mml{group_1:def 3}
+Let $M$ be a multiplicative magma. We call $M$ \define{Unital}
+when for all $x,y,z\in M$ we have $(x\star y)\star z=x\star(y\star z)$.
+\end{definition}
+
+\begin{definition}[Group]\mml{group_1}
+We see that a \define{Group} is a Group-like associative non-empty
+multiplicative magma.
+\end{definition}
+
+\begin{theorem}\mml{group_1:1}
+Let $M$ be a nonempty magma. Let $r$, $s$, $t$ be elements of $S$.
+If $(r\star s)\star t=r\star(s\star t)$ and there exists an element
+$e\in M$ such that for all $s'\in M$ we have $s'\star e=s'$ and
+$e\star s'=s'$ and there exists an $s''\in M$ such that $s'\star s''=e$
+and $s''\star s'=e$, then $M$ is a group.
+\end{theorem}
+
+\begin{theorem}\mml{group_1:3}
+The magma $\structure{U=\RR,\star=+_{\RR}}$ is associative Group-like.
+\end{theorem}
+
+\begin{definition}\mml{group_1:def 4}
+Let $G$ be a unital magma. We define the term $1_{G}$ to be the
+element of $G$ such that for all $h\in G$ we have $h\star1_{G}=h$ and
+$1_{G}\star h=h$.
+\end{definition}
+
+\begin{definition}[Notation for inverse of element in group]\mml{group_1:def 5}
+Let $G$ be a group, let $h\in G$. We will write $h^{-1}$ for the
+element of $G$ such that $h\star h^{-1}=1_{G}$ and $h^{-1}\star h=1_{G}$.
+\end{definition}
+
+\begin{theorem}\mml{group_1:5-10}
+Let $G$ be a group, let $f$, $g$, $h\in G$ be elements of $G$. Then
+all of the following hold:
+\begin{enumerate}
+\item If $h\star g=1_{G}$ and $g\star h=1_{G}$, then $g=h^{-1}$
+\item If $h\star g=h\star f$ or $g\star h=f\star h$, then $g=f$
+\item If $h\star g=h$ or $g\star h=h$, then $g=1_{G}$.
+\item We have $1_{G}^{-1}=1_{G}$.
+\item If $h^{-1}=g^{-1}$, then $h = g$
+\item If $h^{-1}=1_{G}$, then $h=1_{G}$.
+\end{enumerate}
+\end{theorem}
+
+\vfill\break
+\begin{theorem}\mml{group_1:12-20}
+Let $G$ be a group, let $f$, $g$, $h\in G$ be elements of $G$. Then
+all of the following hold:
+\begin{enumerate}
+\item If $h\star g=1_{G}$, then $h=g^{-1}$ and $g=h^{-1}$
+\item We have $h\star f=g$ iff $f=h^{-1}\star g$
+\item $f\star h=g$ iff $f=g\star h^{-1}$
+\item For any elements $x$, $y\in G$ there exists a $z\in G$ such that
+  $x\star z=y$.
+\item For any elements $x$, $y\in G$ there exists a $z\in G$ such that
+  $z\star x=y$.
+\item $(h\star g)^{-1}=g^{-1}\star h^{-1}$
+\item $g\star h=h\star g$ iff $(g\star h)^{-1}=g^{-1}\star h^{-1}$
+\item $g\star h=h\star g$ iff $g^{-1}\star h^{-1}=h^{-1}\star g^{-1}$
+\item $g\star h=h\star g$ iff $g\star h^{-1}=h^{-1}\star g$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}\mml{group_1:def 6}
+Let $G$ be a group. We define the \define{Inverse Operator} of $G$ to
+be the unary operator of $G$ denoted $\cdot_{G}^{-1}$ such that for
+all elements $h\in G$ we have $\cdot_{G}^{-1}(h)=h^{-1}$.
+\end{definition}

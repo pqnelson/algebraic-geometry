@@ -10,119 +10,6 @@
 
 \chapter{Ring Theory}
 
-\section{Basic Structures}
-
-\begin{definition}[Magmas]\mml{algstr_0}
-A (multiplicative) \define{Magma} is a one-sorted structure
-$\structure{U, \cdot}$ where $U$ is a set called its \define{Carrier}
-or \emph{Underlying Set}, and $\cdot\colon U\times U\to U$ is its
-\emph{binary operator} called its \define{Multiplication} operator
-(sometimes we will use $\star$ or $*$ or $\times$ for the binary
-operator). We will often drop the $\cdot$, writing $xy$ instead of
-$x\cdot y$.
-
-We call a magma $M$ \define{Commutative} if for all $x,y\in M$ we have
-$x\cdot y=y\cdot x$. In this case, it is common to use $+$ instead of
-$\cdot$ for the binary operator. In this case, we often refer to it as
-an \define{Additive Magma}.
-\end{definition}
-
-\begin{definition}[Monoids]\label{defn:monoid}
-A (multiplicative) \define{Monoid} is a multiplicative Magma $M$ such that
-\begin{itemize}
-\property{Associativity} for all $x,y,z\in U$ we have $x(yz)=(xy)z$
-\property{Unital} there exists an element $e\in U$ such that for all
-  $x\in U$ we have $xe=x$ and $ex=x$
-\end{itemize}
-Furthermore, the unital element $e$ is unique, so we will write
-$1_{M}$ for the unital element of a monoid $M$ when the binary
-operator is multiplication (and $0_{M}$ when the binary operator is
-addition). 
-
-It is often more natural to work with monoids than magmas for a
-variety of reasons. (Later, we will see that a monoid is really the
-same thing as a category with a single object.)
-\end{definition}
-
-\begin{remark}[Ambiguity in structure of a monoid]
-There is some ambiguity regarding the exact structure of a
-monoid. Specifically, is it a double $M=\structure{U,\cdot}$ with this
-unital axiom? Then $1_{-}$ is a ``term constructor'' in the ambient
-logic (it eats in a magma $M$ and spits out an element $1_{M}\in M$).
-
-On the other hand, we could define a monoid to be a triple
-$M=\structure{U,\cdot,1_{U}}$ and have the extra element $1_{U}\in U$ obey the
-unital condition. What could go wrong here? Well, an ordered pair is
-not an ordered triple, so a monoid could not also be a magma (they are
-different objects in ``mathematical reality'').
-
-Thanks to the invention of proof assistants, we have much experience
-exploring which formalization reflects mathematical practice, and it
-appears the former should be preferred: using ``the smallest structure possible''
-has its benefits. Most relevant for us, every monoid \emph{really is}
-a magma.
-\end{remark}
-
-\begin{definition}[Groups and Inverse Operator]\mml{group_1}
-A \define{Group} is a Monoid $G$ such that
-\begin{itemize}
-\property{Invertibility} For each $x\in G$, there exists a $y\in G$
-  such that $xy=1_{G}$ and $yx=1_{G}$.
-\end{itemize}
-Associativity makes the element $y$ unique, so we will write this as
-$x^{-1}$. The mapping on $G$ sending $x\mapsto x^{-1}$ is called the
-\define{Inverse Operator} of $G$.
-\end{definition}
-
-\begin{definition}[Loops Structure]\mml{algstr_0}
-Following the tradition of Polish logicians, we will define a
-\define{Multiplicative Loop Structure} is a multiplicative magma which
-is also a one structure $\structure{U,\cdot,1_{U}}$.
-
-An \define{Additive Loop Structure} is an additive magma which is also a zero
-structure $\structure{U,+,0_{U}}$.
-
-A (multiplicative) Loop is a (multiplicative) Loop Structure which is
-unital and invertible. The One field of the Loop Structure is the
-multiplicative identity element.
-\end{definition}
-
-\begin{definition}[Ringoid, double magma, and double loop structures]\mml{algstr_0}
-A \define{Double Magma Structure} is a structure $D=\structure{U,+,\cdot}$
-which is both a multiplicative magma and an additive magma.
-
-A \define{Ringoid Structure} 
-is a double magma structure and a zero structure $R=\structure{U,\cdot,+,0_{U}}$ which is
-a magma in $U$ and $\cdot$, adjoined with a binary operator $+\colon U\times U\to U$
-called \emph{Addition},
-and a ``zero element'' $0_{U}\in U$.
-
-A \define{Double Loop Structure} is a Ringoid which is also a multiplicative
-loop, i.e., it is a structure $\structure{U,\cdot,+,0_{U},1_{U}}$. 
-\end{definition}
-
-\begin{definition}[Pointed and Absorption magmas and monoids]
-We define an \define{Magma with Zero} to consist of the structure
-$M=\structure{U,\cdot,0_{U}}$. We further call it an \define{Absorption Magma}
-if it is such that
-\begin{itemize}
-\property{Absorption property} for all $x\in M$, we have
-  $x\cdot0_{U}=0_{U}$ and $0_{U}\cdot x=0_{U}$.
-\end{itemize}
-We define a \define{Monoid with Zero} to be an associative unital
-magma with zero. Furthermore, an \define{Absorption Monoid} to be an
-absorption magma which is unital and associative.
-\end{definition}
-
-\begin{example}[Real numbers]
-The real numbers forms a one-sorted structure $\structure{U=\RR}$,
-a zero structure $\structure{U=\RR,0_{U}=0}$, a one structure
-$\structure{U=\RR,1_{U}=1}$, a zero-one structure, a multiplicative magma
-structure under multiplication, an additive magma structure under
-addition. Hence it also gives us a double magma, a double loop, a ringoid,
-a pointed magma, and every other structure we have defined so far.
-\end{example}
-
 \section{Rings}
 
 \begin{definition}[Distributive double magmas]\mml{vectsp_1:def 7}\label{defn:double-magma:distributive}
@@ -367,12 +254,14 @@ A ring endomorphism which is also an isomorphism is called a
 \end{definition}
 
 \begin{theorem}[Ring morphisms never map one to zero]
-Let $R_{1}$, $R_{2}$ be rings. Let $f\colon R_{1}\to R_{2}$ be a ring
-morphism. Then $f(1)\neq0$.
+Let $R_{1}$, $R_{2}$ be nondegenerate rings.
+Let $f\colon R_{1}\to R_{2}$ be a ring morphism.
+Then $f(1)\neq0$.
 \end{theorem}
 
 \begin{example}%[Identity ring automorphism]
 Let $R$ be a ring. Then $\id_{R}\colon R\to R$ is a ring morphism.
+(This is a fact registered in \texttt{ringcat1}.)
 \end{example}
 
 \begin{example}[Automorphism of field of complex numbers]
@@ -406,10 +295,16 @@ matrices over the integers to the integers $M_{2}(\ZZ)\to\ZZ$.
 \end{enumerate}
 \end{example}
 
-\begin{example}[Existence of canonical ring morphism $\ZZ\to R$]
+\begin{example}[Existence of canonical ring morphism $\ZZ\to R$]\mml{ring_3:def 8}
 Let $R$ be any unital ring. There exists a canonical ring morphism
 $f\colon\ZZ\to R$ defined by $f(1_{\ZZ})=1_{R}$.
 \end{example}
+
+\begin{theorem}[Uniqueness of canonical ring morphism $\ZZ\to R$]\mml{ring_3:84}
+Let $R$ be any unital ring.
+Let $f\colon\ZZ\to R$ be a ring morphism.
+Then $f$ is equal to the canonical ring morphism from $\ZZ$ to $R$.
+\end{theorem}
 
 \begin{remark}[Unit-preserving condition arguably un-natural]
 It is arguable that the condition $f(1)=1$ is too much, because unital
@@ -417,6 +312,13 @@ rings are less ``natural'' than possibly-nonunital rings. For example,
 the kernel of a unital ring morphism is not a unital ring. But the
 kernel of a unital ring morphism \emph{is} an Abelian subgroup.
 \end{remark}
+
+\begin{theorem}[Composing ring morphisms yields a ring morphism]\mml{ringcat1:1}
+Let $R_{1}$, $R_{2}$, $R_{3}$ be non empty double loop structures.
+Let $f\colon R_{1}\to R_{2}$ and $g\colon R_{2}\to R_{3}$ be additive,
+multiplicative, unit-preserving functions. Then $g\circ f\colon R_{1}\to R_{3}$
+is an additive, multiplicative, unit-preserving function.
+\end{theorem}
 
 \subsection{Subrings}
 
@@ -431,17 +333,34 @@ of $R$ if we also have $1_{S}=1_{R}$ in addition to the preceding
 properties. 
 \end{definition}
 
-\begin{example}
-We see $\ZZ$ is a subring of $\RR$, and $\RR$ is a subring of $\CC$,
-and $\CC$ is a subring of $\HH$.
-\end{example}
-
-\begin{theorem}[Subring is a transitive notion]
+\begin{theorem}[Subring is a transitive notion]\mml{algnum_1:1}
 If $R_{1}$ is a subring of $R_{2}$, and $R_{2}$ is a subring of
 $R_{3}$, then $R_{1}$ is a subring of $R_{3}$.
 \end{theorem}
 
-\begin{definition}[Center of a ring]
+\begin{example}\mml{algnum_1:3,4 liouvil2:3,4,5 ring_3:47}
+We see $\ZZ$ is a subring of $\QQ$, and $\QQ$ is a subring of $\RR$,
+and $\RR$ is a subring of $\CC$,
+and $\CC$ is a subring of $\HH$.
+
+Consequently, we see that $\ZZ$ is a subring of $\CC$, $\QQ$ is a
+subring of $\CC$, $\ZZ$ is a subring of $\RR$. These facts follow from
+the transitivity of subrings.
+\end{example}
+
+\begin{theorem}\mml{field_6:13}
+Let $R$ be a ring. Let $R_{1}$, $R_{2}$ be subrings of $R$.
+Then $R_{1}$ is a subring of $R_{2}$ if and only if the underlying
+sets satisfy $U(R_{1})\subset U(R_{2})$.
+\end{theorem}
+
+\begin{theorem}\mml{field_6:12}
+Let $R_{1}$, $R_{2}$ be [strict] rings.
+If $R_{1}$ is a subring of $R_{2}$ and $R_{2}$ is a subring of
+$R_{1}$, then $R_{1}=R_{2}$.
+\end{theorem}
+
+\begin{definition}[Center of a ring]\mml{weddwitt:def 4}
 Let $R$ be a (possibly non-unital) ring. We define the \define{Center} of $R$
 to be the commutative Subring of $R$ denoted $Z(R)$ such that
 for $z\in R$ we have $z\in Z(R)$ iff for all $x\in R$ we have $zx=xz$.
@@ -452,6 +371,18 @@ everything in $R$.
 \begin{theorem}
 The center of a skew-field is a field.
 \end{theorem}
+
+(This is a registered fact in \texttt{WEDDWITT}.)
+
+\begin{theorem}[Wedderburn's theorem]\mml{weddwitt:38}
+Every finite Skew-field is commutative (i.e., a field).
+\end{theorem}
+
+\begin{definition}[Image of a ring morphism]\mml{ring_2:def 6}
+Let $R$, $S$ be rings. Let $f\colon R\to S$ be a ring morphism.
+Then the \define{Image} of $f$ is a [strict] Subring of $S$ denoted $\Im(f)$
+whose underlying set is $\rng(f)$.
+\end{definition}
 
 \section{Formal Polynomials}
 
@@ -658,7 +589,6 @@ formal power series in unknowns $X$ and coefficients in $R$.
 \end{enumerate}
 \end{theorem}
 
-
 \section{Ideals}
 
 \begin{definition}[Ideals of a ring]\mml{ideal_1}
@@ -686,8 +616,8 @@ We call $J$ a \define{Right ideal} of $R$ if
 
 %\medbreak%
 \noindent%
-We call $J$ a \define{Two-sided ideal} of $R$ if it is both a right
-ideal of $R$ and a left ideal of $R$.
+We call $J$ a \define{Two-sided ideal} (or simply an \emph{Ideal}) of
+$R$ if it is both a right ideal of $R$ and a left ideal of $R$.
 \end{definition}
 
 \begin{theorem}[Left ideals are right ideals over commutative rings]
@@ -698,4 +628,19 @@ Let $R$ be a commutative ring.
 \end{enumerate}
 Therefore, we will just speak of \define{Ideals} of a commutative ring.
 \end{theorem}
+(This is a fact registered in \texttt{ideal\_1}.)
 
+\begin{definition}[Quotient ring]\mml{ring_1:def 6}
+Let $R$ be a nonempty (possibly degenerate) Ring.
+Let $I$ be an ideal of $R$.
+We define the \define{Quotient Ring} of $R$ by $I$ to be the strict
+Ring $R/I$ whose underlying set consists equivalence classes of the form
+$x + I$ for each $x\in R$, addition is defined by $(a+I)+(b+I)=(a+b)+I$,
+multiplication is defined by $(a+I)(b+I)=ab+I$, the zero of it is $0_{R/I}=0+I$,
+and the one of it is $1_{R/I}=1_{R}+I$.
+\end{definition}
+
+\begin{theorem}[Every nonzero ring has a maximal ideal (Krull)]\mml{ring_1}
+Let $R$ be a nondegenerate Ring.
+There exists a maximal ideal of $R$.
+\end{theorem}

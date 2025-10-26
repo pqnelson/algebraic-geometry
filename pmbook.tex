@@ -10,37 +10,10 @@
 
 %% Poor man's "book class" macros
 
-\input {pmlmac}
+% ASSUMES you have you loaded pmlmac.tex
 \makeatletter
 
 
-%% Poor man's \emph
-\newif\if@emph \@emphfalse
-\def\em{\it} % because sometimes it may be necessary to switch to \sl
-\def\toggle@emph{\if@emph\@emphfalse\else\@emphtrue\fi}
-\def\emph#1{{\if@emph\rm\else\em\fi\toggle@emph #1\/}}
-
-% usual font manipulations
-\def\textit#1{{\it #1\/}}
-\def\textsl#1{{\sl #1\/}}
-\def\textbf#1{{\bf #1}}
-\def\texttt#1{{\tt #1}}
-\def\textrm#1{{\rm #1}}
-\font\tensf=cmss10
-\def\textsf#1{{\tensf #1}}
-\def\mathcal#1{{\cal #1}}
-
-
-\font\sften=cmss10
-\font\sfseven=cmss7
-\font\sffive=cmss5
-\newfam\sffam
-\textfont\sffam=\sften
-\scriptfont\sffam=\sfseven
-\scriptscriptfont\sffam=\sffive
-\def\sf{\fam\sffam\sften}
-\def\textsf#1{{\sf#1}}
-\def\text#1{{\rm #1}}
 
 %% \font\sstext=ecss1000
 %% \font\sssub=ecss1000 at 7pt
@@ -122,6 +95,8 @@
 \@addtoreset{equation}{chapter}
 \def\theequation{\thechapter.\arabic{equation}}
 
+
+\font\titlefont=cmssbx10 scaled\magstep2
 
 \def\s@chapter#1{\vfill\eject%\refstepcounter{chapter}
     \leftline{\twelvess \spaceskip=10pt \def\\{\kern1pt}\phantom{Chapter}}
@@ -205,6 +180,13 @@
   \vrule\hfil}}
 \def\qedsymbol{\openbox}
 
+% Knuth's taocpmac.tex uses the following for his qedsymbol equivalent:
+\def\slug{\hbox{\kern1.5pt\vrule width2.5pt height6pt depth1.5pt\kern1.5pt}}
+% This one looks a little better...
+\def\slugg{\hbox{\kern1.25pt\vrule width3pt height6pt depth1.5pt\kern1.25pt}}
+
+
+% \def\qedsymbol{\sluggg}
 
 \def\qed{%
   \leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill
@@ -246,31 +228,8 @@
   \def\impliedby{\;\Longlefhtarrow\;}
 \fi
 
-%%
-%% Lists
-%%
-%\newenvironment{itemize}{\def\item{\par}}{\par}
-\def\itemize{\smallbreak%
-  %\advance\leftskip\parindent%
-  %\def\item{\par\noindent$\bullet$\enspace\@ignoretrue\ignorespaces}%
-  \def\@item[##1]{\par\noindent\hang\textindent{##1}}%
-  \def\@@item{\@item[$\bullet$]}%
-  \def\item{\@ifnextchar[\@item\@@item}%\par\noindent\hang\textindent{$\bullet$}}%
-}
-\def\enditemize{\@ignoretrue\smallbreak}%\noindent\ignorespaces}
+\def\property#1{\item\textsc{#1\@addpunct{:}}\ \ignorespaces}
 
-\newcounter{enumi}
-\def\enumerate{\smallbreak\setcounter{enumi}{0}%
-  \def\item{\par\refstepcounter{enumi}\noindent\hang\textindent{(\theenumi)}}%
-}
-\def\endenumerate{\@ignoretrue\smallbreak}%\noindent}
-
-\def\textsc#1{{\tensc #1}}
-\def\property#1{\item\textsc{#1\@addpunct{:}}}
-
-
-
-  
 \usepackage{url}
 
 \makeatother

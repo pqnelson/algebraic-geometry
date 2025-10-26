@@ -3,6 +3,7 @@
 *.log
 *.toc
 *.dvi
+*.ps
 *.pdf
 # PM LaTeX
 toc.tex
@@ -10,3 +11,7 @@ toc2.tex
 # Bibtex stuff
 *.blg
 *.bbl
+# Images
+img.[0-9]*
+*.mpx
+img/demo.tex
