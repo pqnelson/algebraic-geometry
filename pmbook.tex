@@ -39,6 +39,16 @@
 \def\bbb{\fam=\bbbfam}
 \def\mathbb#1{{\bbb#1}}
 
+% fraktur
+\newfam\frakfam
+\font\frakten=eufm10
+\font\frakseven=eufm7
+\font\frakfive=eufm5
+\textfont\frakfam=\frakten
+\scriptfont\frakfam=\frakseven
+\scriptscriptfont\frakfam=\frakfive
+\def\frak{\fam=\frakfam}
+\def\mathfrak#1{{\frak#1}}
 
 %%
 %% Table of contents
