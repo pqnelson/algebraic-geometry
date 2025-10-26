@@ -181,6 +181,12 @@
 
 \def\thetheorem{\thesection.\arabic{theorem}}
 
+% \earmuffed\begin{theorem}...\end{theorem} will place Bourbaki
+% earmuffs before the theorem number, and after the theorem
+% statement. This works for **any** theorem type.
+\newif\ifearmuffed\earmuffedfalse
+\def\earmuffed{\earmuffedtrue}
+
 \def\theorembreak{\smallbreak}
 % \newtheorem{environment-name}{Printed Name}{body font}
 % produces an environment with a mandatory argument (in brackets) for
@@ -189,13 +195,16 @@
 % Without the optional slogan, the body of the theorem will start on
 % the same line as the theorem heading.
 \def\newtheorem#1#2#3{
-  \expandafter\gdef\csname @#1\endcsname[##1]{% \begin{theorem}
+  \expandafter\gdef\csname @#1\endcsname[##1]{% \begin{theorem}[...]
     \theorembreak% \medbreak
-    \refstepcounter{theorem}\noindent{\bf \thetheorem} {\textsc{#2:}} {\sl##1\@addpunct{.}}\hfill\break#3\ignorespaces%
+    \refstepcounter{theorem}%
+    \noindent\ifearmuffed\llap{\future@start}\fi{\bf \thetheorem} {\textsc{#2:}} {\sl##1\@addpunct{.}}\hfill\break#3\ignorespaces%
   }
-  \expandafter\gdef\csname @@#1\endcsname{% \begin{theorem}
+  \expandafter\gdef\csname @@#1\endcsname{% \begin{theorem} % no bracket
     \theorembreak% \medbreak
-    \refstepcounter{theorem}\noindent{\bf \thetheorem} {\textsc{#2:}} #3\ignorespaces%
+    \refstepcounter{theorem}%
+    \ifearmuffed\llap{\future@start}\fi%
+    \noindent{\bf \thetheorem} {\textsc{#2:}} #3\ignorespaces%
   }
   \expandafter\gdef\csname #1\endcsname{
     \def\unbracketed@thm{\csname @@#1\endcsname}
@@ -209,10 +218,14 @@
   %%% End theorem
   \ifLaTeX
   \expandafter\gdef\csname end#1\endcsname{% \end{theorem}
+    \ifearmuffed\llap{\future@end}\fi%
+    \global\earmuffedfalse%
     \ifdim\lastskip<\bigskipamount \removelastskip\penalty55\smallskip\fi%
   }
   \else
   \expandafter\gdef\csname end#1\endcsname{% \end{theorem}
+    \ifearmuffed\llap{\future@end}\fi%
+    \global\earmuffedfalse%
     \@ignoretrue\smallbreak%\medbreak%
   }
   \fi%
@@ -334,7 +347,6 @@
 
 % for Bbb, see https://tex.stackexchange.com/a/236331/14751
 \input amstex
-\loadmsbm
 
 \catcode`@=11
 \font@\tenbbold=bbold10
@@ -348,4 +360,5 @@
  \expandafter\nonmatherr@\expandafter\xbb\fi}
 \def\xbb@#1{{\xbb@@{#1}}}
 \def\xbb@@#1{\noaccents@\fam\bboldfam\relax#1}
+
 \let\mathbb\Bbb
