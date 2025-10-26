@@ -130,6 +130,39 @@ We see that (by right zeroed and distributivity)
 Hence the result by Definition of right-complementable.
 \end{proof}
 
+\begin{definition}[Zero-divisor]\mml{ringfrac:def 1}
+Let $R$ be a ring, let $x\in R$ be nonzero $x\neq 0$.
+We call $x$ a \define{Zero-Divisor} if there exists a $y\in R$ such
+that $y\neq0$ and either $xy=0$ or $yx=0$.
+
+If $x$ is not a zero-divisor, we call it a \emph{nonzero-divisor}.
+\end{definition}
+
+\begin{definition}[Domains and Integral Domains]\mml{vectsp_2}
+A \define{Domain} is a non-degenerate ring $R$ such that
+\begin{itemize}
+\property{Zero-product property}\mml{vectsp_2:def 1} For any $x$, $y\in R$, if $xy=0$,
+then either $x=0$ or $y=0$. (In other words, there are no zero-divisors.)
+\end{itemize}
+Furthermore, if $R$ is a commutative Domain, then we call it an
+\define{Integral Domain}.
+\end{definition}
+
+\begin{remark}[History of integral domains]
+David Hilbert's \emph{Zahlbericht} (\S31, 1897) uses the phrase ``\German{Integrit\"{a}tsbereich}''
+(which is the German word for ``integral domain''), but the notion
+seems to have appeared earlier in Kronecker's \emph{Grundz\"{u}ge einer arithmetischen Theorie der algebraischen Gr\"{o}ssen}
+(1882) when discussing ``\German{Rationalit\"{a}ts-Bereich}'' as well
+as Dedekind's Supplement XI [\emph{\"{U}ber die Theorie der ganzen algebraischen Zahlen}] to Dirichlet's \emph{Vorlesungen \"{u}ber Zahlentheorie}
+(republished in volume 3 of Dedekind's collected works). Hilbert cites
+both Kronecker and Dedekind for using the notion implicitly, but
+Hilbert named it. Emmy Noether, to whom all Mathematicians owe a debt
+we can never hope to repay, cast integral domains in the more
+recognizable form in her paper ``Idealtheorie in Ringbereichen''
+(\journal[Math. Ann.]{Mathematische Annalen} \volume{83} (1921) 24--66).
+% https://math.stackexchange.com/a/46026/31693
+\end{remark}
+
 \begin{definition}[Almost left invertible]\mml{vectsp_1:def 9}
 Let $M$ be a multiplicative loop with zero structure.
 We can define the attribute calling $M$ \define{Almost Left Invertible} 
@@ -137,13 +170,7 @@ if for every $x\in M$ such that $x\neq 0_{M}$ there exists a $y\in M$
 such that $yx=1_{M}$.
 \end{definition}
 
-\begin{definition}[Zero-divisor]
-Let $R$ be a ring, let $x\in R$ be nonzero $x\neq 0$.
-We call $x$ a \define{Zero-Divisor} if there exists a $y\in R$ such
-that $y\neq0$ and either $xy=0$ or $yx=0$.
-\end{definition}
-
-\begin{definition}[Skew-field]\mml{vectsp_1}
+\begin{definition}[Skew-field or division rings]\mml{vectsp_1}
 We define a \define{Skew-field} (or \emph{Division Ring}) to be a
 nondegenerate almost left invertible unital Ring.
 \end{definition}
@@ -232,7 +259,7 @@ $c_{n}\neq c_{k}$ for $n\neq k$.
 
 \subsection{Ring morphisms}
 
-\begin{definition}[Ring morphism, endomorphism, and isomorphism]\mml{quofield, ringcat1}
+\begin{definition}[Ring morphism, endomorphism, and isomorphism]\mml{quofield, ringcat1:def 1}
 Let $R_{1}$ and $R_{2}$ be rings. We define a \define{Ring Morphism}
 to be a function $f\colon R_{1}\to R_{2}$ such that
 \begin{itemize}
@@ -248,7 +275,7 @@ that it is multiplicative.
 When $R_{1} = R_{2}$, the ring morphism is referred to as a
 \define{Ring Endomorphism}.
 
-Furthermore, a \define{Ring Isomorphism} is a bijective ring morphism.
+Furthermore, a \define{Ring Isomorphism}\mml{mod_4:def 12} is a bijective ring morphism.
 A ring endomorphism which is also an isomorphism is called a
 \define{Ring Automorphism}.
 \end{definition}
@@ -261,8 +288,9 @@ Then $f(1)\neq0$.
 
 \begin{example}%[Identity ring automorphism]
 Let $R$ be a ring. Then $\id_{R}\colon R\to R$ is a ring morphism.
-(This is a fact registered in \texttt{ringcat1}.)
 \end{example}
+
+(This is a fact registered in \texttt{ringcat1} and \texttt{ring\_2}.)
 
 \begin{example}[Automorphism of field of complex numbers]
 Complex conjugation $\gamma\colon\CC\to\CC$, $\gamma(x+\I y)=x-\I y$,
@@ -295,11 +323,18 @@ matrices over the integers to the integers $M_{2}(\ZZ)\to\ZZ$.
 \end{enumerate}
 \end{example}
 
+\begin{definition}[$R$-homomorphic rings]\mml{ring_2:def 4}
+Let $S$ and $R$ be rings.
+We say $S$ is \define{$R$-Homomorphic} if there exists a ring morphism
+$f\colon R\to S$.
+\end{definition}
+
 \begin{example}[Existence of canonical ring morphism $\ZZ\to R$]\mml{ring_3:def 8}
 Let $R$ be any unital ring. There exists a canonical ring morphism
 $f\colon\ZZ\to R$ defined by $f(1_{\ZZ})=1_{R}$.
 \end{example}
 
+\earmuffed
 \begin{theorem}[Uniqueness of canonical ring morphism $\ZZ\to R$]\mml{ring_3:84}
 Let $R$ be any unital ring.
 Let $f\colon\ZZ\to R$ be a ring morphism.
@@ -319,6 +354,69 @@ Let $f\colon R_{1}\to R_{2}$ and $g\colon R_{2}\to R_{3}$ be additive,
 multiplicative, unit-preserving functions. Then $g\circ f\colon R_{1}\to R_{3}$
 is an additive, multiplicative, unit-preserving function.
 \end{theorem}
+
+\begin{definition}[Kernel of a ring morphism]\mml{vectsp10:def 9}
+Let $R$ and $S$ be rings. Let $f\colon R\to S$ be a ring morphism.
+We define the \define{Kernel} of $f$ to be a subset of $R$ equal to
+$\ker(f):=\{x\in R\mid f(x)=0\}$.
+\end{definition}
+
+\begin{remark}
+We can define the kernel more generally for any non-empty 1-sorted
+structure $R$ and any zero-structure $S$. The definition we just gave
+still holds (the kernel is the set of all elements mapped to zero).
+\end{remark}
+
+\begin{theorem}[Ring morphism is injective iff its kernel is zero]\mml{ring_2:12}
+Let $R$ be a ring. Let $S$ be an $R$-homomorphic ring.
+Let $f\colon R\to S$ be a ring morphism.
+Then $f$ is injective if and only if $\ker(f)=\{0\}$.
+\end{theorem}
+
+\begin{definition}[Isomorphic rings]\mml{quofield:def 23}
+Let $R$ and $S$ be nonempty double loop structures.
+We define the predicate, saying $R$ and $S$ \define{are isomorphic}
+if there exists a [ring] isomorphism $f\colon R\to S$.
+This is obvious reflexive (since the identity is an isomorphism of rings).
+\end{definition}
+
+\begin{theorem}[``Are isomorphic rings'' is a symmetric predicate]\mml{quofield:def 23}
+Let $R$ and $S$ be nonempty double loop structures.
+If $R$ is isomorphic to $S$, then $S$ is isomorphic to $R$.
+\end{theorem}
+
+\begin{proof}
+Let $f\colon R\to S$ be a ring isomorphism. We claim $f^{-1}\colon S\to R$
+is
+\begin{enumerate}
+\item a ring morphism (suffices to check
+  $f^{-1}(x+y)=f^{-1}(x)+f^{-1}(y)$, $f^{-1}(xy)=f^{-1}(x)f^{-1}(y)$, $f^{-1}(1)=1$), and
+\item surjective, and
+\item injective.
+\end{enumerate}
+Hence the result.
+\end{proof}
+
+\begin{theorem}[``Are isomorphic rings'' is transitive]\mml{ring_3:44}
+Let $R$, $S$, $T$ be nonempty double loop structures.
+If $R$ is isomorphic to $S$, and $S$ is isomorphic to $T$,
+then $R$ is isomorphic to $T$.
+\end{theorem}
+
+\begin{proof}
+Let $f\colon R\to S$ and $g\colon S\to T$ be the ring isomorphisms.
+We see that $g\circ f\colon R\to T$ is a ring morphism. We claim it is
+a ring isomorphism. We see that $g\circ f$ is both surjective and
+injective (since composing surjective functions is surjective, and
+composing injective functions is injective). Hence the result.
+\end{proof}
+
+\begin{remark}[``Are isomorphic rings'' forms an equivalence relation]
+The previous two theorems proves that ``are isomorphic rings'' forms a
+symmetric and transitive binary predicate, and we remarked when we
+defined the predicate that it is reflexive. This combines together to
+tell us we have an equivalence relation of rings.
+\end{remark}
 
 \subsection{Subrings}
 
@@ -618,6 +716,8 @@ We call $J$ a \define{Right ideal} of $R$ if
 \noindent%
 We call $J$ a \define{Two-sided ideal} (or simply an \emph{Ideal}) of
 $R$ if it is both a right ideal of $R$ and a left ideal of $R$.
+In this case, we write $J\ideal R$. When $J\neq R$, we write
+$J\properideal R$.
 \end{definition}
 
 \begin{theorem}[Left ideals are right ideals over commutative rings]
@@ -630,6 +730,36 @@ Therefore, we will just speak of \define{Ideals} of a commutative ring.
 \end{theorem}
 (This is a fact registered in \texttt{ideal\_1}.)
 
+\begin{theorem}[Kernels of ring morphisms are ideals]\mml{ring_2}
+Let $R$ be a nonempty double loop structure.
+Let $S$ be a ring. Let $f\colon R\to S$ be a ring morphism.
+Then $\ker(f)$ is an ideal of $R$.
+\end{theorem}
+
+\begin{theorem}[(Krull) Every nonzero ring has a maximal ideal]\mml{ring_1}
+Let $R$ be a nondegenerate Ring.
+There exists a maximal ideal of $R$.
+\end{theorem}
+
+(This is a registered fact in \texttt{RING\_1}.)
+
+\begin{proof}[Proof sketch]
+We consider the relation $\{(I,J)\mid I\properideal R, J\properideal R, I\subset J\}$.
+We see this is nonempty.
+There exists at least one chain to this relation.
+Then we use Zorn's lemma to find the maximal element of the chain.
+We see that it must be a maximal proper ideal of $R$.
+\end{proof}
+
+\begin{definition}[Prime and quasi-prime subsets]\mml{ring_1:def 1,2}
+Let $R$ be a nonempty multiplicative loop structure.
+Let $S\subset R$ be a subset.
+We call $S$ \define{Quasi-Prime} to mean: for any elements $a$ and $b$
+of $R$, if $ab\in S$, then either $a\in S$ or $b\in S$.
+
+If further $S\neq R$ is a proper subset, then we call $S$ \define{Prime}.
+\end{definition}
+
 \begin{definition}[Quotient ring]\mml{ring_1:def 6}
 Let $R$ be a nonempty (possibly degenerate) Ring.
 Let $I$ be an ideal of $R$.
@@ -640,7 +770,128 @@ multiplication is defined by $(a+I)(b+I)=ab+I$, the zero of it is $0_{R/I}=0+I$,
 and the one of it is $1_{R/I}=1_{R}+I$.
 \end{definition}
 
-\begin{theorem}[Every nonzero ring has a maximal ideal (Krull)]\mml{ring_1}
-Let $R$ be a nondegenerate Ring.
-There exists a maximal ideal of $R$.
+\begin{theorem}[Quotient of commutative ring by maximal ideal is skew-field]\mml{ring_1:21}
+Let $R$ be a non-degenerate commutative unital ring.
+Let $\mathfrak{m}\properideal R$ be a proper ideal of $R$. 
+Then $\mathfrak{m}$ is a maximal ideal if and only if the quotient ring $R/\mathfrak{m}$ is 
+a skew-field.
 \end{theorem}
+
+\begin{definition}[Canonical morphism from ring to quotient ring]\mml{ring_2:def 5}
+Let $R$ be a ring. Let $I\ideal R$ be an ideal.
+We define the \define{Canonical Morphism} of $I$ to be the surjective
+ring morphism $f\colon R\to R/I$ sending $x\in R$ to $x+I$.
+\end{definition}
+
+\begin{theorem}[Quotient ring $R/I$ is $R$-homomorphic]\mml{ring_2}
+Let $R$ be a ring. Let $I\ideal R$.
+We claim the quotient ring $R/I$ is $R$-homomorphic.
+\end{theorem}
+
+\begin{proof}
+Take the canonical morphism. Hence the result.
+\end{proof}
+
+\begin{definition}[Ideal generated by a set]\mml{ideal_1:def 14}
+Let $R$ be a nonempty double loop structure, let $S\subset R$ be some subset of $R$.
+We define the \define{(Two-Sided) Ideal Generated by} $S$ to be the
+Ideal $\langle S\rangle$ of $R$ such that
+\begin{itemize}
+\property{It contains $S$} $S\subset\langle S\rangle$, and
+\property{Smallest ideal containing $S$} For any ideal $I\ideal R$
+such that $S\subset I$, we have $\langle S\rangle\subset I$.
+\end{itemize}
+(We can similarly define ``the left-ideal generated by $S$''
+[\texttt{IDEAL\_1:def 15}] and ``the right-ideal generated by $S$''
+[\texttt{IDEAL\_1:def 16}] by replacing ``ideal'' with ``left-ideal''
+or ``right-ideal'' in the definition.)
+\end{definition}
+
+\begin{theorem}[Ideals generate themselves]\mml{ideal_1:44}
+Let $R$ be a nonempty double loop structure.
+Let $I\ideal R$ be an ideal of $R$.
+Then $\langle I\rangle=I$.
+\end{theorem}
+
+\begin{theorem}[Subsets generate subideals]\mml{ideal_1:57}
+Let $R$ be a nonempty double loop structure.
+Let $A$ and $B$ be subsets of $R$.
+If $A\subset B$, then the ideals they generate $\langle A\rangle\subset\langle B\rangle$.
+\end{theorem}
+
+\begin{theorem}[Elements of an ideal generate subideals]\mml{ring_2:4}
+Let $R$ be a commutative ring.
+Let $I\ideal R$ be an ideal.
+For any $x\in I$, we see $\langle x\rangle\subset I$.
+\end{theorem}
+
+\begin{definition}[Multiplying a subset by an element]\mml{ideal_1:def 18}
+Let $M$ be a nonempty multiplicative magma.
+Let $I\subset M$ be a subset of $M$.
+Let $a\in M$ be an element of $M$.
+We define the term $aI$ to be the subset of $M$ equal to $\{ai\in M\mid i\in I\}$.
+\end{definition}
+
+\begin{definition}[Adding two subsets together]\mml{ideal_1:def 19}
+Let $A$ be an additive magma.
+Let $I$ and $J$ be subsets of $A$.
+We define the term $I+J$ to be the subset of $A$ equal to
+$I+J:=\{(i+j)\in A\mid i\in I, j\in J\}$.
+\end{definition}
+
+\begin{definition}[Principal ideal]\mml{ideal_1:def 27}
+Let $R$ be a nonempty double loop structure.
+Let $I$ be an ideal of $R$.
+We say $I$ is \define{Principal} if there exists an element $x$ of $R$
+such that it generates $I = \langle x\rangle$.
+\end{definition}
+
+\begin{definition}[Principal ideal domains]\mml{ring_2}
+We define [the soft type of] a \define{Principal Ideal Domain} to be
+an integral domain $R$ such that
+\begin{itemize}
+\property{Ideals are principal}\mml{ideal_1:def 28} Every ideal
+$I\ideal R$ is principal, i.e., generated by a single element $x\in R$
+such that $I=\langle x\rangle$.
+\end{itemize}
+\end{definition}
+
+\begin{definition}[Radical of a subset of a double loop]\mml{ideal_1:def 24}
+Let $R$ be a nonempty well-unital double loop structure.
+Let $I$ be a subset of $R$.
+We define the \define{Radical} of $I$ to be the subset $\Radical{I}$
+of $R$ equal to $\Radical{I}:=\{a\in R\mid\exists n\in\NN\ldotp a^{n}\in I\}$.
+\end{definition}
+
+\begin{theorem}[Radical of an ideal is an ideal]\mml{ideal_1}
+Let $R$ be a well-unital associative commutative nonempty double loop structure.
+Let $I$ be an ideal of $R$.
+Then $\Radical{I}$ is an ideal of $R$.
+\end{theorem}
+
+(This is a registered fact in \texttt{ideal\_1}.)
+
+\begin{definition}[Finitely-generated ideal]\mml{ideal_1:def 25}
+Let $R$ be a nonempty double loop structure.
+Let $I$ be an ideal of $R$.
+We say $I$ is \define{Finitely-Generated} if there exists a finite
+subset $G\subset R$ such that it generates $I=\langle G\rangle$.
+\end{definition}
+
+\begin{definition}[Noetherian double loops]\mml{ideal_1:def 26}
+Let $R$ be a nonempty double loop structure.
+We say $R$ is \define{Noetherian} if every ideal of $R$ is finitely-generated.
+\end{definition}
+
+\begin{theorem}[Principal ideal domains are Noetherian]\mml{ideal_1:95}
+For any $R$ being a principal ideal domain,
+we see that $R$ is Noetherian.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+Let $R$ be a principal ideal domain. We want to show every ideal
+$I\ideal R$ is finitely-generated. But every ideal $I$ is principal,
+so it is generated by a singleton set. Singleton sets are finite sets.
+Therefore every ideal is generated by a finite set. Hence every ideal
+of $R$ is finitely-generated. (Hence $R$ is Noetherian.)
+\end{proof}

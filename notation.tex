@@ -33,8 +33,9 @@
 \Def\needs#1{}
 
 % Latin phrases should be italicized
-\Def\Latin#1{\textit{#1}}
-\Def\French#1{\textit{#1}}
+\Def\Latin#1{\textit{#1\/}}
+\Def\French#1{\textit{#1\/}}
+\Def\German#1{\textit{#1\/}}
 
 %% Constants like e, etc.
 \Def\I{{\rm i}}
@@ -89,8 +90,11 @@
 \Def\onto{\twoheadrightarrow}
 % \preimage{f}{A} = f^{-1}(A) for the preimage of A under f
 \Def\preimage#1#2{#1^{-1}(#2)}
-\Def\im{\mathop{\rm im}\nolimits} % image of a function, morphism, etc.
+\Def\im{\mathop{\rm Im}\nolimits} % image of a function, morphism, etc.
 \Def\coim{\mathop{\rm coim}\nolimits} % coimage of a morphism
+
+\let\ImaginaryPart\Im
+\let\Im\im
 
 %% Topology
 \Def\closure#1{\mathop{\rm Cl}\nolimits(#1)}
@@ -128,7 +132,11 @@
 \Def\monus{\mathbin{\mathop{\kern0pt \smash{-}}%
 \limits^{\raise.55ex\hbox{$\textstyle.$}}}}
 
-
+% ideals
+\let\Radical\sqrt
+\newcommand\ideal{\mathrel{\trianglelefteq}}
+\def\properideal{\mathrel{\triangleleft}}
+\Def\Radical#1{\sqrt{#1}}
 
 %% Logos
 %\def\logo#1{\hbox{\textsf{#1}}}
