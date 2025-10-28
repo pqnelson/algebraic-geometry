@@ -137,6 +137,13 @@
 \newcommand\ideal{\mathrel{\trianglelefteq}}
 \def\properideal{\mathrel{\triangleleft}}
 \Def\Radical#1{\sqrt{#1}}
+\Def\NilRadical{\mathop{\rm nil}\nolimits}
+
+\Def\Spec{\mathop{\rm Spec}\nolimits}
+\Def\MSpec{\mathop{\rm MSpec}\nolimits}
+
+% Matrices
+\Def\Mat#1#2{\mathop{\rm Mat}\nolimits(#1, #2)}
 
 %% Logos
 %\def\logo#1{\hbox{\textsf{#1}}}
@@ -144,6 +151,8 @@
 
 \Def\HOL/{\logo{HOL}}
 \Def\Mizar/{\logo{Mizar}}
+
+% Axiomatic set theories
 \Def\MK/{\logo{MK}}
 \Def\NBG/{\logo{NBG}}
 \Def\PRA/{\logo{PRA}}
@@ -155,7 +164,7 @@
 
 %% Notation for structures
 \Def\structure#1{\langle\!\langle#1\rangle\!\rangle}
-% poor man's U+AAA \smt symbol https://tex.stackexchange.com/a/712877/14751
+% poor man's U+2AAA \smt symbol https://tex.stackexchange.com/a/712877/14751
 \def\angin@#1#2{
     \vphantom{#2}%
     \ooalign{$\m@th#1#2$\cr$\m@th#1-$\cr}%
@@ -164,9 +173,10 @@
 %``SMaller Than''
 % It shows up in the writings of Boole and Pierce
 % https://tex.stackexchange.com/q/482843/14751
-\def\smt{\mathrel{\mathpalette\angin@{<}}}
+\def\smt{\mathrel{\mathpalette\angin@{<}}} % U+02AAA
+\def\lat{\mathrel{\mathpalette\angin@{>}}} % U+02AAB
 
-\font\sidenotefont=cmti8
+\font\sidenotefont=cmti7
 
 % https://tex.stackexchange.com/a/86088/14751
 % See also exercise 14.28 of the TeXbook

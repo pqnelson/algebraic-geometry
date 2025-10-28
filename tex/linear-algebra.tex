@@ -1,0 +1,178 @@
+%%
+%% linear-algebra.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-10-26T13:07:18-0700
+%% Last update 2025-10-26T13:07:18-0700
+%% 
+
+\chapter{Linear Algebra}
+
+\begin{remark}[Modules over other stuff]
+We can consider ``modules over monads'', or even ``modules over more
+general stuff''. All we really need to define a module $M$ over $X$ is an
+action of $X$ on $M$ which is ``compatible'' with the structure of
+$M$. In fact, we could internalize the notion of a ``left module
+object'' internal to \emph{any} monoidal category. Grothendieck first
+did this in FGA III.
+
+This would allow us to define, for example, modules over algebras,
+modules over Lie algebras, modules over\dots well, you get the
+idea. See also Daniel Quillen's ``Module theory over nonunital rings''
+(unpublished manuscript, dated August 1996, \url{https://ncatlab.org/nlab/files/QuillenModulesOverRngs.pdf}),
+and Positselski's ``Tensor-Hom formalism for modules over nonunital
+rings'' (\arXiv{2308.16090}).
+\end{remark}
+
+\begin{remark}[Modules are an Abelian group acted upon by something else]
+The fundamental idea underlying a module is that it consists of an
+Abelian group (written additively) equipped with an action upon it. 
+We could have a module $M$ over a set $S$ defined by an action
+$\mu\colon S\times M\to M$ such that for each $s\in S$, $\mu(s,-)$ is
+an endomorphism of $M$. When $S$ is an associative magma,
+we have $\mu(xy,m)=\mu(x,\mu(y,m))$ for all $x,y\in S$ and $m\in M$.
+When $S$ is further unital, then $\mu(1,-)=\id_{M}$.
+
+Readers familiar with ``groups with operators'' should see a strong
+resemblence here. It's no mistake, either. But it's only with the
+benefit of hindsight that we realize these ``operators'' are precisely
+elements of a set which act on the group. Since this action is usually
+associative, it gives a natural representation of a monoid on a group.
+\end{remark}
+
+\section{Modules over rings}
+
+\begin{definition}[(Left) Module structure]\mml{vectsp_1}
+Let $L$ be a 1-sorted structure.
+We define the \define{Module Structure} over $L$ to extend the
+additive loop structure, $M=\structure{U,+,0,\star_{L}}$ where
+$\star_{L}\colon L\times U\to U$ is the \define{Left Scalar Multiplication}.
+\end{definition}
+
+\begin{definition}[Left module over a ring]\mml{vectsp_2}
+Let $R$ be a ring.
+We define [the soft type of] a \define{Left Module} of $R$ to be a
+nonempty module structure $M$ over $R$ such that
+\begin{itemize}
+\property{Right Complementable}\mml{algstr_0:def 16} for all $x\in M$, there exists a $y\in M$ such that $x+y=0$
+\property{Vector distributive}\mml{vectsp_1:def 13} for any scalar
+$x\in R$, for any vectors $v\in M$ and $w\in M$, we have $x(v+w)=(xv)+(xw)$
+\property{Scalar distributive}\mml{vectsp_1:def 14} for any scalars
+$x\in R$ and $y\in R$, for any vector $v\in M$, we have $(x+y)v=(xv)+(yv)$
+\property{Scalar associative}\mml{vectsp_1:def 15} for any scalars
+$x\in R$ and $y\in R$, and for any vector $v\in M$, we have $(xy)v=x(yv)$
+\property{Scalar unital}\mml{vectsp_1:def 16} For any vector $v\in M$, we have $1_{R}v=v$
+\property{Vector addition is commutative}\mml{rlvect_1:def 2} For any vectors
+$u\in M$, $v\in M$, we have $u+v=v+u$
+\property{Vector addition is associative}\mml{rlvect_1:def 3} For any vectors
+$u\in M$, $v\in M$, $w\in M$, we have $(u+v)+w=u+(v+w)$
+\property{Right zeroed}\mml{rlvect_1:def 4} For any vector $v\in M$,
+we have $v+0=v$.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+Let $R$ be any associative unital ring. Then $R$ is a left module over itself.
+\end{example}
+
+\begin{definition}[Right scalar multiplication for left modules over commutative rings]
+Let $R$ be a commutative ring. Let $M$ be a left module over $R$.
+Let $m$ be an element of $M$, let $r$ be an element of $R$.
+We can define the \define{Right Scalar Multiplication} of $R$ on $M$
+by $m\star_{R}r := r\star_{L}m$. This makes sense since multiplication
+is commutative in the ring.
+\end{definition}
+
+\begin{definition}[Vector space over a field]\mml{vectsp_1}
+Let $\FF$ be a field. We define [the soft type of] a \define{Vector Space}
+over $\FF$ to be a left module over $\FF$.
+\end{definition}
+
+\begin{definition}[Right module structure]\mml{vectsp_2}
+Let $R$ be a 1-sorted structure. We define the \define{Right Module Structure}
+over $R$ to extend the additive loop structure, being $M=\structure{U,+,0,\star_{R}}$
+where $\star_{R}\colon U\times R\to U$ is the \define{Right Scalar Multiplication}
+operation (usually we just write $vr$ instead of $v\star_{R}r$).
+\end{definition}
+
+\begin{definition}[Right module over a ring]\mml{vectsp_2}
+Let $R$ be a ring.
+We define [the soft type of] a \define{Right Module} over $R$
+to be a nonempty right module structure $M$ over $R$ such that
+\begin{itemize}
+\property{Right Complementable}\mml{algstr_0:def 16} for all $x\in M$, there exists a $y\in M$ such that $x+y=0$
+\property{Vector addition is commutative}\mml{rlvect_1:def 2} For any vectors
+$u\in M$, $v\in M$, we have $u+v=v+u$
+\property{Vector addition is associative}\mml{rlvect_1:def 3} For any vectors
+$u\in M$, $v\in M$, $w\in M$, we have $(u+v)+w=u+(v+w)$
+\property{Right zeroed}\mml{rlvect_1:def 4} For any vector $v\in M$,
+we have $v+0=v$
+\property{Right-module-like}\mml{vectsp_2:def 8} For any scalars $x\in R$
+and $y\in R$, for any vectors $v\in M$ and $w\in M$, we have
+$(v+w)x=(vx)+(wx)$ and $v(x+y)=(vx)+(vy)$ and $v(yx)=(vy)x$ and $v1_{R}=v$.
+\end{itemize}
+\end{definition}
+
+\begin{example}
+Let $R$ be any associative unital ring. 
+Then $R$ is a right module over itself.
+\end{example}
+
+\begin{definition}[Bi-Module structure]\mml{vectsp_2}
+Let $L$, $R$ be 1-sorted structures.
+We define the structure \define{Bi-Module Structure} over $L$, $R$ to
+be $B=\structure{U,+,0,\star_{L},\star_{R}}$
+extending (1) the left module structure over $L$, and (2) the right
+module structure over $R$;
+where
+we have left scalar multiplication $\star_{L}\colon L\times U\to U$
+and right scalar multiplication $\star_{R}\colon U\times R\to U$.
+\end{definition}
+
+\begin{definition}[Bimodule over rings]\mml{vectsp_2}
+Let $R_{1}$ and $R_{2}$ be rings.
+We define [the soft type of] a \define{Bimodule} over $R_{1}$, $R_{2}$
+to be a nonempty Bimodule structure $M$ over $R_{1}$, $R_{2}$ such
+that
+\begin{itemize}
+\property{Vector distributive}\mml{vectsp_1:def 13} for any scalar
+$x\in R_{1}$, for any vectors $v\in M$ and $w\in M$, we have $x(v+w)=(xv)+(xw)$
+\property{Scalar distributive}\mml{vectsp_1:def 14} for any scalars
+$x\in R_{1}$ and $y\in R_{1}$, for any vector $v\in M$, we have $(x+y)v=(xv)+(yv)$
+\property{Scalar associative}\mml{vectsp_1:def 15} for any scalars
+$x\in R_{1}$ and $y\in R_{1}$, and for any vector $v\in M$, we have $(xy)v=x(yv)$
+\property{Scalar unital}\mml{vectsp_1:def 16} For any vector $v\in M$, we have $1_{R_{1}}v=v$
+\property{Right Complementable}\mml{algstr_0:def 16} for all $x\in M$, there exists a $y\in M$ such that $x+y=0$
+\property{Vector addition is commutative}\mml{rlvect_1:def 2} For any vectors
+$u\in M$, $v\in M$, we have $u+v=v+u$
+\property{Vector addition is associative}\mml{rlvect_1:def 3} For any vectors
+$u\in M$, $v\in M$, $w\in M$, we have $(u+v)+w=u+(v+w)$
+\property{Right zeroed}\mml{rlvect_1:def 4} For any vector $v\in M$,
+we have $v+0=v$
+\property{Right-module-like}\mml{vectsp_2:def 8} For any scalars $x\in R_{2}$
+and $y\in R_{2}$, for any vectors $v\in M$ and $w\in M$, we have
+$(v+w)x=(vx)+(wx)$ and $v(x+y)=(vx)+(vy)$ and $v(yx)=(vy)x$ and $v1_{R_{2}}=v$
+\property{Bi-module-like}\mml{vectsp_2:def 9} For any scalars $x\in R_{1}$
+and $y\in R_{2}$, for any vector $v\in M$, we have $x(vy)=(xv)y$.
+\end{itemize}
+\end{definition}
+
+\begin{remark}[Bimodules are left and right modules]
+Observe that a bimodule $M$ over $L$, $R$ is automatically a left
+module over $L$ \emph{and simultaneously} a right module over $R$.
+\end{remark}
+
+\begin{remark}[Notation and nomenclature for modules]
+It is not uncommon to see $L$-modules for left modules of $L$, and
+module-$R$ for right modules of $R$, and $L$-modules-$R$ for a
+bimodule over $L$, $R$. There are variations on this notation (e.g.,
+using subscripts to say ${}_{L}$Mod${}_{R}$ for a bimodule over $L$,
+$R$, etc.).
+\end{remark}
+
+\begin{example}
+Let $R$ be any associative unital ring. 
+Then $R$ is a bimodule over itself.
+\end{example}
