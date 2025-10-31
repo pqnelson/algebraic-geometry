@@ -1,5 +1,5 @@
 TEX=tex
-FILE=algeo
+FILE=main
 
 all: img
 	$(TEX) $(FILE)

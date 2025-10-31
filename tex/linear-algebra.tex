@@ -24,6 +24,16 @@ idea. See also Daniel Quillen's ``Module theory over nonunital rings''
 (unpublished manuscript, dated August 1996, \url{https://ncatlab.org/nlab/files/QuillenModulesOverRngs.pdf}),
 and Positselski's ``Tensor-Hom formalism for modules over nonunital
 rings'' (\arXiv{2308.16090}).
+
+Charlotte Aten pointed out (on Mathstodon 26 October 2025 at
+3:53\text{pm} [PDT]) that, ``You can have a module over any kind of
+algebraic structure. Given an object $B$ in a category with finite
+products, let ${\rm Pol}(B)$ be the polymorphism clone of $B$, consisting of
+all `$n$-ary endomorphisms' $B^{n}\to B$. Given an algebra $A$ (in any
+signature), let ${\rm Clo}(A)$ be the clone of term operations of $A$. We have
+an $A$-module structure on $B$ when there is a clone homomorphism
+${\rm Clo}(A)\to{\rm Pol}(B)$. I've never seen this printed anywhere,
+but I think about it sometimes.''
 \end{remark}
 
 \begin{remark}[Modules are an Abelian group acted upon by something else]
@@ -137,6 +147,7 @@ We define [the soft type of] a \define{Bimodule} over $R_{1}$, $R_{2}$
 to be a nonempty Bimodule structure $M$ over $R_{1}$, $R_{2}$ such
 that
 \begin{itemize}
+\property{Right Complementable}\mml{algstr_0:def 16} for all $x\in M$, there exists a $y\in M$ such that $x+y=0$
 \property{Vector distributive}\mml{vectsp_1:def 13} for any scalar
 $x\in R_{1}$, for any vectors $v\in M$ and $w\in M$, we have $x(v+w)=(xv)+(xw)$
 \property{Scalar distributive}\mml{vectsp_1:def 14} for any scalars
@@ -144,16 +155,16 @@ $x\in R_{1}$ and $y\in R_{1}$, for any vector $v\in M$, we have $(x+y)v=(xv)+(yv
 \property{Scalar associative}\mml{vectsp_1:def 15} for any scalars
 $x\in R_{1}$ and $y\in R_{1}$, and for any vector $v\in M$, we have $(xy)v=x(yv)$
 \property{Scalar unital}\mml{vectsp_1:def 16} For any vector $v\in M$, we have $1_{R_{1}}v=v$
-\property{Right Complementable}\mml{algstr_0:def 16} for all $x\in M$, there exists a $y\in M$ such that $x+y=0$
 \property{Vector addition is commutative}\mml{rlvect_1:def 2} For any vectors
 $u\in M$, $v\in M$, we have $u+v=v+u$
 \property{Vector addition is associative}\mml{rlvect_1:def 3} For any vectors
 $u\in M$, $v\in M$, $w\in M$, we have $(u+v)+w=u+(v+w)$
 \property{Right zeroed}\mml{rlvect_1:def 4} For any vector $v\in M$,
-we have $v+0=v$
+we have $v+0=v$ --- thus $M$ is a left module over $R_{1}$;
 \property{Right-module-like}\mml{vectsp_2:def 8} For any scalars $x\in R_{2}$
 and $y\in R_{2}$, for any vectors $v\in M$ and $w\in M$, we have
 $(v+w)x=(vx)+(wx)$ and $v(x+y)=(vx)+(vy)$ and $v(yx)=(vy)x$ and $v1_{R_{2}}=v$
+--- thus $M$ is a right module over $R_{2}$;
 \property{Bi-module-like}\mml{vectsp_2:def 9} For any scalars $x\in R_{1}$
 and $y\in R_{2}$, for any vector $v\in M$, we have $x(vy)=(xv)y$.
 \end{itemize}
@@ -176,3 +187,14 @@ $R$, etc.).
 Let $R$ be any associative unital ring. 
 Then $R$ is a bimodule over itself.
 \end{example}
+
+\begin{remark}[History of modules]
+Dedekind invented the notion of modules (and coined the term
+``module'') in his paper ``Sur la Th\'eorie des Nombres entiers alg\'ebriques'' (1877;
+in his \textit{Collected Works}, vol.~3, pp.~262--298), although he
+coined the term earlier in his 1871 Supplement X and XI to Dirichlet
+(\S161 and \S168). Originally, a module of a ring $R$ was an Abelian
+subgroup of the additive group $\structure{R,+,0}$. We would now call Dedekind's
+notion a ``finite free $\ZZ$-module''. Emmy Noether generalized this to
+an Abelian group equipped with an $R$-action.
+\end{remark}

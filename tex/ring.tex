@@ -897,6 +897,12 @@ Let $R$ be a nonempty double loop structure.
 We say $R$ is \define{Noetherian} if every ideal of $R$ is finitely-generated.
 \end{definition}
 
+\begin{remark}[Noetherian is a ``nice'' finiteness condition]
+We want to avoid working with rings which are ``too infinite'' and
+``too big''. Noetherian provides the ``right'' finiteness conditions
+to restrict focus to the relevant rings.
+\end{remark}
+
 \begin{theorem}[Principal ideal domains are Noetherian]\mml{ideal_1:95}
 For any $R$ being a principal ideal domain,
 we see that $R$ is Noetherian.
@@ -928,6 +934,12 @@ We say $R$ is \define{Local} if there is exactly one maximal ideal of $R$.
 (This could be defined for any nonempty double loop structure $R$.)
 \end{definition}
 
+\begin{definition}[Semi-local rings]\mml{topzari:def 10}
+Let $R$ be a commutative ring where $1\neq0$.
+We say $R$ is \define{Semi-Local} if there are only finitely many
+maximal ideals of $R$. Equivalently, $\MSpec(R)$ is a finite set.
+\end{definition}
+
 \begin{definition}[Multiplicative set]\mml{c0sp1:def 4}
 Let $M$ be a nonempty multiplicative loop with zero.
 Let $S$ be a subset of $M$.
@@ -954,6 +966,19 @@ Then $\Radical{I}=\Intersects\{P\in\Spec(A)\mid I\subset P\}$.
 \begin{theorem}\mml{topzar1:19}
 Let $A$ be a nondegenerate commutative ring.
 Then $\NilRadical(A)=\Intersects\Spec(A)$.
+\end{theorem}
+
+\begin{definition}[Reduced rings have no nilradical]\mml{field_16:20}
+Let $R$ be a nondegenerate commutative ring.
+We say $R$ is \define{Reduced} when $\NilRadical{R}=\{0\}$.
+\end{definition}
+
+\begin{theorem}
+Let $A$ be an arbitrary commutative ring. Then the quotient ring
+\begin{equation*}
+R = A/\bigcap\Spec(A)
+\end{equation*}
+is a reduced ring.
 \end{theorem}
 
 \begin{definition}[Localization of a ring over a multiplicative set]\mml{ringfrac:def 18}

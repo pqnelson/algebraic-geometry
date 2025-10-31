@@ -553,6 +553,32 @@ Let $X$ be a subspace of $Y$.
 Then the inclusion mapping (\S\ref{yellow_9:def 1}) $\incl\colon X\into Y$ is an embedding.
 \end{theorem}
 
+\begin{definition}[Topology induced by a function on a set]
+Let $\structure{Y,\mathcal{T}_{Y}}$ be a topological space.
+Let $X$ be a set. Let $f\colon X\to Y$ be a function.
+We define the \define{Topology induced by} $f$ to be the subset-family
+of $X$ equal to $\tau_{f}:=\{\preimage{f}{U}\mid U\in\mathcal{T}_{Y}\}$.
+\end{definition}
+
+\begin{theorem}[Topology induced by a function really is a topology]
+Let $\structure{Y,\mathcal{T}_{Y}}$ be a topological space.
+Let $X$ be a set. Let $f\colon X\to Y$ be a function.
+Then the topology $\tau_{f}$ induced by $f$ is a topology on $X$, i.e.,
+\begin{enumerate}
+\item $X\in\tau_{f}$ and $\emptyset\in\tau_{f}$;
+\item if $\{U_{\alpha}\}_{\alpha\in A}\subset\tau_{f}$, then
+  $\Union\{U_{\alpha}\}_{\alpha\in A}\in\tau_{f}$;
+\item if $U_{1}$, \dots, $U_{n}\in\tau_{f}$, then $U_{1}\cap\cdots\cap U_{n}\in\tau_{f}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Topology induced by a function is coarsest topology making it continuous]
+Let $\structure{Y,\mathcal{T}_{Y}}$ be a topological space.
+Let $X$ be a set. Let $f\colon X\to Y$ be a function.
+Then the topology $\tau_{f}$ induced by $f$ is the coarsest topology
+such that $f$ is a continuous function between topological spaces.
+\end{theorem}
+
 \section{Connected Spaces}
 
 \begin{definition}[Separated subsets of a topological space]\mml{connsp_1:def 1}

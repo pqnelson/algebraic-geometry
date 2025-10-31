@@ -111,3 +111,262 @@ Let $G$ be a group. We define the \define{Inverse Operator} of $G$ to
 be the unary operator of $G$ denoted $\cdot_{G}^{-1}$ such that for
 all elements $h\in G$ we have $\cdot_{G}^{-1}(h)=h^{-1}$.
 \end{definition}
+
+\begin{definition}[Power notation for elements of groups]\mml{group_1:def 8}
+Let $G$ be a group. Let $h$ be an element of $G$.
+
+Let $n$ be a natural number. Then we define $h^{n}$ inductively as
+$h^{0}=1_{G}$ and $h^{n+1}=h\cdot h^{n}$.
+
+Let $m$ be an integer.
+We define the term $h^{m}$ to be
+\begin{equation}
+h^{m} = \cases{
+h^{|m|} & if $m\geq0$\cr
+(h^{-1})^{|m|} & if $m < 0$.\cr
+}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Properties of power notation]\mml{group_1:25-40}
+Let $G$ be a group. Let $g$, $h$ be elements of $G$. We have the
+following properties of power notation:
+\begin{enumerate}
+\item $g^{0}=1_{G}$;
+\item $g^{1}=g$;
+\item $g^{2}=g\cdot g$;
+\item $g^{3}=g\cdot g\cdot g$;
+\item $g^{2}=1$ iff $g^{-1}=g$;
+\item for any $m\in\ZZ$, if $m\leq0$, we have $g^{m}=(g^{|m|})^{-1}$;
+\item for any $m\in\ZZ$, $1_{G}^{m}=1_{G}$;
+\item for any $m\in\ZZ$, if $m=-1$, then $g^{m}=g^{-1}$ (i.e., the
+  power notation is compatible with the notation for the inverse operator);
+\item for any $m,n\in\ZZ$, $g^{m+n}=(g^{m})\cdot(g^{n})$;
+\item for any $m\in\ZZ$, $g^{m+1}=g^{m}\cdot g$ and $g^{m+1}=g\cdot g^{m}$;
+\item for any $m,n\in\ZZ$, $g^{mn}=(g^{m})^{n}$;
+\item for any $m\in\ZZ$, $g^{(-m)}=(g^{m})^{-1}$;
+\item for any $m\in\ZZ$, $g^{(-m)}=(g^{-1})^{m}$;
+\item for any $m\in\ZZ$, if $gh=hg$, then $(gh)^{m}=g^{m}h^{m}$;
+\item for any $m\in\ZZ$, if $gh=hg$, then $g(h^{m})=h^{m}g$;
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Order of a group element]
+Let $G$ be a group. Let $g$ be an element of $G$.
+
+
+We\mml{group_1:def 10} say that $g$ is \define{Order Zero} if for all
+$n\in\NN_{0}$, if $g^{n}=1_{G}$, then $n=0$.
+
+
+We define the \define{Order}\mml{group_1:def 11} of $g$ to be the
+natural number $\ord(g)$ such that $g^{\ord(g)}=1_{G}$ and for all
+$m\in\NN$, $m\neq0$, such that $g^{m}=1_{G}$ we have $\ord(g)\leq m$.
+In particular, if $g$ is of order zero, then $\ord(g)=0$.
+\end{definition}
+
+\begin{definition}[Cardinality of a finite group]\mml{group_1}
+Let $G$ be a finite 1-sorted structure. We define $|G|$ to be the
+natural number equal to the cardinality of its underlying set.
+
+In particular,\mml{group_1:45} nonempty finite 1-sorted structures $G$ have $|G|\geq1$.
+\end{definition}
+
+\begin{definition}[Commutative multiplicative magmas]\mml{group_1:def 12}
+Let $M$ be a multiplicative magma. We say $M$ is \define{Commutative}
+if for all $x$, $y\in M$, we have $xy=yx$.
+\end{definition}
+
+\begin{remark}[Abelian groups reserved for additive notation]
+We will follow \Mizar/'s conventions and reserve the phrase ``Abelian Group''
+for the additive loop $\structure{U,+,0}$ which forms a commutative group.
+This notion (of an Abelian group) should be understood as generalizing
+a vector space by forgetting the scalar multiplication operation.
+
+When we want to discuss groups which are commutative, we will speak of
+``commutative groups''. If we wanted to discuss the classification of
+finite simple groups, for example, then we would discuss ``finite
+commutative groups''.
+\end{remark}
+
+\begin{definition}[Unity-preserving maps]\mml{group_1:def 13}
+Let $G$ and $H$ be [unital] multiplicative magmas.
+Let $f\colon G\to H$ be a function.
+We say $f$ is \define{Unity-Preserving} if $f(1_{G})=1_{H}$.
+\end{definition}
+
+\section{Subgroups}
+
+\begin{definition}[Inverting a subset of a group]\mml{group_2:def 1}
+Let $G$ be a group. Let $A\subset G$ be a subset.
+We define the \define{Inverse} of $A$ to be the subset $A^{-1}$ of $G$
+equal to $A^{-1}:=\{g^{-1}\mid g\in A\}$.
+
+We see that $(A^{-1})^{-1}=A$.
+\end{definition}
+
+\begin{theorem}\mml{group_2:2}
+Let $G$ be a group, let $A$ be a subset of $G$, let $x\in G$.
+Then $x\in A^{-1}$ if and only if there exists a $g\in A$ such that $x=g^{-1}$.
+\end{theorem}
+
+\begin{theorem}[Small examples of inverted subsets of groups]\mml{group_2:4-7}
+Let $G$ be a group. Let $g$, $h$ be elements of $G$. Then:
+\begin{enumerate}
+\item $\{g\}^{-1}=\{g^{-1}\}$
+\item $\{g,h\}^{-1}=\{g^{-1},h^{-1}\}$
+\item $\{\}^{-1}=\{\}$
+\item $G^{-1}=G$
+\item for any subset $A\subset G$, we have $A\neq\emptyset$ iff $A^{-1}\neq\emptyset$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Multiplying subsets of a multiplicative magma]\mml{group_2:def 2}
+Let $M$ be a nonempty multiplicative magma. Let $A$ and $B$ be subsets of $M$.
+We define the multiplication of $AB$ to be the subset of $M$ equal to
+$\{ab\mid a\in A,b\in B\}$.
+
+Further, when $M$ is commutative, we see $AB=BA$.
+
+If necessary, we may sometimes write $A\star B$ or $A\cdot B$ for the
+multiplication of the sets.
+\end{definition}
+
+\begin{theorem}[Properties of multiplying subsets of magmas]\mml{group_2:9-18}
+Let $M$ be a nonempty multiplicative magma.
+Let $A$, $B$, $C$ be subsets of $M$. Then the following are all true:
+\begin{enumerate}
+\item $A\neq\emptyset$ and $B\neq\emptyset$ if and only if $AB\neq\emptyset$;
+\item if $M$ is associative, then $(AB)C=A(BC)$;
+\item if $M$ is a group, then $(AB)^{-1}=B^{-1}A^{-1}$;
+\item $A(B\cup C)=(AB)\cup(AC)$;
+\item $(A\cup B)C=(AC)\cup(BC)$;
+\item $A(B\cap C)\subset(AB)\cap(AC)$;
+\item $(A\cap B)C\subset(AC)\cap(BC)$;
+\item $\emptyset\star A=\emptyset$ and $A\star\emptyset=\emptyset$;
+\item if $M$ is a group and $A\neq\emptyset$, then $M\star A=M$ and
+  $A\star M=M$.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Multiplying a subset of a magma by an element]\mml{group_2:def 3,4}
+Let $M$ be a nonempty multiplicative magma.
+Let $g$ be an element of $M$.
+Let $A$ be a subset of $M$.
+Then we define the terms:
+\begin{enumerate}
+\item $gA$ to be the subset of $M$ equal to $gA := \{g\}\star A$;
+\item $Ag$ to be the subset of $M$ equal to $Ag := A\star\{g\}$;
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Characterizing multiplying a subset of a magma by an element]\mml{group_2:27}
+Let $M$ be a nonempty multiplicative magma.
+Let $A$ be a subset of $M$.
+Let $g$ be an element of $M$.
+For any object $x$, we have $x\in gA$ if and only if there exists an
+element $h$ of $M$ such that $x=gh$ and $h\in A$.
+\end{theorem}
+
+\begin{theorem}[Characterizing multiplying a subset of a magma by an element]\mml{group_2:28}
+Let $M$ be a nonempty multiplicative magma.
+Let $A$ be a subset of $M$.
+Let $g$ be an element of $M$.
+For any object $x$, we have $x\in Ag$ if and only if there exists an
+element $h$ of $M$ such that $x=hg$ and $h\in A$.
+\end{theorem}
+
+\begin{theorem}[Associativity of multiplying subsets and elements of magmas]\mml{group_2:29-37}
+Let $M$ be an associative nonempty multiplicative magma.
+Let $A$, $B$ be subsets of $M$.
+Let $g$, $h$ be elements of $M$. Then the following all hold:
+\begin{enumerate}
+\item $(gA)B=g(AB)$
+\item $(Ag)B=A(gB)$
+\item $(AB)g=A(Bg)$
+\item $(gh)A=g(hA)$
+\item $(gA)h=g(Ah)$
+\item $(Ag)h=A(gh)$
+\item $\emptyset\star g=\emptyset$ and $g\star\emptyset=\emptyset$
+\item $Mg=M$ and $gM=M$
+\item If $M$ is unital, $1_{M}A=A$ and $A=A1_{M}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Subgroup]\mml{group_2:def 5}
+Let $G$ be a group. We define [the soft type of] a \define{Subgroup}
+of $G$ to be a group $H$ such that
+\begin{enumerate}
+\item the carrier of $H$ is a subset of $G$: $U_{H}\subset U_{G}$;
+\item the binary operator is inherited from $G$:
+  $\star_{H}=\star_{G}|_{H\times H}$.
+\end{enumerate}
+We will use the notation $H\subgroup G$ to indicate $H$ is a subgroup
+of $G$.
+
+This is well-defined because $G$ is a subgroup of itself.
+\end{definition}
+
+\begin{theorem}[Subgroups of finite groups are finite]\mml{group_2:39}
+Let $G$ be a finite group. Let $H$ be a subgroup of $G$.
+Then $H$ is finite.
+\end{theorem}
+
+\begin{theorem}[Elements of subgroup belong to parent group]\mml{group_2:40-42}
+Let $G$ be a group. Let $H$ be a subgroup of $G$.
+If $x$ is an element of $H$, then $x$ is an element of $G$.
+This means $x\in H$ implies $x\in G$.
+\end{theorem}
+
+\begin{theorem}[Compatibility of multiplying elements of subgroup]\mml{group_2:43}
+Let $G$ be a group. Let $H\subgroup G$ be a subgroup of $G$.
+Let $g_{1}$, $g_{2}$ be elements of $G$.
+Let $h_{1}$, $h_{2}$ be elements of $H$.
+If $g_{1}=h_{1}$ and $g_{2}=h_{2}$, then $g_{1}g_{2}=h_{1}h_{2}$.
+\end{theorem}
+
+\begin{theorem}[Identity element of subgroups]\mml{group_2:44-47}
+Let $G$ be a group.
+Let $H\subgroup G$, $H_{1}\subgroup G$, and $H_{2}\subgroup G$ be subgroups of $G$.
+Then the following all hold:
+\begin{enumerate}
+\item $1_{H}=1_{G}$
+\item $1_{H_{1}}=1_{H_{2}}$
+\item $1_{G}\in H$
+\item $1_{H_{1}}\in H_{2}$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Inverting elements of subgroups]\mml{group_2:48}
+Let $G$ be a group.
+Let $H\subgroup G$ be a subgroup of $G$.
+Let $h$ be an element of $H$, let $g$ be an element of $G$.
+If $g=h$, then $g^{-1}=h^{-1}$.
+\end{theorem}
+
+\begin{theorem}[Multiplying elements of subgroup]\mml{group_2:50}
+Let $G$ be a group. Let $g_{1}$ and $g_{2}$ be elements of $G$.
+Let $H\subgroup G$ be a subgroup.
+If $g_{1}\in H$ and $g_{2}\in H$, then $g_{1}g_{2}\in H$.
+\end{theorem}
+
+\begin{theorem}[Group inversion operator closed on subgroups]\mml{group_2:51}
+Let $G$ be a group. Let $H\subgroup G$. Let $g$ be an element of $G$.
+If $g\in H$, then $g^{-1}\in H$.
+\end{theorem}
+
+\begin{theorem}[Subgroups of commutative groups are commutative]\mml{group_2:53}
+Let $G$ be a commutative group. Let $H\subgroup G$ be a subgroup.
+Then $H$ is commutative.
+\end{theorem}
+(This is a registered fact in \texttt{GROUP\_2}.)
+
+\begin{theorem}[Every group is a subgroup of itself]\mml{group_2:54}
+Let $G$ be a group. Then $G$ is a subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Transitivity of subgroups]\mml{group_2:56}
+Let $G_{1}$, $G_{2}$, $G_{3}$ be groups.
+If $G_{1}$ is a subgroup of $G_{2}$, and $G_{2}$ is a subgroup of $G_{3}$,
+then $G_{1}$ is a subgroup of $G_{3}$.
+\end{theorem}
