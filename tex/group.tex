@@ -365,8 +365,546 @@ Then $H$ is commutative.
 Let $G$ be a group. Then $G$ is a subgroup of $G$.
 \end{theorem}
 
+\begin{theorem}[``Is subgroup'' is antisymmetric relation]\mml{group_2:55}
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$ be strict subgroups of $G$.
+If $H_{1}$ is a subgroup of $H_{2}$, and if $H_{2}$ is a subgroup of $H_{1}$,
+then $H_{1}=H_{2}$. (This justifies the $H_{1}\leq G$ notation.)
+\end{theorem}
+
 \begin{theorem}[Transitivity of subgroups]\mml{group_2:56}
 Let $G_{1}$, $G_{2}$, $G_{3}$ be groups.
 If $G_{1}$ is a subgroup of $G_{2}$, and $G_{2}$ is a subgroup of $G_{3}$,
 then $G_{1}$ is a subgroup of $G_{3}$.
 \end{theorem}
+
+\begin{theorem}[Subsets and subgroups]\mml{group_2:57}
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$ be strict subgroups of $G$.
+If $H_{1}\subset H_{2}$, 
+then $H_{1}\subgroup H_{2}$. 
+\end{theorem}
+
+
+\begin{definition}[Trivial groups]\mml{group_2:def 7,8}
+Let $G$ be a group. We define the \define{(proper) Trivial Group} of $G$ to be
+the strict subgroup $\TrivialSubgroup{G}$ of $G$ whose set equals
+$U_{\TrivialSubgroup{G}}=\{1_{G}\}$ consists of the singleton with the
+identity element.
+
+We also define the \define{(improper) Trivial Group} of $G$ to be the
+strict subgroup $\Omega_{G}$ of $G$ whose underlying set is all of
+$G$: $U_{\Omega_{G}}=U_{G}$.
+\end{definition}
+
+\begin{theorem}[Properties of proper trivial subgroups]\mml{group_2:63-65}
+Let $G$ be a group. Let $H$, $H_{1}$, $H_{2}$ be subgroups of $G$.
+Then the following all hold:
+\begin{enumerate}
+\item $\TrivialSubgroup{H}=\TrivialSubgroup{G}$
+\item $\TrivialSubgroup{H_{1}}=\TrivialSubgroup{H_{2}}$
+\item $\TrivialSubgroup{G}$ is a subgroup of $H$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}\mml{group_2:68}
+For any group, $\TrivialSubgroup{G}$ is finite.
+\end{theorem}
+
+\begin{definition}[Intersection of subgroups]\mml{group_2:def 10}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+We define the term $H_{1}\cap H_{2}$ to be the strict subgroup of $G$
+such that its carrier is the intersection of the underlying sets of
+$H_{1}$ and $H_{2}$, i.e., $U_{H_{1}\cap H_{2}}=U_{H_{1}}\cap U_{H_{2}}$.
+
+Obseve this is commutative $H_{1}\cap H_{2}=H_{2}\cap H_{1}$.
+\end{definition}
+
+\begin{theorem}[Associativity of intersecting subgroups]\mml{group_2:84}
+Let $G$ be a group. Let $H_{1}$, $H_{2}$, $H_{3}$ be subgroups of $G$.
+Then $(H_{1}\cap H_{2})\cap H_{3}=H_{1}\cap(H_{2}\cap H_{3})$.
+\end{theorem}
+
+\subsection{Normal Subgroups}
+
+\begin{theorem}\mml{group_3:4}
+Let $G$ be a group. Let $A$, $B$, $C$, $D$ be subsets of $G$.
+If $A\subset B$ and $C\subset D$, then $AC\subset BD$.
+\end{theorem}
+
+\begin{theorem}\mml{group_3:5}
+Let $G$ be a group. Let $a\in G$ be an element of $G$.
+Let $A$, $B$ be subsets of $G$. 
+If $A\subset B$, then $aA\subset aB$ and $Aa\subset Ba$.
+\end{theorem}
+
+\begin{theorem}\mml{group_3:6}
+Let $G$ be a group. Let $a\in G$ be an element of $G$.
+Let $H_{1}$, $H_{2}$ be subgroups of $G$. 
+If $H_{1}\subgroup H_{2}$, then $aH_{1}\subgroup aH_{2}$ and $H_{1}a\subgroup H_{2}a$.
+\end{theorem}
+
+\begin{theorem}
+Let $G$ be a group. Let $a\in G$ be an element of $G$.
+Let $A\subset G$ be a subset of $G$. Let $H$ be a subgroup of $G$.
+\begin{enumerate}
+\item\mml{group_3:9} $(Aa)H=A(aH)$
+\item\mml{group_3:10} $(aH)A=a(HA)$
+\item\mml{group_3:11} $(AH)a=A(Ha)$
+\item\mml{group_3:12} $(Ha)A=H(aA)$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Set of all subgroups]\mml{group_3:def 1}
+Let $G$ be a group. We define the term $\subgroups(G)$ to be the nonempty set of
+all strict subgroups of $G$; i.e., for all objects $x$, we have
+$x\in\subgroups(G)$ if and only if $x$ is a strict subgroup of $G$.
+\end{definition}
+
+\begin{theorem}[Set of subgroups is nonempty]\mml{group_3:14}
+Let $G$ be a strict subgroup. Then $G\in\subgroups(G)$.
+\end{theorem}
+
+\begin{theorem}[Set of subgroups of finite group is a finite set]\mml{group_3:15}
+Let $G$ be a finite group. Then $\subgroups(G)$ is a finite set.
+\end{theorem}
+
+\begin{definition}[Conjugation of element of group]\mml{group_3:def 2}
+Let $G$ be a group.
+Let $a$, $b$ be elements of $G$.
+We define the \define{Conjugate} of $a$ by $b$ to be the element
+$a^{b}$ of $G$ equal to $a^{b} := b^{-1}ab$.
+\end{definition}
+
+\begin{theorem}\mml{group_3:16}
+Let $G$ be a group. Let $a$, $b$, $g$ be elements of $G$.
+If $a^{g}=b^{g}$, then $a=b$.
+\end{theorem}
+
+\begin{theorem}[Conjugation involving identity element]
+Let $G$ be a group. Let $a$, $b$ be elements of $G$. Then the
+following hold:
+\begin{enumerate}
+\item\mml{group_3:17} Conjugation of identity element is identity element $1_{G}^{a}=1_{G}$;
+\item\mml{group_3:18} If $a^{b}=1_{G}$, then $a=1_{G}$;
+\item\mml{group_3:19} $a^{1_{G}}=a$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Properties of conjugation]
+Let $G$ be a group. Let $a$, $b$, $g$, $h$ be elements of $G$.
+Then the following hold:
+\begin{enumerate}
+\item\mml{group_3:20} $a^{a}=a$;
+\item\mml{group_3:21} $a^{a^{-1}}=a$ and $(a^{-1})^{a}=a^{-1}$;
+\item\mml{group_3:22} $a^{b}=a$ if and only if $ab=ba$;
+\item\mml{group_3:23} $(ab)^{g}=a^{g}b^{g}$;
+\item\mml{group_3:24} $(a^{g})^{h}=a^{gh}$;
+\item\mml{group_3:25} $(a^{b})^{b^{-1}}=a$ and $(a^{b^{-1}})^{b}=a$;
+\item\mml{group_3:26} $(a^{-1})^{b}=(a^{b})^{-1}$;
+\item\mml{group_3:27} For any natural number $n\in\NN_{0}$, $(a^{n})^{b}=(a^{b})^{n}$;
+\item\mml{group_3:28} For any integer $n\in\ZZ$, $(a^{n})^{b}=(a^{b})^{n}$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Conjugation in commutative group]
+Let $G$ be a group. Then the following hold:
+\begin{enumerate}
+\item\mml{group_3:29} If $G$ is commutative, then for any $a,b\in G$, we have $a^{b}=a$;
+\item\mml{group_3:30} If $a^{b}=a$ for all $a,b\in G$, then $G$ is commutative.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Conjugating subsets of a group by subsets]\mml{group_3:def 3}
+Let $G$ be a group. Let $A$ and $B$ be subsets of $G$.
+We define $A^{B}$ to be the subset of $G$ equal to
+\begin{equation}
+A^{B}:=\{g^{h}\mid g\in A,h\in B\}.
+\end{equation}
+\end{definition}
+
+\begin{theorem}\mml{group_3:31}
+Let $x$ be an object, $G$ be a group. Let $A$ and $B$ be subsets of $G$.
+Then $x\in A^{B}$ if and only if there exists elements $g$, $h$ of $G$
+such that $x=g^{h}$ and $g\in A$ and $h\in B$.
+\end{theorem}
+
+\begin{theorem}
+Let $G$ be a group. Let $A$, $B$, $C$ be subsets of $G$. Then the
+following hold:
+\begin{enumerate}
+\item\mml{group_3:32} $A^{B}\neq\emptyset$ if and only if
+  $A\neq\emptyset$ and $B\neq\emptyset$;
+\item\mml{group_3:33} $A^{B}\subset (B^{-1}A)B$
+\item\mml{group_3:34} $(AB)^{C}\subset A^{C}B^{C}$;
+\item\mml{group_3:35} $(A^{B})^{C}=A^{BC}$;
+\item\mml{group_3:36} $(A^{-1})^{B}=(A^{B})^{-1}$;
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Conjugating elements and subsets]
+Let $G$ be a group. Let $A$ be a subset of $G$. Let $g$ be an element
+of $G$.
+\begin{enumerate}
+\item\mml{group_3:def 4} We define the term $A^{g}$ to be the subset
+  of $G$ equal to $A^{g} := A^{\{g\}}$;
+\item\mml{group_3:def 5} We define the term $g^{A}$ to be the subset
+  of $G$ equal to $g^{A} := \{g\}^{A}$.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Properties of conjugating elements with subsets]
+Let $G$ be a group. Let $a$, $b$, $g$ be elements of $G$.
+Let $A$, $B$ be subsets of $G$. Then the following hold:
+\begin{enumerate}
+\item\mml{group_3:43} $g^{A}\subset(A^{-1}g)A$
+\item\mml{group_3:44} $(A^{B})^{g}=A^{Bg}$
+\item\mml{group_3:45} $(A^{g})^{B}=A^{gB}$
+\item\mml{group_3:46} $(g^{A})^{B}=g^{AB}$
+\item\mml{group_3:47} $(A^{a})^{b}=A^{ab}$
+\item\mml{group_3:48} $(a^{A})^{b}=a^{Ab}$
+\item\mml{group_3:49} $(a^{b})^{A}=a^{bA}$
+\item\mml{group_3:50} $A^{g}=(g^{-1}A)g$
+\item\mml{group_3:51} $(AB)^{a}\subset (A^{a})(B^{a})$
+\item\mml{group_3:52} $A^{1_{G}}=A$
+\item\mml{group_3:53} If $A\neq\emptyset$, then $1_{G}^{A}=\{1_{G}\}$;
+\item\mml{group_3:54} $(A^{a})^{a^{-1}}=A$ and $(A^{a^{-1}})^{a}=A$.
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Conjugating a subgroup by an element]\mml{group_3:def 6}
+Let $G$ be a group, let $H\subgroup G$ be a subgroup of $G$, let $g$
+be an element of $G$.
+We define the term $H^{a}$ to be the strict subgroup of $G$ such that
+its underling set $U_{H^{a}}=U_{H}^{a}$.
+\end{definition}
+
+\begin{theorem}\mml{group_3:58}
+Let $x$ be an object, $G$ be a group, $a$ be an element of $G$,
+$H\subgroup G$ be a subgroup of $G$. Then $x\in H^{a}$ if and only if
+there exists an element $g$ of $G$ such that $x=g^{a}$ and $g\in H$.
+\end{theorem}
+
+\begin{theorem}[Properties of conjugating a subgroup by an element]
+Let $G$ be a group. Let $H$, $H_{1}$, $H_{2}$ be subgroups of $G$.
+Let $a$, $b$ be elements of $G$. Then the following holds:
+\begin{enumerate}
+\item\mml{group_3:59} $U_{H^{a}}=(a^{-1}H)a$
+\item\mml{group_3:60} $(H^{a})^{b}=H^{ab}$
+\item\mml{group_3:61} $H^{1_{G}}=H$
+\item\mml{group_3:62} if $H$ is a strict subgroup of $G$, the $(H^{a})^{a^{-1}}=H$
+and $(H^{a^{-1}})^{a}=H$;
+\item\mml{group_3:63} $(H_{1}\cap H_{2})^{a}=(H_{1}^{a})\cap(H_{2}^{a})$
+\item\mml{group_3:64} $|H^{a}|=|H|$
+\item\mml{group_3:65} $H$ is finite if and only if $H^{a}$ is finite
+\item\mml{group_3:67} $\TrivialSubgroup{G}^{a}=\TrivialSubgroup{G}$
+\item\mml{group_3:68} If $H^{a}=\TrivialSubgroup{G}$, then $H=\TrivialSubgroup{G}$;
+\item\mml{group_3:69} $G^{a}=G$
+\item\mml{group_3:70} If $H^{a}=G$, then $H=G$;
+\item\mml{group_3:73} If $G$ is commutative, then $H^{a}=H$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Conjugate elements form a predicate]\mml{group_3:def 7}
+Let $G$ be a group. Let $a$ and $b$ be elements of $G$.
+We say $a$ and $b$ \define{are conjugated} if there exists an element
+$g$ of $G$ such that $a=b^{g}$.
+
+We see that $a$ is conjugate to itself (i.e., ``are conjugate'' is reflexive).
+
+We see that $a$ is conjugate to $b$ implies $b$ is conjugate to $a$
+(i.e., ``are conjugate'' is symmetric).
+\end{definition}
+
+\begin{theorem}[Conjugate is transitive]\mml{group_3:77}
+Let $G$ be a group. Let $a$, $b$, $c$ be elements of $G$.
+If $a$ is conjugate to $b$, and $b$ is conjugate to $c$, then $a$ is
+conjugate to $c$.
+\end{theorem}
+
+\begin{theorem}[Only identity element is conjugate to itself]\mml{group_3:78}
+Let $G$ be a group. Let $a$ be an element of $G$.
+If $a$ is conjugate to $1_{G}$, then $1_{G}=a$.
+\end{theorem}
+
+\begin{definition}[Conjugacy class of element]\mml{group_3:def 8}
+Let $G$ be a group. Let $a$ be an element.
+We define the \define{Conjugacy Class} of $a$ to be the subset of $G$
+equal to $a^{U_{G}}$. We write $\Cl(a)$ for the conjugacy class of $a$.
+\end{definition}
+
+\begin{theorem}\mml{group_3:81}
+Let $G$ be a group. Let $a$ and $b$ be elements of $G$.
+Then $a$ is in the conjugacy class of $b$ if and only if $a$ is
+conjugate to $b$.
+\end{theorem}
+
+\begin{theorem}
+Let $G$ be a group. Let $a$, $b$, and $g$ be elements of $G$.
+Then the following holds:
+\begin{enumerate}
+\item\mml{group_3:82} $a^{g}$ is in the conjugacy class of $a$
+\item\mml{group_3:83} $a$ is in the conjugacy class of $a$
+\item\mml{group_3:84} if $a$ is in the conjugacy class of $b$, then $b$
+  is in the conjugacy class of $a$
+\item\mml{group_3:85} the conjugacy class of $a$ equals the conjugacy
+  class of $b$ if and only if they are not disjoint
+\item\mml{group_3:86} the conjugacy class of $a$ is equal to
+  $\{1_{G}\}$ if and only if $a=1_{G}$
+\item\mml{group_3:87} for any subset $A$ of $G$, then $\Cl(a)A=A\Cl(a)$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Predicate for subsets of a group being conjugate]\mml{group_3:def 9}
+Let $G$ be a group. Let $A$ and $B$ be subsets of $G$.
+We say $A$ and $B$ \define{Are Conjugate} (or $A$ is conjugate to $B$)
+if there exists an element $g$ of $G$ such that $A=B^{g}$.
+
+We see that $A$ is conjugate to itself since $A^{1_{G}}=A$.
+
+We also see if $A$ is conjugate to $B$, then $B$ is conjugate to $A$
+(if $A=B^{g}$, then $B=A^{g^{-1}}$).
+\end{definition}
+
+\begin{theorem}[Transitivity of subsets being conjugate]\mml{group_3:91}
+Let $G$ be a group. Let $A$, $B$, $C$ be subsets of $G$.
+If $A$ is conjugate to $B$ and $B$ is conjugate to $C$,
+then $A$ is conjugate to $C$.
+\end{theorem}
+
+\begin{definition}[Conjugacy class of a subset]\mml{group_3:def 10}
+Let $G$ be a group, let $A$ be a subset of $G$.
+We define the \define{Conjugacy Class} of $A$ to be the subset-family
+of $G$ equal to $\Cl(A) := \{B\subset G\mid A\mbox{ is conjugate to }B\}$.
+\end{definition}
+
+\begin{theorem}[Properties of conjugacy class for a subset]
+Let $G$ be a group. Let $A$, $B$ be subsets of $G$.
+Let $g$ be elements of $G$. Then the following all hold:
+\begin{enumerate}
+\item\mml{group_3:95} $A\in\Cl(B)$ if and only if $A$ is conjugate to $B$
+\item\mml{group_3:96} $A^{g}\in\Cl(A)$
+\item\mml{group_3:97} $A\in\Cl(A)$
+\item\mml{group_3:98} If $A\in\Cl(B)$, then $B\in\Cl(A)$
+\item\mml{group_3:99} $\Cl(A)=\Cl(B)$ if and only if $\Cl(A)$ is not
+  disjoint with $\Cl(B)$
+\item\mml{group_3:100} If $G$ is finite, then $\Cl(A)$ is finite
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Conjugate subgroups]\mml{group_3:def 11}
+Let $G$ be a group. Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+We define the predicate saying $H_{1}$ and $H_{2}$ \define{are conjugate}
+to mean there exists an element $g$ of $G$ such that $\structure{U_{H_{1}},\star_{H_{1}}}=H_{2}^{g}$.
+
+This is a reflexive and symmetric predicate.
+\end{definition}
+
+\begin{theorem}[Transitivity of subgroups beings conjugate]\mml{group_3:105}
+Let $G$ be a group. Let $H_{1}$, $H_{3}$ be strict subgroups of $G$.
+Let $H_{2}$ be a subgroup of $G$.
+If $H_{1}$ is conjugate to $H_{2}$ and $H_{2}$ is conjugate to $H_{3}$,
+then $H_{1}$ is conjugate to $H_{3}$.
+\end{theorem}
+
+\begin{definition}[Conjugacy class of subgroup]\mml{group_3:def 12}
+Let $G$ be a group, let $H$ be a subgroup of $G$.
+We define the \define{Conjugacy Class} of $H$ to be the subset
+$\Cl(H)$ of $G$ such that for all objects $x$, we have $x\in\Cl(H)$ if
+and only if there exists a strict subgroup $H_{1}$ of $G$ such that
+$x=H_{1}$ and $H$ is conjugate to $H_{1}$.
+\end{definition}
+
+\begin{definition}[Normal subgroup]\mml{group_3:def 13}
+Let $G$ be a group. Let $N$ be a subgroup of $G$.
+We say $N$ is \define{Normal} if for each element $a$ of $G$,
+$N^{a}=\structure{U_{N},\star_{N}}$.
+\end{definition}
+
+\begin{theorem}[Trivial subgroups are normal]\mml{group_3:114}
+Let $G$ be a group. Then $\TrivialSubgroup{G}$ is normal and $G$ is a
+normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Intersection of normal subgroups is normal]\mml{group_3:115}
+Let $N_{1}$, $N_{2}$ be normal subgroups of $G$. Then $N_{1}\cap N_{2}$
+is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Every subgroup of commutative group is normal]\mml{group_3:116}
+Let $G$ be a commutative group. Let $H$ be a subgroup of $G$. Then $H$
+is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{definition}[Normalizer of subset]\mml{group_3:def 14}
+Let $G$ be a group. Let $A$ be a subset of $G$.
+We define the \define{Normalizer} of $A$ to be the strict subgroup $\normalizer{G}{A}$
+of $G$ such that its underlying set equals
+$U_{\normalizer{G}{A}}:=\{h\in G\mid A=A^{h}\}$.
+\end{definition}
+
+\begin{definition}[Normalizer of subgroup]\mml{group_3:def 15}
+Let $G$ be a group. Let $H$ be a subgroup of $G$.
+We define the \define{Normalizer} of $H$ to be the strict subgroup
+$\normalizer{G}{H}$ of $G$ equal to the normalizer of the underlying
+set of $H$.
+\end{definition}
+
+\begin{theorem}[Normalizer of normal subgroups is everything]\mml{group_3:137}
+Let $G$ be a group. Let $H$ be a strict subgroup of $G$.
+Then $H$ is a normal subgroup of $G$ if and only if $\normalizer{G}{H}=G$.
+\end{theorem}
+
+\begin{theorem}[Normalizer of trivial subgroups is everything]\mml{group_3:138,139}
+Let $G$ be a group. Then $\normalizer{G}{\TrivialSubgroup{G}}=G$ and
+$\normalizer{G}{G}=G$. 
+\end{theorem}
+
+\begin{definition}[Subnormal subgroups]
+Let $G$ be a group. Let $H$ be a subgroup of $G$.
+We say $H$ is \define{Subnormal} if there exists a finite sequence of
+subgroups $H_{0}=H$, \dots, $H_{k}=G$ such that $H_{i}\normalsubgroup H_{i+1}$.
+In this case, we write $H\subnormalsubgroup G$.
+\end{definition}
+
+\subsection{Generating a subgroup from a set}
+
+\begin{definition}[Subgroup generated by a subset]\mml{group_4:def 4}
+Let $G$ be a group. Let $A$ be a subset of $G$. We define the
+\define{Subgroup Generated} by $A$ to be the strict subgroup $\gr{A}$
+of $G$ such that $A\subset\gr{A}$ and for $H$ being a strict subgroup
+of $G$ such that $A\subset H$, we have $\gr{A}\subgroup H$.
+\end{definition}
+
+\begin{theorem}
+Let $G$ be a group. Let $A$, $B$ be subsets of $G$. Then
+\begin{enumerate}
+\item\mml{group_4:29} If $a\in A$, then $a\in\gr{A}$
+\item\mml{group_4:30} $\gr{\emptyset}=\TrivialSubgroup{G}$
+\item\mml{group_4:32} If $A\subset B$, then $\gr{A}$ is a subgroup of $\gr{B}$
+\item\mml{group_4:33} $\gr{A\cap B}$ is a subgroup of $\gr{A}\cap\gr{B}$
+\item\mml{group_4:34} $U_{\gr{A}}=\bigcap\{B\subset G\mid\exists H\subgroup G\ldotp B=U_{H}\land A\subset H\}$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Product of a finite sequence of magma elements]\mml{group_4:def 2}
+Let $M$ be a nonempty associative unital multiplicative magma.
+Let $(a_{1},\dots,a_{n})$ be a finite sequence of elements of $M$.
+We define the \define{Product} of $(a_{k})$ to be the element of $M$
+denoted $\prod_{k}a_{k}$ defined inductively on the length of the
+sequence as, for the empty product:
+\begin{equation}
+\prod^{0}_{i=1}a_{i}=1_{M},
+\end{equation}
+and when there are elements in the finite sequence:
+\begin{equation}
+\prod^{n+1}_{i=1}a_{i}=\left(\prod^{n}_{i=1}a_{i}\right)a_{n+1}
+\end{equation}
+\end{definition}
+
+\begin{theorem}[Product of concatenation of sequence of product of products]\mml{group_4:5}
+Let $M$ be a nonempty associative unital multiplicative magma.
+If $(a_{k})$ and $(b_{\ell})$ are finite sequences of $M$,
+and if $(c_{j})=(a_{k})\concat(b_{\ell})$ is the concatenation of these
+two sequences, then
+\begin{equation}
+\prod_{j}c_{j}=\left(\prod_{k}a_{k}\right)\left(\prod_{\ell}b_{\ell}\right).
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Inductive definition for product]\mml{group_4:6}
+Let $M$ be a nonempty unital multiplicative magma.
+Let $(a_{1},\dots,a_{n})$ be a finite sequence of elements of $M$.
+Let $b$ be an element of $M$. Then
+\begin{equation*}
+\prod_{k}(a_{k})\concat\langle
+b\rangle=\left(\prod_{k}a_{k}\right)\cdot b.
+\end{equation*}
+In particular, we have this product equal to $(((a_{1}\cdot a_{2})\cdots)a_{n})b$.
+\end{theorem}
+
+\begin{theorem}[Product of prepending an element to a sequence]\mml{group_4:7}
+Let $M$ be a nonempty associative unital multiplicative magma.
+Let $(a_{1},\dots,a_{n})$ be a finite sequence of elements of $M$.
+Let $a$ be an element of $M$.
+Then the product of the sequence $\langle a\rangle\concat(a_{k})$
+prepending the sequence with $a$ is
+\begin{equation*}
+\prod(\langle a\rangle\concat(a_{k}))=a\cdot\prod_{k}a_{k}.
+\end{equation*}
+\end{theorem}
+
+\begin{theorem}[Empty product is identity element]\mml{group_4:8}
+Let $M$ be a nonempty unital multiplicative magma.
+Then the empty product is the identity element
+$\prod^{0}_{i}a_{i}=1_{M}$.
+\end{theorem}
+
+\begin{theorem}[Finite products]
+Let $M$ be a non empty multiplicative magma.
+Then the following all hold:
+\begin{enumerate}
+\item\mml{group_4:9} For any $a\in M$, $\prod\langle a\rangle=a$
+\item\mml{group_4:10} For any $a,b\in M$, $\prod\langle a,b\rangle=ab$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Products do not depend on identity elements]\mml{group_4:13}
+Let $G$ be a group.
+Let $(a_{1},\dots,a_{n})$ be a finite sequence of elements of $G$.
+Let $(b_{1},\dots,b_{m})$ be a finite sequence of elements of $G$
+obtained from $(a_{i})$ by removing any entries equal to the identity
+element $1_{G}$ of $G$. Then
+\begin{equation*}
+\prod_{i}a_{i}=\prod_{i}b_{i}.
+\end{equation*}
+\end{theorem}
+
+\begin{theorem}[Inverse of product is reverse product of inverses]\mml{group_4:14}
+Let $G$ be a group. Let $(a_{1},\dots,a_{n})$ and
+$(b_{1},\dots,b_{n})$ be finite sequences of $G$ such that $b_{i}=a_{n-i}^{-1}$.
+Then $(\prod_{i}a_{i})^{-1}=\prod_{i}b_{i}$.
+\end{theorem}
+
+\begin{definition}[Power of a finite sequence of group elements]\mml{group_4:def 3}
+Let $G$ be a group.
+Let $(a_{i})=(a_{1},\dots,a_{n})$ be a finite sequence of $G$,
+let $(m_{i})=(m_{1},\dots,m_{n})$ be a finite sequence of integers.
+We define the term $(a_{i})^{(m_{i})}$ to be the finite sequence of
+$G$ equal to $(a_{1}^{m_{1}},a_{2}^{m_{2}},\dots,a_{n}^{m_{n}})$.
+\end{definition}
+
+\begin{definition}[Frattini subgroup]\mml{group_4:def 7}
+Let $G$ be a group. We define the \define{Frattini Subgroup} of $G$ to
+be the strict subgroup $\FrattiniSubgroup(G)$ of $G$ such that
+\begin{enumerate}
+\item if there exists a maximal subgroup of $G$, then
+  $\FrattiniSubgroup(G)$ is the intersection of all maximal subgroups
+  of $G$; or equivalently, the underlying set of $\FrattiniSubgroup(G)$ equals the intersection of
+all subsets of the maximal subgroups of $G$, i.e., $\bigcap\{A\subset G\mid\exists H\subgroup G\ldotp A=U_{H}\land H\mbox{ is maximal}\}$
+\item otherwise $\FrattiniSubgroup(G)=G$.
+\end{enumerate}
+\end{definition}
+
+\begin{remark}[Frattini subgroup when there is no maximal group]
+Care must be taken: when there is no maximal subgroup, the
+``na\"{\i}ve'' definition would yield the underlying set being
+$\bigcap\emptyset=\emptyset$. The alternate definitions for the
+Frattini subgroup would yield the trivial subgroup. We want to avoid
+this, which is why we have this ``piecemeal'' definition.
+\end{remark}
+
+\begin{remark}[History]
+Giovanni Frattini's ``Intorno alla generazione dei gruppi di operazioni''
+(\journal[Rom. Acc. L. Rend.]{Accademia dei Lincei, Rendiconti} \volume{I} no.4 (1885) 281--285, 455--457)
+introduced the Frattini subgroup as the subgroup consisting of all
+non-generating elements of the group. It was given this designation by
+Reinhold Baer in 1952. In Section 5 of Frattini's 1885 paper, the
+first occurrence of ``the Frattini argument'' may be found.
+Wolfgang Gasch\"{u}tz's ``\"{U}ber die $\Phi$-Untergruppe endlicher Gruppen''
+(\journal[Math. Z.]{Mathematische Zeitschrift } \volume{58} (1953)
+160--170, \doi{10.1007/BF01174137}) coined the term
+``Frattini argument'' for the first time. For more about this history,
+see Brescia, de~Giovanni, and Trombetti~\cite{brescia2017true}.
+\end{remark}

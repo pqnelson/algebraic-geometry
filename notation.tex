@@ -47,10 +47,10 @@
 \Def\HH{\mathbb{H}}
 \Def\NN{\mathbb{N}}
 \Def\QQ{\mathbb{Q}}
-\Def\Reals{\RR}
 \Def\RR{\mathbb{R}}
+\let\Reals\RR
 \Def\ZZ{\mathbb{Z}}
-\Def\Integers{\ZZ}
+\let\Integers\ZZ
 \Def\FinSETS{\textbf{U}_{0}}
 \Def\SETS{\textbf{U}_{1}}
 \Def\TarskiClass#1{{\bf T}(#1)}
@@ -62,9 +62,13 @@
 %% Set operations
 \let\Union\bigcup
 \let\Intersects\bigcap
+\let\Intersection\Intersects % synonym
+
 \let\propersubset\subset
 \let\og@subset\subset
+
 \let\subset\subseteq
+
 \ifLaTeX
 \usepackage{amssymb}
 \else
@@ -96,9 +100,25 @@
 \let\ImaginaryPart\Im
 \let\Im\im
 
+%% Finite Sequence
+\Def\concat{\frown}
+
 %% Group Theory
 \Def\ord{\mathop{\rm ord}\nolimits}
 \let\subgroup\leq
+\Def\TrivialSubgroup#1{\mathbf{1}_{#1}}
+\Def\Cl{\mathop{\rm Cl}\nolimits} % conjugacy class
+\Def\normalizer#1#2{\mathop{\rm N}\nolimits_{#1}(#2)}
+\Def\normalsubgroup{\mathrel{\trianglelefteq}}
+\Def\propernormalsubgroup{\mathrel{\triangleleft}}
+%\Def\subnormalsubgroup{\mathrel{\joinrel{\normalsubgroup\normalsubgroup}}}
+\Def\subnormalsubgroup{\mathrel{\trianglelefteq\mkern-2mu\trianglelefteq}}
+\Def\subgroups{\mathop{\rm SubGr}\nolimits}
+\let\SubGr\subgroups
+
+
+\Def\gr#1{\langle#1\rangle}
+\Def\FrattiniSubgroup{\mathop{\Phi}\nolimits}
 
 %% Topology
 \Def\closure#1{\mathop{\rm Cl}\nolimits(#1)}
@@ -138,8 +158,8 @@
 
 % ideals
 \let\Radical\sqrt
-\newcommand\ideal{\mathrel{\trianglelefteq}}
-\def\properideal{\mathrel{\triangleleft}}
+\Def\ideal{\mathrel{\trianglelefteq}}
+\Def\properideal{\mathrel{\triangleleft}}
 \Def\Radical#1{\sqrt{#1}}
 \Def\NilRadical{\mathop{\rm nil}\nolimits}
 
@@ -177,8 +197,8 @@
 %``SMaller Than''
 % It shows up in the writings of Boole and Pierce
 % https://tex.stackexchange.com/q/482843/14751
-\def\smt{\mathrel{\mathpalette\angin@{<}}} % U+02AAA
-\def\lat{\mathrel{\mathpalette\angin@{>}}} % U+02AAB
+\Def\smt{\mathrel{\mathpalette\angin@{<}}} % U+02AAA
+\Def\lat{\mathrel{\mathpalette\angin@{>}}} % U+02AAB
 
 \font\sidenotefont=cmti7
 

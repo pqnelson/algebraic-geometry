@@ -11,9 +11,11 @@
 \makeatletter
 
 % 12pt - amsart
+% 15pt - svmono.cls
 % 18pt - amsbook, amsproc
 % 19pt - taocpmac.tex
-\parindent=19pt
+% 20pt - plain.tex
+\parindent=15pt
 
 %% Strikethrough
 %% https://tex.stackexchange.com/a/738717/14751
@@ -152,6 +154,8 @@
 \def\journal{\@ifnextchar[\@journal\@@journal}
 % \volume{x}
 \def\volume{\textbf}
+
+\def\doi#1{\texttt{doi:#1}}
 
 %%
 %% Quotes
