@@ -1,0 +1,305 @@
+%%
+%% commutative-algebra.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-11-11T16:19:29-0800
+%% Last update 2025-11-11T16:19:29-0800
+%% 
+
+\chapter{Commutative Algebra}
+
+\begin{remark}[References]
+There are quite a few references for commutative algebra.
+Atiyah and Macdonald~\cite{atiyah1969introduction} remains a classic,
+Eisenbud~\cite{eisenbud1994commutative} contains a number of good
+examples and exercises. Matsumara~\cite{matsumura1970commutative}
+is also quite good.
+\end{remark}
+
+\begin{definition}[Spectrum of a ring]\mml{topzari:def 5}
+Let $R$ be a commutative ring. We define the \define{Spectrum} of $R$
+to be the subset-family $\Spec(R)$ equal to $\{I\ideal R\mid I\mbox{ is prime}\}$.
+% Stacks: 00DY
+\end{definition}
+
+\begin{definition}[Maximal spectrum of a ring]\mml{topzari:def 7}
+Let $R$ be a commutative ring.
+We define the \define{Maximal Spectrum} of $R$ to be the set $\MSpec(R)$ of all
+maximal ideals of $R$.
+\end{definition}
+
+\begin{theorem}
+If $R$ is a commutative ring and $I\ideal R$ such that $I\neq R$,
+then $R$ has a maximal ideal $\mathfrak{m}$ such that $I\subset\mathfrak{m}$.
+\end{theorem}
+
+\begin{corollary}
+Every non-unit of a commutative ring lies in a maximal ideal.
+\end{corollary}
+
+\begin{proof}
+If $x$ is a non-unit, then $(x)\neq R$. Then apply the previous theorem.
+\end{proof}
+
+\begin{proposition}
+Let $R$ be a ring with a maximal ideal $\mathfrak{m}$. If every
+element of $1+\mathfrak{m}$ is a unit, then $R$ is a local ring.
+\end{proposition}
+
+\begin{proof}
+Let $x\in R\setminus\mathfrak{m}$.
+Since $\mathfrak{m}$ is maximal, the smallest ideal containing both
+$\mathfrak{m}$ and $x$ is $R$. Then $1=ax+y$ for some $a\in R$ and
+$y\in\mathfrak{m}$. Then $ax=1-y$ is a unit by assumption, so
+$\mathfrak{m}$ contains all the non-units.
+\end{proof}
+
+\begin{proposition}[Ideal is prime iff quotient ring is integral domain]
+Let $R$ be a unital commutative ring. Let $I\ideal R$.
+Then $I$ is a prime ideal of $R$ if and only if the quotient ring
+$R/I$ is an integral domain.
+\end{proposition}
+
+\begin{proof}
+\forwardproof\ Let $I$ be a prime ideal. We want to show: for any $(x+I)\in R/I$ and
+$(y+I)\in R/I$ such that $(x+I)(y+I)=xy+I=0_{R/I}$, then we have $x+I=0_{R/I}$
+or $y+I=0_{R/I}$.
+
+The zero of $R/I$ is $0_{R/I}=I$. Therefore $xy+I=0_{R/I}$ implies
+$xy\in I$. Since $I$ is a prime ideal, either $x\in I$ or $y\in I$.
+Without loss of generality, we may assume $x\in I$. Then $x+I=I=0_{R/I}$.
+Hence the claim.
+
+\backwardproof\ Assume $R/I$ is an integral domain.
+Let $x,y\in R$ be such that $xy\in I$. Then $0_{R/I}=I=xy+I=(x+I)(y+I)$.
+Since $R/I$ is an integral domain, it follows that either
+$x+I=0_{R/I}$ or $y+I=0_{R/I}$. If $x+I=0_{R/I}$, then $x\in I$.
+If $y+I=0_{R/I}$, then $y\in I$. Hence either $x\in I$ or $y\in I$,
+and so by definition $I$ is a prime ideal.
+\end{proof}
+
+\begin{proposition}[Maximal ideals of commutative rings are prime]
+Let $R$ be a commutative ring.
+If $\mathfrak{m}\ideal R$ is a maximal ideal, then $\mathfrak{m}$ is a
+prime ideal of $R$.
+\end{proposition}
+
+\begin{proof}
+The quotient $R/\mathfrak{m}$ is a field (and in particular, an
+integral domain). But an ideal $I$ is prime iff $R/I$ is an integral
+domain. Hence $\mathfrak{m}$ must be prime.
+\end{proof}
+
+\begin{definition}[Local ring]\mml{topzari:def 9}
+Let $R$ be a commutative ring where $1\neq0$.
+We say $R$ is \define{Local} if there is exactly one maximal ideal of $R$.
+(This could be defined for any nonempty double loop structure $R$.)
+\end{definition}
+
+\begin{definition}[Semi-local rings]\mml{topzari:def 10}
+Let $R$ be a commutative ring where $1\neq0$.
+We say $R$ is \define{Semi-Local} if there are only finitely many
+maximal ideals of $R$. Equivalently, $\MSpec(R)$ is a finite set.
+\end{definition}
+
+\begin{definition}[Nilradical of a ring]\mml{topzar1:def 13}
+Let $A$ be a nondegenerate commutative ring.
+We define the \define{Nilradical} of $A$ to be the ideal
+$\NilRadical(A):=\{a\in A\mid a\mbox{ is nilpotent}\}$. 
+\end{definition}
+
+\begin{theorem}\mml{topzar1:18}
+Let $A$ be a nondegenerate commutative ring.
+Let $I\ideal A$ be an ideal.
+Then $\Radical{I}=\Intersects\{P\in\Spec(A)\mid I\subset P\}$.
+\end{theorem}
+
+\begin{theorem}\mml{topzar1:19}
+Let $A$ be a nondegenerate commutative ring.
+Then $\NilRadical(A)=\Intersects\Spec(A)$.
+\end{theorem}
+
+\begin{definition}[Reduced rings have no nilradical]\mml{field_16:20}
+Let $R$ be a nondegenerate commutative ring.
+We say $R$ is \define{Reduced} when $\NilRadical{R}=\{0\}$.
+\end{definition}
+
+\begin{theorem}
+Let $A$ be an arbitrary commutative ring. Then the quotient ring
+\begin{equation*}
+R = A/\bigcap\Spec(A)
+\end{equation*}
+is a reduced ring.
+\end{theorem}
+
+\begin{definition}[Jacobson radical of a ring]
+Let $R\neq0$ be an arbitrary ring (not necessarily commutative).
+Then the \define{Jacobson Radical} of $R$ is the ideal
+\begin{equation}
+\JacobsonRadical(R):=\{r\in R\mid rM=0\mbox{ for all }M\mbox{ simple}\}
+\end{equation}
+consisting of all elements $r\in R$ which annihilate all simple
+modules over $R$.
+\end{definition}
+
+\begin{proposition}[Jacobson radical of a commutative ring]
+Let $R\neq0$ be a commutative ring. Then the Jacobson Radical of $R$
+is the ideal $\JacobsonRadical(R)=\bigcap\MSpec(R)$ obtained by taking
+the intersection of all maximal ideals of $R$.
+\end{proposition}
+
+The proposition holds for noncommutative rings, if we work with
+maximal left ideals.
+
+\begin{proof}
+\textsc{Claim 1:} $\JacobsonRadical(R)\subset\bigcap\MSpec(R)$.
+Let $x\in\JacobsonRadical(R)$ and $\mathfrak{m}$ be a maximal ideal.
+Then $R/\mathfrak{m}$ is a simple module, so $x(R/\mathfrak{m})=0$.
+Hence $x\in\mathfrak{m}$.
+
+\textsc{Claim 2:} $\JacobsonRadical(R)\supset\bigcap\MSpec(R)$.
+Let $x$ be in every maximal ideal, let $M$ be a simple module over $R$.
+Then for every nonzero $v\in M$, $Rv=M$ and $\Annihilator(v)$ is a
+maximal ideal. Then $xv=0$. Then $xM=0$, hence $x\in\JacobsonRadical(R)$.
+\end{proof}
+
+\begin{proposition}
+Let $R$ be a commutative ring. If $x\in\JacobsonRadical(R)$,
+then $1+x$ is a unit in $R$.
+\end{proposition}
+
+The previous proposition is stated in Matsumara~\cite{matsumura1970commutative}
+after Definition 1L.
+
+\begin{proof}
+Let $x\in\JacobsonRadical(R)$. Assume for contradiction $1+x$ is not a
+unit in $R$.
+\end{proof}
+
+\begin{proposition}
+Let $I\ideal R$ be an ideal. If $1+x$ is a unit for all $x\in I$,
+then $I\subset\JacobsonRadical(R)$.
+\end{proposition}
+
+The previous proposition is stated in Matsumara~\cite{matsumura1970commutative}
+after Definition 1L.
+
+\begin{proof}
+Assume $1+x$ is a unit for all $x\in I$.
+Assume for contradiction $\mathfrak{m}$ is a maximal ideal and
+$I\nsubset\mathfrak{m}$.
+Then $I+\mathfrak{m}=R$.
+Then $1=x+y$ for some $x\in I$ and $y\in\mathfrak{m}$.
+Then $y=1-x$ is not a unit. Hence contradiction.
+\end{proof}
+
+\section{Localization}
+
+\begin{definition}[Multiplicative set]\mml{c0sp1:def 4}
+Let $M$ be a nonempty multiplicative loop with zero.
+Let $S$ be a subset of $M$.
+We say $S$ is \define{Multiplicatively-Closed} (or just \emph{multiplicative})
+if
+\begin{enumerate}
+\item $1\in S$, and
+\item for all $u,v\in S$, we have $uv\in S$.
+\end{enumerate}
+\end{definition}
+
+\begin{proposition}[Partial converse of prime ideal, to construct prime ideals]
+Let $R$ be a commutative ring, let $U\subset R$ be a
+multiplicatively-closed subset. If $I\properideal R$ is an ideal maximal
+among those disjoint with $U$, then $I$ is prime.
+\end{proposition}
+
+This partial converse is due to
+Eisenbud~\cite[Prop.~2.11]{eisenbud1994commutative}.
+
+\begin{proof}
+Let $f\in R$, $g\in R$. Assume $f\notin I$ and $g\notin I$. Then by
+the maximality of $I$, both $I+(f)$ and $I+(g)$ intersect $U$.
+There exists elements of the form $af+i\in U$ and $bg+j\in U$ where
+$i,j\in I$. If $fg\in I$, then the product $(af+i)(bg+j)\in I$,
+contradicting the fact that $I$ is disjoint with $U$.
+\end{proof}
+
+\begin{proposition}[Complement of a prime ideal is a multiplicative set]\label{prop:commutative-algebra:complement-of-prime-ideal-is-multiplicative-set}
+Let $R$ be a ring. Let $P\in\Spec(R)$ be a prime ideal.
+Then $U=R\setminus P$ is a multiplicative set.
+\end{proposition}
+
+\begin{proof}
+  We see that $1\notin P$. Then
+  \begin{equation}\label{eq:complement-of-prime-ideal:condition-one}
+1\in U\setminus P.
+  \end{equation}
+  Let $u\in R\setminus P$ and $v\in R\setminus P$.
+  Then $u\notin P$ and $v\notin P$. Then $uv\notin P$, otherwise
+  either $u\in P$ or $v\in P$ by definition of a prime ideal. Then
+  \begin{equation}
+uv\in R\setminus P.
+  \end{equation}
+  Hence $U$ satisfies the properties of being multiplicatively-closed
+  by Equation~\eqref{eq:complement-of-prime-ideal:condition-one} and
+  the Definition of multiplicatively-closed sets.
+\end{proof}
+
+\begin{definition}[Localization of a ring over a multiplicative set]\mml{ringfrac:def 18}
+Let $R$ be any commutative ring.
+Let $S$ be a nonempty multiplicatively-closed subset of $R$.
+We define the \define{Localization} of $R$ with respect to $S$ to be
+the ring $S^{-1}R$ consisting of equivalence classes of fractions
+$a/s$ where $a\in R$ and $s\in S$, the equivalence relation being
+\begin{equation}
+\frac{a}{s}\sim\frac{b}{s'}\iff\exists s''\in S\ldotp s''(s'a-sb)=0,
+\end{equation}
+where the $s''$ factor is needed (if we omit it, we would not have an
+equivalence relation, because of zero-divisors).
+\end{definition}
+
+\begin{definition}[Localization with respect to a prime]
+Let $R$ be a commutative ring. Let $P\in\Spec(R)$ be a prime ideal.
+We define the \define{Localization with respect to the prime} $P$ of
+the ring $R$ to be the ring $R_{P}:=R/(R\setminus P)$. We can see this
+is well-defined because $U=R\setminus P$ is a multiplicative set by
+Proposition~\ref{prop:commutative-algebra:complement-of-prime-ideal-is-multiplicative-set}.
+\end{definition}
+
+\section{Nakayama's Lemma}
+
+\begin{remark}[Usefulness of Nakayama's lemma]
+You'd use Nakayama's lemma when $R$ is a local ring, and $I\ideal R$
+is its maximal ideal.
+\end{remark}
+
+\begin{proposition}
+Let $R$ be a unital commutative ring. Let $I\ideal R$ be an ideal.
+Let $M$ be a finitely-generated module over $R$.
+If $IM=M$, then there exists an $r\in R$ with $r\equiv1\bmod{I}$
+such that $rM=0$.
+\end{proposition}
+
+\begin{proposition}[$IM=M\implies im=m$]
+Let $I\ideal R$ be an ideal, let $M$ be a finitely-generated module
+over $R$.
+If $IM=M$, then there exists an $i\in I$ such that $im=m$ for all
+$m\in M$.
+\end{proposition}
+
+\begin{proposition}
+Let $R$ be a ring, let $M$ be a finitely-generated module over $R$.
+Let $I\ideal R$ be an ideal. If $IM=M$, then there exists some $r\in R$
+of the form $r=1+x$ where $x\in I$ and $rM=0$. Moreover, if
+$I\subset\JacobsonRadical(A)$, then $M=0$.
+\end{proposition}
+
+This is how Matsumara~\cite[1M]{matsumura1970commutative} presents
+Nakayama's lemma.
+
+\begin{proposition}
+Let $M$ is a finitely-generated module over $R$ and
+let $\JacobsonRadical(R)$ be the Jacobson radical of $R$.
+If $\JacobsonRadical(R)M=M$, then $M=0$.
+\end{proposition}
