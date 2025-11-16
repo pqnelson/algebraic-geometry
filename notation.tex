@@ -59,6 +59,9 @@
 \Def\UNIVERSE#1{\mathop{\bf U}\nolimits_{#1}}
 \Def\succ{\mathop{\rm succ}\nolimits}
 
+%% Set theory
+\Def\card#1{\left|#1\right|}
+
 %% Set operations
 \let\Union\bigcup
 \let\Intersects\bigcap
@@ -66,7 +69,9 @@
 
 \let\propersubset\subset
 \let\og@subset\subset
-
+\let\og@supset\supset
+\let\propersupset\supset
+\let\supset\supseteq
 \let\subset\subseteq
 
 \ifLaTeX
@@ -74,6 +79,9 @@
 \else
 \input amssym.tex
 \fi
+\let\nsubset\nsubseteq
+\let\nsupset\nsupseteq
+
 \Def\powerset#1{\mathcal{P}\left(#1\right)}
 \Def\symdiff{\mathbin{\Delta}}
 
@@ -115,10 +123,22 @@
 \Def\subnormalsubgroup{\mathrel{\trianglelefteq\mkern-2mu\trianglelefteq}}
 \Def\subgroups{\mathop{\rm SubGr}\nolimits}
 \let\SubGr\subgroups
+\Def\join{\sqcup}
 
 
 \Def\gr#1{\langle#1\rangle}
 \Def\FrattiniSubgroup{\mathop{\Phi}\nolimits}
+
+\let\iso\cong
+\Def\nathom#1{q_{#1}} % natural morphism to quotient group
+%\Def\Index#1#2{\hbox{\texttt{[}}#1:#2\hbox{\texttt{]}}} % \Index{group}{subgroup}
+\Def\Index#1#2{[#1:#2]}
+\Def\LeftCosets#1#2{#2/#1} % \LeftCosets{subgroup}{group}
+\Def\RightCosets#1#2{#1\backslash#2} % \RightCosets{subgroup}{group}
+
+\Def\CyclicGroup#1{C_{#1}} % cyclic group
+\Def\SylowSubgroups{\mathop{\rm Syl}\nolimits}
+\let\Syl\SylowSubgroups
 
 %% Topology
 \Def\closure#1{\mathop{\rm Cl}\nolimits(#1)}

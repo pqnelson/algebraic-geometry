@@ -221,7 +221,7 @@ Let $G$ be a group. Let $g$, $h$ be elements of $G$. Then:
 \end{enumerate}
 \end{theorem}
 
-\begin{definition}[Multiplying subsets of a multiplicative magma]\mml{group_2:def 2}
+\begin{definition}[Multiplying subsets of a multiplicative magma]\mml{group_2:def 2}\label{def:group:group2:def2}
 Let $M$ be a nonempty multiplicative magma. Let $A$ and $B$ be subsets of $M$.
 We define the multiplication of $AB$ to be the subset of $M$ equal to
 $\{ab\mid a\in A,b\in B\}$.
@@ -397,6 +397,10 @@ strict subgroup $\Omega_{G}$ of $G$ whose underlying set is all of
 $G$: $U_{\Omega_{G}}=U_{G}$.
 \end{definition}
 
+\begin{theorem}\mml{group_5:1}
+Let $G$ be a group. For any object $x$, $x\in\TrivialSubgroup{G}$ iff $x=1_{G}$.
+\end{theorem}
+
 \begin{theorem}[Properties of proper trivial subgroups]\mml{group_2:63-65}
 Let $G$ be a group. Let $H$, $H_{1}$, $H_{2}$ be subgroups of $G$.
 Then the following all hold:
@@ -424,6 +428,58 @@ Obseve this is commutative $H_{1}\cap H_{2}=H_{2}\cap H_{1}$.
 \begin{theorem}[Associativity of intersecting subgroups]\mml{group_2:84}
 Let $G$ be a group. Let $H_{1}$, $H_{2}$, $H_{3}$ be subgroups of $G$.
 Then $(H_{1}\cap H_{2})\cap H_{3}=H_{1}\cap(H_{2}\cap H_{3})$.
+\end{theorem}
+
+\begin{definition}[Left cosets of a subgroup]\mml{group_2:def 15}
+Let $H\subgroup G$ be a subgroup of $G$.
+Then we define the set of \define{Left Cosets} of $H$ to be the family $\LeftCosets{H}{G}$
+of subsets of $G$ such that for all subsets $A\subset G$, we have
+$A\in\LeftCosets{H}{G}$ iff there exists an $a\in G$ such that $A=aH$.
+\end{definition}
+
+\begin{definition}[Right cosets of a subgroup]\mml{group_2:def 16}
+Let $H\subgroup G$ be a subgroup of $G$.
+Then we define the set of \define{Right Cosets} of $H$ to be the family $\RightCosets{H}{G}$
+of subsets of $G$ such that for all subsets $A\subset G$, we have
+$A\in\RightCosets{H}{G}$ iff there exists an $a\in G$ such that $A=Ha$.
+\end{definition}
+
+\begin{theorem}[Left cosets equipotent with right cosets]\mml{group_2:136}
+Let $H\subgroup G$ be a subgroup.
+Then $\RightCosets{H}{G}$ is equipotent with $\LeftCosets{H}{G}$.
+\end{theorem}
+
+\begin{theorem}[Cosets partition the group]\mml{group_2:137}
+Let $H\subgroup G$.
+Then $\Union\RightCosets{H}{G}=U_{G}$ and $\Union\LeftCosets{H}{G}=U_{G}$.
+\end{theorem}
+
+\begin{definition}[Index of a subgroup]\mml{group_2:def 17}\label{defn:group:index-of-a-subgroup}
+Let $G$ be a group. Let $H\subgroup G$ be a subgroup.
+We define the \define{Index} of $H$ to be the cardinal number
+equal to the cardinality of the left cosets of $H$ denoted $\Index{G}{H}:=\card{\LeftCosets{H}{G}}$
+\end{definition}
+
+\begin{theorem}[Index of subgroup is a natural number when set of cosets is finite]
+Let $G$ be a group, let $H\subgroup G$ be a subgroup.
+If $\LeftCosets{H}{G}$ is finite, then $\Index{G}{H}$ is a natural number.
+\end{theorem}
+
+\begin{theorem}[Lagrange's theorem for groups]\mml{group_2:147}
+Let $G$ be a finite group. Let $H\subgroup G$.
+Then $\card{G}=\card{H}\cdot\Index{G}{H}$.
+\end{theorem}
+
+\begin{theorem}[Index of grandchild is product of indices]\mml{group_2:149}
+Let $G$ be a finite group.
+Let $I\subgroup G$ and $H\subgroup G$ be subgroups of $G$.
+If $I\subgroup H$, then $\Index{G}{I}=\Index{G}{H}\cdot\Index{H}{I}$.
+\end{theorem}
+
+\begin{theorem}[Cauchy's theorem]\mml{group_10:11}
+Let $G$ be a finite group. Let $p$ be a prime number.
+If $p$ divides $\card{G}$, then there exists an element $g\in G$ of
+$G$ which has order $p$.
 \end{theorem}
 
 \subsection{Normal Subgroups}
@@ -732,9 +788,32 @@ Let $N_{1}$, $N_{2}$ be normal subgroups of $G$. Then $N_{1}\cap N_{2}$
 is a normal subgroup of $G$.
 \end{theorem}
 
-\begin{theorem}[Every subgroup of commutative group is normal]\mml{group_3:116}
+\begin{theorem}[Every subgroup of a commutative group is normal]\mml{group_3:116}
 Let $G$ be a commutative group. Let $H$ be a subgroup of $G$. Then $H$
 is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Equivalent criteria for normal subgroups]
+Let $G$ be a group, let $H$ be a subgroup of $G$. Then the following hold:
+\begin{enumerate}
+\item\mml{group_3:117} $H$ is normal iff for each $a\in G$ we have $aH=Ha$
+\item\mml{group_3:118} $H$ is normal iff for each $a\in G$ we have
+  $aH\subset Ha$
+\item\mml{group_3:119} $H$ is normal iff for each $a\in G$ we have
+  $Ha\subset aH$
+\item\mml{group_3:120} $H$ is normal iff for each subset $A\subset G$
+  we have $AH=HA$
+\item\mml{group_3:121} $H$ is a strict normal subgroup of $G$ iff for
+  each $a\in G$ we have $H\subgroup H^{a}$ is a subgroup of $H^{a}$
+\item\mml{group_3:122} $H$ is a strict normal subgroup of $G$ iff for
+  each $a\in G$ we have $H^{a}\subgroup H$ is a subgroup of $H$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Left cosets of a normal subgroup are also right cosets]\mml{group_3:127}
+Let $G$ be a group. Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+Then the set of left cosets of $N$ in $G$ is equal to the set of right
+cosets of $N$ in $G$.
 \end{theorem}
 
 \begin{definition}[Normalizer of subset]\mml{group_3:def 14}
@@ -743,6 +822,17 @@ We define the \define{Normalizer} of $A$ to be the strict subgroup $\normalizer{
 of $G$ such that its underlying set equals
 $U_{\normalizer{G}{A}}:=\{h\in G\mid A=A^{h}\}$.
 \end{definition}
+
+\begin{theorem}[Elements of normalizer of subset]\mml{group_3:129}
+Let $G$ be a group, let $A\subset G$ be a subset of $G$, let $x$ be a set.
+Then $x\in\normalizer{G}{A}$ iff there exists an element $h$ of $G$
+such that $x=h$ and $A^{h}=A$.
+\end{theorem}
+
+\begin{theorem}[Index of normalizer is cardinality of conjugacy class]\mml{group_3:130}
+Let $G$ be a group. Let $A\subset G$ be a subset of $G$.
+Then $\card{\Cl(A)}=\Index{G}{\normalizer{G}{A}}$.
+\end{theorem}
 
 \begin{definition}[Normalizer of subgroup]\mml{group_3:def 15}
 Let $G$ be a group. Let $H$ be a subgroup of $G$.
@@ -875,6 +965,26 @@ We define the term $(a_{i})^{(m_{i})}$ to be the finite sequence of
 $G$ equal to $(a_{1}^{m_{1}},a_{2}^{m_{2}},\dots,a_{n}^{m_{n}})$.
 \end{definition}
 
+\begin{definition}[Maximal subgroup]\mml{group_4:def 6}
+Let $G$ be a group, let $H$ be a subgroup of $G$.
+We say $H$ is \define{Maximal} if $H\neq G$ and for all subgroups $K$
+of $G$ such that $H\neq K$ and $H$ is a subgroup of $K$ we have $K=G$.
+\end{definition}
+
+\begin{definition}[Generating element of a group]\mml{group_4:def 5}
+Let $G$ be a group. Let $a$ be an element of $G$.
+We say $a$ is \define{Generating} if there exists a subset $A\subset G$
+such that $\gr{A}=G$ and $\gr{A\setminus\{a\}}\neq G$.
+
+Equivalently, we say $a$ is \define{Non-generating} if for all subsets
+$A\subset G$ such that $\gr{A}=G$, we have
+$\gr{A\setminus\{a\}}=G$. Otherwise, $a$ is generating.
+\end{definition}
+
+\begin{theorem}\mml{group_4:36}
+Let $G$ be a group. Then $1_{G}$ is non-generating.
+\end{theorem}
+
 \begin{definition}[Frattini subgroup]\mml{group_4:def 7}
 Let $G$ be a group. We define the \define{Frattini Subgroup} of $G$ to
 be the strict subgroup $\FrattiniSubgroup(G)$ of $G$ such that
@@ -886,6 +996,17 @@ all subsets of the maximal subgroups of $G$, i.e., $\bigcap\{A\subset G\mid\exis
 \item otherwise $\FrattiniSubgroup(G)=G$.
 \end{enumerate}
 \end{definition}
+
+\begin{theorem}[Frattini subgroup consists of non-generating elements]\mml{group_4:42}
+Let $G$ be a strict group. For each element $a\in G$,
+we have $a\in\FrattiniSubgroup(G)$ iff $a$ is not a generating element
+of $G$.
+\end{theorem}
+
+\begin{theorem}[Frattini subgroup contained in every maximal subgroup]\mml{group_4:40}
+Let $G$ be a group, let $H\subgroup G$ be a [strict] maximal subgroup
+of $G$. Then the Frattini subgroup $\FrattiniSubgroup{G}$ is a subgroup of $H$.
+\end{theorem}
 
 \begin{remark}[Frattini subgroup when there is no maximal group]
 Care must be taken: when there is no maximal subgroup, the
@@ -908,3 +1029,505 @@ Wolfgang Gasch\"{u}tz's ``\"{U}ber die $\Phi$-Untergruppe endlicher Gruppen''
 ``Frattini argument'' for the first time. For more about this history,
 see Brescia, de~Giovanni, and Trombetti~\cite{brescia2017true}.
 \end{remark}
+
+\subsection{Lattice of subgroups}
+
+\begin{definition}[Products of subgroups]\mml{group_4:def 8}
+Let $G$ be a group. Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+We define $H_{1}H_{2}$ to be the subset of $G$ equal to
+$U_{H_{1}}U_{H_{2}}$ the product of their underlying subsets.
+\end{definition}
+
+\begin{theorem}[Associativity of product of subgroups]
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$, $H_{3}$ be subgroups of $G$.
+Let $A\subset G$ be a subset of $G$, let $a\in G$ be an element of $G$.
+Then the following all hold:
+\begin{enumerate}
+\item\mml{group_4:44} $(H_{1}H_{2})H_{3}=H_{1}(H_{2}H_{3})$
+\item\mml{group_4:45} $(aH_{1})H_{2}=a(H_{1}H_{2})$
+\item\mml{group_4:46} $(H_{1}H_{2})a=H_{1}(H_{2}a)$
+\item\mml{group_4:47} $(AH_{1})H_{2}=A(H_{1}H_{2})$
+\item\mml{group_4:48} $(H_{1}H_{2})A=H_{1}(H_{2}A)$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[``Join'' of subgroups]\mml{group_4:def 9}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+Then we define the \define{Join} of $H_{1}$ with $H_{2}$ to be the
+subgroup $H_{1}\join H_{2} := \gr{U_{H_{1}}\cup U_{H_{2}}}$ generated
+by all the elements of $H_{1}$ and $H_{2}$. 
+\end{definition}
+
+\begin{theorem}[Join is generated by product of subgroups]\mml{group_4:50}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+Then $H_{1}\join H_{2}=\gr{H_{1}H_{2}}$.
+\end{theorem}
+
+\begin{theorem}[Underlying set of join of permutable subgroups]\mml{group_4:51}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+If $H_{1}H_{2}=H_{2}H_{1}$, then $U_{H_{1}\join H_{2}}=H_{1}H_{2}$.
+\end{theorem}
+
+\begin{theorem}[Underlying set of join of subgroups of commutative group]\mml{group_4:52}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+If $G$ is a commutative group, then $U_{H_{1}\join H_{2}}=H_{1}H_{2}$.
+\end{theorem}
+
+\begin{theorem}[Underlying set of join of normal subgroups]\mml{group_4:53}
+Let $G$ be a group.
+Let $N_{1}$ and $N_{2}$ be normal subgroups of $G$.
+Then $U_{N_{1}\join N_{2}}=N_{1}N_{2}$.
+\end{theorem}
+
+\begin{theorem}[Join of normal subgroups is normal]\mml{group_4:54}
+Let $G$ be a group.
+Let $N_{1}$ and $N_{2}$ be normal subgroups of $G$.
+Then $N_{1}\join N_{2}$ is a normal subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Commutativity of join of subgroups]\mml{group_4:56}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+Then $H_{1}\join H_{2}=H_{2}\join H_{1}$.
+\end{theorem}
+
+\begin{theorem}[Associativity of join of subgroups]\mml{group_4:57}
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$, $H_{3}$ be subgroups of $G$.
+Then $(H_{1}\join H_{2})\join H_{3}=H_{1}\join(H_{2}\join H_{3})$.
+\end{theorem}
+
+\begin{theorem}[Join with trivial subgroups]
+Let $G$ be a group.
+Let $H$ be a strict subgroup of $G$.
+Then:
+\begin{enumerate}
+\item\mml{group_4:58} $TrivialSubgroup{G}\join H=H$ and $H\join\TrivialSubgroup{G}=H$
+\item\mml{group_4:59} $G\join H=G$ and $H\join G=G$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Join contains its arguments as subgroups]\mml{group_4:60}
+Let $G$ be a group.
+Let $H_{1}$ and $H_{2}$ be subgroups of $G$.
+Then $H_{1}$ is a subgroup of $H_{1}\join H_{2}$,
+and $H_{2}$ is a subgroup of $H_{1}\join H_{2}$.
+\end{theorem}
+
+\begin{theorem}[Lattice-like behaviour of join]
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$, $H_{3}$ be subgroups of $G$.
+Then the following all hold:
+\begin{enumerate}
+\item\mml{group_4:61} $H_{1}\subgroup H_{2}$ iff $H_{1}\join H_{2}=H_{2}$
+\item\mml{group_4:62} If $H_{1}\subgroup H_{2}$, then $H_{1}\subgroup H_{2}\join H_{3}$
+\item\mml{group_4:63} If $H_{1}\subgroup H_{3}$ and $H_{2}\subgroup H_{3}$,
+  then $H_{1}\join H_{2}\subgroup H_{3}$
+\item\mml{group_4:64} If $H_{1}\subgroup H_{2}$, then $H_{1}\join H_{3}$
+  is a subgroup of $H_{2}\join H_{3}$
+\item\mml{group_4:65} $H_{1}\cap H_{2}$ is a subgroup of $H_{1}\join H_{2}$
+\item\mml{group_4:66} $(H_{1}\cap H_{2})\join H_{2}=H_{2}$
+\item\mml{group_4:67} $H_{1}\cap(H_{1}\join H_{2})=H_{1}$
+\item\mml{group_4:68} $H_{1}\join H_{2}=H_{2}$ iff $H_{1}\cap H_{2}=H_{1}$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Lattice of subgroups]\mml{group_4:def 12}
+Let $G$ be a group. We define the \define{Lattice of Subgroups} to be
+the strict lattice structure
+$$L(G):=\structure{U=\subgroups(G), \join, \cap}.$$
+\end{definition}
+
+\subsection{Center of Group, Derived Subgroup}
+
+\begin{theorem}[Subgroups closed under conjugation]\mml{group_5:2}
+Let $G$ be a group.
+Let $a$, $b$ be elements of $G$.
+Let $H$ be a subgroup of $G$.
+If $a\in H$ and $b\in H$, then $a^{b}\in H$.
+\end{theorem}
+
+\begin{theorem}[Normal subgroup closed under conjugation]\mml{group_5:3}
+Let $G$ be a group.
+Let $a$, $b$ be elements of $G$.
+Let $N\normalsubgroup G$ be a strict normal subgroup of $G$.
+If $a\in N$, then $a^{b}\in N$.
+\end{theorem}
+
+\begin{definition}[Commutator of elements of a group]\mml{group_5:def 2}
+Let $G$ be a group. Let $a$, $b$ be elements of $G$.
+We define the \define{Commutator} of $a$ with $b$ to be the element of
+$G$ equal to $[a,b]:=(((a^{-1}b^{-1})a)b$.
+\end{definition}
+
+\begin{theorem}[Properties of commutator of group elements]
+Let $G$ be a group.
+Let $a$, $b$, $c$ be elements of $G$. Then the following all hold:
+\begin{enumerate}
+\item\mml{group_5:19} $[1_{G},a]=1_{G}$ and $[a,1_{G}]1_{G}$
+\item\mml{group_5:20} $[a,a]=1_{G}$
+\item\mml{group_5:21} $[a,a^{-1}]=1_{G}$ and $[a^{-1},a]=1_{G}$
+\item\mml{group_5:22} $[a,b]^{-1}=[b,a]$
+\item\mml{group_5:23} $[a,b]^{c}=[a^{c},b^{c}]$
+\item\mml{group_5:25} $[ab,c]=[a,c]^{b}[b,c]$
+\item\mml{group_5:26} $[a,bc]=[a,c]([a,b]^{c})$
+\item\mml{group_5:27} $[a^{-1},b]=[b,a]^{a^{-1}}$
+\item\mml{group_5:28} $[a,b^{-1}]=[b,a]^{b^{-1}}$
+\item\mml{group_5:29} $[a^{-1},b^{-1}]=[a,b]^{(ab)^{-1}}$ and $[a^{-1},b^{-1}]=[a,b]^{(ba)^{-1}}$
+\item\mml{group_5:30} $[a,b^{a^{-1}}]=[b,a^{-1}]$
+\item\mml{group_5:31} $[a^{b^{-1}},b]=[b^{-1},a]$
+\item\mml{group_5:34} for any $n\in\ZZ$, $[a^{n},b]=a^{-n}(a^{b})^{n}$
+\item\mml{group_5:35} for any $n\in\ZZ$, $[a,b^{n}]=(b^{a})^{-n}b^{n}$
+\item\mml{group_5:36} $[a,b]=1_{G}$ iff $ab=ba$
+\item\mml{group_5:38} for any $H\subgroup G$, if $a\in H$ and $b\in H$,
+  then $[a,b]\in H$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Commutator with three elements]\mml{group_5:def 3}
+Let $G$ be a group.
+Let $a$, $b$, $c$ be elements of $G$.
+Then we introduce the notation $[a,b,c] := [[a,b],c]$.
+\end{definition}
+
+\begin{theorem}[Hall's identity]\mml{group_5:46}
+Let $G$ be a group.
+Let $a$, $b$, $c$ be elements of $G$.
+Then $[a,b^{-1},c]^{b}[b,c^{-1},a]^{c}[c,a^{-1},b]^{a}=1_{G}$.
+\end{theorem}
+
+\begin{definition}[Set of all commutators from subsets of a group]\mml{group_5:def 4}
+Let $G$ be a group.
+Let $A$ and $B$ be subsets of $G$.
+We define \define{the commutators of $A$ with $B$} to be the subset of
+$G$ equal to the set of all possible commutators of their elements
+$\{[a,b]\mid a\in A,b\in B\}$.
+\end{definition}
+
+\begin{definition}[Group generated from commutators of subsets]\mml{group_5:def 7}
+Let $G$ be a group.
+Let $A$ and $B$ be subsets of $G$.
+We define the subgroup $[A,B]$ of $G$ to be equal to $\gr{\{[a,b]\mid a\in A,b\in B\}}$.
+Note this is the subgroup generated by the set of all commutators of
+$A$ with $B$.
+\end{definition}
+
+\begin{definition}[Group generated from commutators of subgroups]\mml{group_3:def 8}
+Let $G$ be a group.
+Let $H_{1}$, $H_{2}$ be subgroups of $G$.
+We define $[H_{1},H_{2}]$ to be the subgroup of $G$ generated by the
+set of all commutators of $H_{1}$ with $H_{2}$.
+\end{definition}
+
+\begin{definition}[Derived subgroup]\mml{group_5:def 9}
+Let $G$ be a group.
+We define the \define{Derived Subgroup} of $G$ to be the strict normal
+subgroup $G':=[G,G]$ generated from the commutators of all its elements.
+
+This is also denoted $[G,G]$, $G^{(1)}$, rarely $\Gamma_{2}(G)$
+\end{definition}
+
+\begin{definition}[Center of a group]\mml{group_5:def 10}
+Let $G$ be a group. 
+We define the \define{Center} of $G$ to be the strict subgroup $Z(G)$
+of $G$ such that its underlying set $U_{Z(G)}=\{a\in G\mid\forall b\in G\ldotp ab=ba\}$ 
+consists of elements which commute with everything in $G$.
+\end{definition}
+
+\begin{theorem}[Group is commutative if center is everything]\mml{group_5:82}
+Let $G$ be a [strict] group.
+Then $G$ is commutative if and only if $Z(G)=G$.
+\end{theorem}
+
+\section{Quotient groups and Morphisms}
+
+\subsection{Quotient groups}
+
+\begin{definition}[Quotient group]\mml{group_6}
+Let $G$ be a group. Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+We define the \define{Quotient Group} of $G$ with respect to $N$ to be
+the strict multiplicative magma $G/N$ equal to the set of left cosets
+of $N$ equipped with set-wise multiplication (\S\ref{def:group:group2:def2}).
+
+We see that $G/N$ is strict nonempty group-like associative --- i.e.,
+it's a \emph{bona fide} strict group.
+\end{definition}
+
+\begin{theorem}\mml{group_6:21}
+Let $N\normalsubgroup G$.
+For any element $S\in G/N$, there exists an $a\in G$ such that $S=aN=Na$.
+\end{theorem}
+
+\begin{theorem}[Identity element of quotient group]\mml{group_6:24}
+Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+Then $1_{G/N}=U_{N}$ the identity element of the quotient group is
+just the set underlying $N$.
+\end{theorem}
+
+\begin{theorem}[Inverse operator for quotient group]\mml{group_6:25}
+Let $G$ be a group. Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+Let $S\in G/N$ be an element of the quotient group. 
+If $S=aN$, then $S^{-1}=a^{-1}N$.
+\end{theorem}
+
+\begin{theorem}[Cardinality of quotient group is index of denominator]\mml{group_6:26}
+Let $G$ be a group. Let $N\normalsubgroup G$ be a normal subgroup.
+Then $\card{G/N}=\Index{G}{N}$.
+\end{theorem}
+
+\begin{theorem}[Quotient group is commutative iff normal subgroup contains derived subgroup]\mml{group_6:30}
+Let $G$ be a strict group.
+Let $N\normalsubgroup G$ be a strict normal subgroup of $G$.
+Then $G/N$ is commutative iff $G'\subgroup N$.
+\end{theorem}
+
+\begin{definition}[Casting subgroups]\mml{group_6:def 1}
+Let $G$ be a group. Let $B\subgroup G$ be a subgroup.
+Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+If $N\subgroup B$, then we introduce the notation $(N)_{B}$ for the
+strict normal subgroup of $B$ equal to $\structure{U_{N},\star_{N}}$ (the
+multiplicative magma underlying $N$).
+
+So $(N)_{B}\normalsubgroup B$ equals $N$. We just use this notation to
+stress that we are thinking of $(N)_{B}$ as a normal subgroup of $B$.
+\end{definition}
+
+\begin{theorem}[Subgroup correspondence for quotient group]\mml{group_6:28}
+Let $G$ be a group. Let $B$ be a subgroup of $G$.
+Let $M\normalsubgroup G$ be a strict normal subgroup of $G$.
+If $M\subgroup B$, then $B/(M)_{B}$ is a subgroup of $G/M$.
+\end{theorem}
+
+\begin{theorem}[Normal subgroup correspondence for quotient group]\mml{group_6:29}
+Let $G$ be a group. Let $B$ be a subgroup of $G$.
+Let $N\normalsubgroup G$ be a strict normal subgroup of $G$.
+If $N\normalsubgroup B$, then $B/(N)_{B}$ is a normal subgroup of $G/N$.
+\end{theorem}
+
+\subsection{Morphisms of groups}
+
+\begin{definition}[Multiplicative functions]\mml{group_6:def 6}
+Let $G$ and $H$ be nonempty multiplicative magmas.
+Let $f\colon G\to H$ be a function.
+We call $f$ \define{Multiplicative} if for every element $a$ and $b$
+of $G$, $f(ab)=f(a)f(b)$.
+\end{definition}
+
+\begin{theorem}[Composition of multiplicative functions is multiplicative]\mml{group_6:39}
+Let $G$, $H$, $I$ be nonempty unital multiplicative magmas.
+If $f\colon G\to H$ and $g\colon H\to I$ are multiplicative,
+then $g\circ f\colon G\to I$ is multiplicative.
+\end{theorem}
+
+\begin{definition}[Group Morphism]\mml{group_6}
+Let $G$, $H$ be groups.
+We define [the soft type of] a \define{Group Morphism} from $G$ to $H$
+to be a multiplicative function from $G$ to $H$.
+\end{definition}
+
+\begin{theorem}[Group morphisms preserve identity element]\mml{group_6:31}
+Let $G$, $H$ be groups.
+Let $f\colon G\to H$ be a group morphism.
+Then $f(1_{G})=1_{H}$.
+\end{theorem}
+
+\begin{theorem}[Group morphisms preserve inverses]\mml{group_6:32}
+Let $G$, $H$ be groups.
+Let $f\colon G\to H$ be a group morphism.
+For any $a\in G$, we have $f(a^{-1})=(f(a))^{-1}$.
+\end{theorem}
+
+\begin{theorem}[Group morphisms preserve conjugation]\mml{group_6:33}
+Let $G$, $H$ be groups.
+Let $f\colon G\to H$ be a group morphism.
+For any $a,b\in G$, we have $f(a^{b})=(f(a))^{f(b)}$.
+\end{theorem}
+
+\begin{theorem}[Group morphisms preserve commutators]\mml{group_6:34}
+Let $G$, $H$ be groups.
+Let $f\colon G\to H$ be a group morphism.
+For any $a,b\in G$, we have $f([a,b])=[f(a),f(b)]$.
+\end{theorem}
+
+\begin{definition}[Constant group morphism]\mml{group_6:def 7}
+Let $G_{1}$ and $G_{2}$ be groups.
+We define the \define{Constant Group Morphism} (or \define{Zero Morphism})
+from $G_{1}$ to $G_{2}$ to be the map sending all of $G_{1}$ to the
+identity element $1_{G_{2}}$.
+\end{definition}
+
+\begin{definition}[Natural morphism to quotient group]\mml{group_6:def 8}
+Let $G$ be a group.
+Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+We define the \define{Natural Morphism} (or the \define{Quotient Epimorphism}) of $N$ to be the morphism
+$\nathom{N}\colon G\to G/N$ such that for all $x\in G$, $\nathom{N}(x)=xN$ is
+the left coset $xN$ of $N$.
+
+This is also called the ``canonical morphism from $G$ to $G/N$''.
+\end{definition}
+
+\begin{definition}[Kernel of group morphism]\mml{group_6:def 9}
+Let $f\colon G\to H$ be a group morphism.
+We define the \define{Kernel} of $f$ to be the subgroup $\ker(f)$ of
+$G$ such that its underlying set equals $U_{\ker(f)}=\{a\in G\mid f(a)=1_{H}\}$.
+\end{definition}
+
+\begin{theorem}\mml{group_6:41}
+Let $f\colon G\to H$ be a group morphism.
+For every element $x\in G$, we have $x\in\ker(f)$ iff $f(x)=1_{H}$.
+\end{theorem}
+
+\begin{definition}[Image of a group morphism]\mml{group_6:def 10}
+Let $f\colon G\to H$ be a group morphism.
+We define the \define{Image} of $f$ to be the subgroup $\Im(f)$ of $H$
+whose underlying set equals $U_{\Im(f)}=f(U_{G})$.
+\end{definition}
+
+\begin{theorem}\mml{group_6:45}
+Let $f\colon G\to H$ be a group morphism.
+For any object $x$, we have $x\in\Im(f)$ iff there exists an $a\in G$
+such that $x=f(a)$.
+\end{theorem}
+
+\begin{theorem}[Injective morphisms have trivial kernels]\mml{group_6:56}
+Let $f\colon G\to H$ be a group morphism.
+Then $f$ is injective iff $\ker(f)=\TrivialSubgroup{G}$.
+\end{theorem}
+
+\begin{definition}[Isomorphic groups]\mml{group_6:def 11}
+Let $G$, $H$ be groups.
+We say $G$ and $H$ \define{Are Isomorphic} (or $G$ is isomorphic to $H$)
+if there exists a bijective group morphism $f\colon G\to H$.
+This is a predicate of two groups.
+
+We write $G\iso H$ as shorthand for $G$ and $H$ being isomorphic.
+
+Observe: for any group $G$, $G\iso G$ is isomorphic to itself.
+\end{definition}
+
+\begin{theorem}[Symmetry of isomorphic]\mml{group_6:66}
+Let $G$, $H$ be groups.
+If $G$ is isomorphic to $H$, then $H$ is isomorphic to $G$.
+\end{theorem}
+
+\begin{theorem}[Transitivity of isomorphic groups]\mml{group_6:67}
+Let $G_{1}$, $G_{2}$, $G_{3}$ be groups.
+If $G_{1}$ is isomorphic to $G_{2}$, and if $G_{2}$ is isomorphic to $G_{3}$,
+then $G_{1}$ is isomorphic to $G_{3}$.
+\end{theorem}
+
+In other words, the preceding theorems taken altogether tells us that
+``is isomorphic to'' forms an equivalence relation on groups.
+
+\begin{theorem}
+Let $G$, $H$ be isomorphic groups. Then the following holds:
+\begin{enumerate}
+\item\mml{group_6:74} If $G$ is finite, then $H$ is finite.
+\item\mml{group_6:76} If $G$ is trivial, then $H$ is trivial.
+\item\mml{group_6:77} If $G$ is commutative, then $H$ is commutative.
+\end{enumerate}
+\end{theorem}
+
+\subsection{Isomorphism theorems}
+
+\begin{theorem}[First isomorphism theorem for groups]\mml{group_6:79}
+Let $G$ and $H$ be groups.
+Let $\varphi\colon G\to H$ be a group morphism.
+Then there exists a group morphism $\psi\colon G/\ker(\varphi)\to\Im(\varphi)$
+such that $\psi$ is bijective and $\varphi=\psi\circ\nathom{\ker(\varphi)}$.
+\end{theorem}
+
+\begin{theorem}[Second isomorphism theorem for groups]\mml{group_6:81}
+Let $G$ be a group. Let $B\subgroup G$ be a subgroup of $G$.
+Let $N\normalsubgroup G$ be a [strict] normal subgroup of $G$.
+Then $(B\join N)/(N)_{B\join N}\iso B/(B\cap N)$.
+\end{theorem}
+
+\begin{theorem}[Third isomorphism theorem for groups]\mml{group_6:80}
+Let $G$ be a group.
+Let $N\normalsubgroup G$ be a normal subgroup of $G$.
+Let $M\normalsubgroup G$ be a [strict] normal subgroup of $G$.
+Let $J\normalsubgroup G/M$ be a [strict] normal subgroup of $G/M$.
+If $M$ is a subgroup of $N$ and if $J=N/(M)_{N}$, then $(G/M)/J\iso G/N$.
+\end{theorem}
+
+\section{Sylow Theorems}
+
+\begin{definition}[Cyclic group]\mml{gr_cy_1:def 5}
+Let $n\in\NN$ be a [positive] natural number.
+We define the \define{Cyclic Group of Order $n$} to be the finite
+commutative group
+$\CyclicGroup{n}$ consisting of numbers $\{0,1,\dots,n-1\}$ equipped
+with addition modulo $n$.
+\end{definition}
+
+\begin{definition}[P-groups]\mml{group_10:def 17}
+Let $G$ be a group. Let $p\in\NN$.
+We say $G$ is a \define{$p$-Group} to mean there exists some $r\in\NN$
+such that $\card{G}=p^{r}$.
+\end{definition}
+
+\begin{example}[Cyclic groups are p-groups]
+Let $p\in\NN$ be nonzero.
+Then the cyclic group $\CyclicGroup{p}$ is a $p$-group.
+\end{example}
+
+\begin{definition}[Sylow $p$-subgroup]\mml{group_10:def 18}
+Let $p\in\NN$ be a natural number. Let $G$ be a group. Let $P\subgroup G$
+be a subgroup of $G$. We define [the predicate] $P$ \define{is a Sylow $p$-subgroup}
+if $P$ is a $p$-group and $p$ does not divide $\Index{G}{P}$.
+\end{definition}
+
+\begin{definition}[The set of all Sylow $p$-subgroups]\mml{group_10:def 19}
+Let $G$ be a group. Let $p\in\NN$ be a natural number.
+We define the term the \define{Set of all Sylow $p$-Subgroups} of $G$
+to be the subset $\Syl_{p}(G)$ of $\subgroups{G}$ equal to
+$\{H\subgroup G\mid H\mbox{ is Sylow $p$-subgroup of }G\}$.
+\end{definition}
+
+\begin{remark}[Sylow's theorems are never numbered consistently]
+Everyone agrees there are three Sylow's theorems. No one agrees with
+the ordering of those theorems. Even the presentation of the three
+theorems has some variation, which is rather disappointing. I'm rather
+fond of I.~Martin Isaac's naming conventions: instead of using
+ordinals (``The First Sylow Theorem'', etc.), using designations
+(``Sylow E'' for the existence of a Sylow subgroup, % 1.7 of FGT
+``Sylow C'' for any two Sylow $p$-subgroups are \emph{conjugate} to
+each other,  % 1.12 of FGT
+and ``Sylow D'' for the \emph{development} result that any
+$p$-subgroup is contained in a Sylow $p$-subgroup). % 1.14 of FGT
+Bourbaki combines Sylow C and D into the Second Sylow Theorem
+(\textit{Algebra} I~\S6.6, Theorem~3).
+\end{remark}
+
+\begin{theorem}[Existence of a Sylow subgroup]\mml{group_10:10}
+Let $G$ be a finite group.
+Let $p$ be a prime number.
+Then there exists a strict subgroup $P\subgroup G$ such that $P$ is a
+Sylow $p$-subgroup of $G$.
+\end{theorem}
+
+\begin{theorem}[Any $p$-group is contained in a Sylow subgroup]\mml{group_10:12}
+Let $G$ be a finite group. Let $p$ be a prime number.
+Let $H$ be a $p$-subgroup of $G$.
+Then there exists a $P\in\Syl_{p}(G)$ such that $H\subgroup P$ is a
+subgroup of $P$.
+\end{theorem}
+
+\begin{theorem}[Any two Sylow $p$-subgroups are conjugates of each other]\mml{group_10:12}
+Let $G$ be a finite group. Let $p$ be a prime number.
+For any $P_{1}\in\Syl_{p}(G)$ and $P_{2}\in\Syl_{p}(G)$, there exists
+a $g\in G$ such that $P_{1}=P_{2}^{g}$.
+\end{theorem}
+
+\begin{theorem}[Number of Sylow $p$-subgroups divides order of group and is coprime to $p$]\mml{group_10:13}
+Let $G$ be a finite group.
+Let $p$ be a prime number.
+The $\card{\Syl_{p}(G)}\equiv1\pmod{p}$, and $\card{\Syl_{p}(G)}$
+divides $\card{G}$.
+\end{theorem}
