@@ -454,6 +454,15 @@ Let $H\subgroup G$.
 Then $\Union\RightCosets{H}{G}=U_{G}$ and $\Union\LeftCosets{H}{G}=U_{G}$.
 \end{theorem}
 
+\begin{definition}[Double cosets]\mml{group_8:def 1}
+Let $G$ be a strict group.
+Let $H$ and $K$ be strict subgroups of $G$.
+We define the \define{Double Cosets} of $H$, $K$ to be the family
+$\DoubleCosets{H}{G}{K}$ of $G$ such that for all subsets $A\subset G$
+we have $A\in\DoubleCosets{H}{G}{K}$ iff there exists an $a\in G$ such
+that $A=(Ha)K$.
+\end{definition}
+
 \begin{definition}[Index of a subgroup]\mml{group_2:def 17}\label{defn:group:index-of-a-subgroup}
 Let $G$ be a group. Let $H\subgroup G$ be a subgroup.
 We define the \define{Index} of $H$ to be the cardinal number
@@ -480,6 +489,12 @@ If $I\subgroup H$, then $\Index{G}{I}=\Index{G}{H}\cdot\Index{H}{I}$.
 Let $G$ be a finite group. Let $p$ be a prime number.
 If $p$ divides $\card{G}$, then there exists an element $g\in G$ of
 $G$ which has order $p$.
+\end{theorem}
+
+\begin{theorem}\mml{group_8:19}
+Let $G$ be a finite group.
+Let $B\subgroup G$ and $A\subgroup G$ be subgroups of $G$.
+Then $\Index{G}{B}\geq\Index{A}{A\cap B}$.
 \end{theorem}
 
 \subsection{Normal Subgroups}
@@ -850,6 +865,24 @@ Then $H$ is a normal subgroup of $G$ if and only if $\normalizer{G}{H}=G$.
 Let $G$ be a group. Then $\normalizer{G}{\TrivialSubgroup{G}}=G$ and
 $\normalizer{G}{G}=G$. 
 \end{theorem}
+
+\begin{definition}[Normalizes]
+Let $G$ be a group, $H$ a subgroup of $G$.
+We say $a\in G$ \define{Normalizes} $H$ if $a\in\normalizer{G}{H}$.
+
+We say a subset $A\subset G$ \define{Normalizes} $H$ if $A\subset\normalizer{G}{H}$.
+
+We say a subgroup $K\subgroup G$ \define{Normalizes} $H$ if $K\subgroup\normalizer{G}{H}$.
+
+We can also abuse language, when $A\subset G$ is a subset, saying $a$
+\define{Normalizes} $A$ if $a\in\normalizer{G}{A}$.
+(And if $B\subset G$ is another subset of $G$, then $B$
+\define{Normalizes} $A$ if $B\subset\normalizer{G}{A}$. And $H$
+\define{Normalizes} $A$ if $H\subgroup\normalizer{G}{A}$.)
+
+When we replace the normalizer with the centralizer, we use the phrase
+``centralizes'' in all these cases.
+\end{definition}
 
 \begin{definition}[Subnormal subgroups]
 Let $G$ be a group. Let $H$ be a subgroup of $G$.
@@ -1494,7 +1527,7 @@ $\{H\subgroup G\mid H\mbox{ is Sylow $p$-subgroup of }G\}$.
 Everyone agrees there are three Sylow's theorems. No one agrees with
 the ordering of those theorems. Even the presentation of the three
 theorems has some variation, which is rather disappointing. I'm rather
-fond of I.~Martin Isaac's naming conventions: instead of using
+fond of I.~Martin Isaac's naming conventions~\cite{isaacs2008finite}: instead of using
 ordinals (``The First Sylow Theorem'', etc.), using designations
 (``Sylow E'' for the existence of a Sylow subgroup, % 1.7 of FGT
 ``Sylow C'' for any two Sylow $p$-subgroups are \emph{conjugate} to
