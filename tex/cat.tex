@@ -158,6 +158,67 @@ $\cat{C}$. We abuse notation and language speaking of the
 $f$, and similarly the \define{Codomain} of $f$ is $\cod(f)=b=t(f)$ for the codomain of $f$.
 \end{definition}
 
+\begin{definition}[Monomorphisms]\mml{cat_1:def~14 altcat_3:def~7}
+Let $\cat{C}$ be a category, $f\colon X\to Y$ be a morphism in $\cat{C}$.
+We say $f$ is a \define{Monomorphism} (or that $f$ is ``\emph{Monic}'') if
+for every object $Z$ and every pair of morphisms $g_{1},g_{2}\colon Z\to X$,
+$f\circ g_{1}=f\circ g_{2}$ implies $g_{1}=g_{2}$.
+
+These generalize the notion of ``injective maps''. Remember: injective
+maps are one-to-one, they go \emph{mono e mono}.
+\end{definition}
+
+\begin{example}[Monomorphisms in category of sets are injective functions]
+A monomorphism in $\Set$ is an injective function.
+\end{example}
+
+\begin{example}[Inclusions in concrete categories are monic]
+Let $\cat{C}$ be a concrete category (the category of all gadgets
+which are a set equipped with extra structure --- $\Top$, $\Grp$, etc.).
+Let $X,Y\in\cat{C}$ where there is an inclusion of $X$ into $Y$,
+$i\colon X\into Y$. Then $i$ is a monomorphism.
+\end{example}
+
+\begin{definition}[Epimorphisms]\mml{cat_1:def~15 altcat_3:def~8}
+Let $\cat{C}$ be a category, $f\colon X\to Y$ be a morphism in $\cat{C}$.
+We say $f$ is a \define{Epimorphism} (or that $f$ is ``\emph{Epic}'') if
+for every object $Z$ and every pair of morphisms $g_{1},g_{2}\colon Y\to Z$,
+$g_{1}\circ f=g_{2}\circ f$ implies $g_{1}=g_{2}$.
+\end{definition}
+
+\begin{example}[Epimorphisms in category of sets are surjective functions]
+Let $X,Y\in\Set$ and let $f\colon X\to Y$ be an epimorphism in $\Set$.
+Then $f$ is a surjective function.
+\end{example}
+
+\begin{definition}[Isomorphism and automorphism]\mml{cat_1:def~16 altcat_3:def~5}
+Let $\cat{C}$ be a category, $X,Y\in\Ob(\cat{C})$, and $f\colon X\to Y$
+is a morphism in $\cat{C}$. We call $f$ an \define{Isomorphism} if
+there exists a morphism $g\colon Y\to X$ such that $f\circ g=\id_{Y}$
+and $g\circ f=\id_{X}$.
+
+When $X=Y$, we call such isomorphisms an \define{Automorphism}.
+\end{definition}
+
+\begin{example}[Epic monomorphism not necessarily an isomorphism for topological spaces]
+Let $\cat{C}$ be the category of Hausdorff topological spaces, let
+$A\subset X$ be a dense subset. Then the inclusion $A\into X$ is an
+epic monomorphism, but it is not an isomorphism.
+\end{example}
+
+\begin{example}[Epic monomorphism not necessarily an isomorphism for rings]
+In the category $\cat{C}$ of unital rings, the canonical inclusion
+$i\colon\ZZ\into\QQ$ of the integers into the rational numbers is an
+epimorphism. But it is not an isomorphism.
+
+To see this is a monomorphism, consider ring morphisms
+$g_{1},g_{2}\colon\QQ\to R$ for any unital ring $R$. Then we see
+$g_{1}\circ i=g_{2}\circ i$ implies $g_{1}=g_{2}$ because
+$g_{i}(a/b)=g_{i}(a)\cdot\bigl(g_{i}(b)\bigr)^{-1}$ for any unital ring
+morphism $g_{i}$ and for any integers $a,b\in\ZZ$, it follows that
+$g_{1}(z)=g_{2}(z)$ for all integers $z\in\ZZ$ and hence they must be equal.
+\end{example}
+
 \begin{definition}[Large, small, and locally-small categories]
   Let $\cat{C}$ be a category.
 \begin{enumerate}
@@ -445,7 +506,7 @@ $eq\circ u=m$; i.e., the following diagram commutes
 \begin{equation}
 \vcenter{
 \xymatrix{E \ar[r]^{eq} & X \ar@<0.5ex>[r]^{f} \ar@<-0.5ex>[r]_{g} & Y\\ %X\ar@<1ex>[r]^{f} \ar@<-1ex>[r]_{g} & Y\\
-W\ar@{.>}[u]\ar[ur]_{m} & &}
+W\ar@{.>}[u]^{u}\ar[ur]_{m} & &}
 }
 \end{equation}
 \end{definition}
