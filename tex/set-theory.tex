@@ -553,6 +553,25 @@ $\GrothendieckUniverse{A}$ is the intersection of all the Grothendieck
 universes containing $A$.)
 \end{definition}
 
+\begin{theorem}[For any set, there is a proper class of Grothendieck universes containing it]
+Let $X$ be a set. Then there is no set $G$ such that for all sets
+$U$ we have $U\in G$ iff $U$ is a Grothendieck universe and $X\in u$.
+\end{theorem}
+
+\begin{proof}
+We can construct a sequence $G_{\alpha}$ indexed by ordinals such that
+$G_{0}=\GrothendieckUniverse{X}$, and for all successor ordinals
+$\succ{A}$ we have
+$G_{\succ{A}}=\GrothendieckUniverse{\powerset{G_{A}}}$, and for any
+limit ordinal $\lambda$ we have $G_{\lambda}=\GrothendieckUniverse{\powerset{\Union_{\alpha<\lambda}G_{\alpha}}}$.
+This is clearly an increasing sequence: for any ordinals $A<B$ we have
+$G_{A}\propersubset G_{B}$. This gives us an injection from the proper
+class of all ordinals to a (necessarily proper) class of Grothendieck universes
+$\{G_{A}\mid A\mbox{ is an ordinal}\}$ each of which contains $X\in G_{A}$.
+This may not even be \emph{all} possible Grothendieck universes
+containing $X$, and we \emph{already} have a proper class.
+\end{proof}
+
 \begin{definition}[Tarski Universe]\label{defn:set-theory:tarski-universe}
 A \define{Tarski Universe} is a set $\mathcal{U}$ such that
 \begin{itemize}
