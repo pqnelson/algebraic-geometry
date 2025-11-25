@@ -264,7 +264,8 @@ Let $R_{1}$ and $R_{2}$ be rings. We define a \define{Ring Morphism}
 to be a function $f\colon R_{1}\to R_{2}$ such that
 \begin{itemize}
 \property{Additive} for any $x$, $y\in R_{1}$, we have $f(x+y)=f(x)+f(y)$
-\property{Preserves zero} we have $f(0_{R_{1}})=0_{R_{2}}$
+\property{Preserves zero} we have $f(0_{R_{1}})=0_{R_{2}}$ (this
+follows from $f$ being additive)
 \property{Multiplicative} for any $x$ and $y\in R_{1}$, we have $f(xy)=f(x)f(y)$.
 \property{Unit-preserving} When $R_{1}$ and $R_{2}$ are unital rings,
   we have $f(1_{R_{1}})=1_{R_{2}}$
@@ -280,10 +281,17 @@ A ring endomorphism which is also an isomorphism is called a
 \define{Ring Automorphism}.
 \end{definition}
 
-\begin{theorem}[Ring morphisms never map one to zero]
-Let $R_{1}$, $R_{2}$ be nondegenerate rings.
+\begin{theorem}[Additive maps preserve zero]\mml{ring_2:6}
+Let $R$ and $S$ be right-complementable, add-associative, right-zeroed
+nonempty double loops. If $S$ is right-distributive and $f\colon R\to S$
+is an additive function, then $f(0_{R})=0_{S}$.
+\end{theorem}
+
+\begin{theorem}[Ring morphisms never map one to zero for nondegenerate rings]\mml{ring_2:9}
+Let $R_{1}$, $R_{2}$ be rings.
 Let $f\colon R_{1}\to R_{2}$ be a ring morphism.
-Then $f(1)\neq0$.
+If either $R_{1}$ or $R_{2}$ is degenerate, then $f(1_{R_{1}})=0_{R_{2}}$;
+otherwise, when $R_{1}$ and $R_{2}$ are both nondegenerate, then $f(1_{R_{1}})\neq0_{R_{2}}$.
 \end{theorem}
 
 \begin{example}%[Identity ring automorphism]

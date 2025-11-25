@@ -30,12 +30,12 @@ We define the \define{Maximal Spectrum} of $R$ to be the set $\MSpec(R)$ of all
 maximal ideals of $R$.
 \end{definition}
 
-\begin{theorem}
+\begin{theorem}\mml{topzari1:8}
 If $R$ is a commutative ring and $I\ideal R$ such that $I\neq R$,
 then $R$ has a maximal ideal $\mathfrak{m}$ such that $I\subset\mathfrak{m}$.
 \end{theorem}
 
-\begin{corollary}
+\begin{corollary}\mml{topzari1:10}
 Every non-unit of a commutative ring lies in a maximal ideal.
 \end{corollary}
 
@@ -43,7 +43,7 @@ Every non-unit of a commutative ring lies in a maximal ideal.
 If $x$ is a non-unit, then $(x)\neq R$. Then apply the previous theorem.
 \end{proof}
 
-\begin{proposition}
+\begin{proposition}\mml{tozari1:15}
 Let $R$ be a ring with a maximal ideal $\mathfrak{m}$. If every
 element of $1+\mathfrak{m}$ is a unit, then $R$ is a local ring.
 \end{proposition}
@@ -56,7 +56,7 @@ $y\in\mathfrak{m}$. Then $ax=1-y$ is a unit by assumption, so
 $\mathfrak{m}$ contains all the non-units.
 \end{proof}
 
-\begin{proposition}[Ideal is prime iff quotient ring is integral domain]
+\begin{proposition}[Ideal is prime iff quotient ring is integral domain]\mml{ring_1:18}
 Let $R$ be a unital commutative ring. Let $I\ideal R$.
 Then $I$ is a prime ideal of $R$ if and only if the quotient ring
 $R/I$ is an integral domain.
@@ -80,11 +80,17 @@ If $y+I=0_{R/I}$, then $y\in I$. Hence either $x\in I$ or $y\in I$,
 and so by definition $I$ is a prime ideal.
 \end{proof}
 
-\begin{proposition}[Maximal ideals of commutative rings are prime]
+\begin{proposition}[Quotient ring is a field iff quotient by maximal ideal]\mml{ring_1:21}
+Let $R$ be a commutative ring. Let $\mathfrak{p}\ideal R$ be an ideal.
+Then $\mathfrak{p}$ is prime iff $R/\mathfrak{p}$ is a field.
+\end{proposition}
+
+\begin{proposition}[Maximal ideals of commutative rings are prime]\mml{ring_1}
 Let $R$ be a commutative ring.
 If $\mathfrak{m}\ideal R$ is a maximal ideal, then $\mathfrak{m}$ is a
 prime ideal of $R$.
 \end{proposition}
+(This is a registered fact in \texttt{ring\_1}.)
 
 \begin{proof}
 The quotient $R/\mathfrak{m}$ is a field (and in particular, an
@@ -144,7 +150,7 @@ consisting of all elements $r\in R$ which annihilate all simple
 modules over $R$.
 \end{definition}
 
-\begin{proposition}[Jacobson radical of a commutative ring]
+\begin{proposition}[Jacobson radical of a commutative ring]\mml{topzari1:def 14}
 Let $R\neq0$ be a commutative ring. Then the Jacobson Radical of $R$
 is the ideal $\JacobsonRadical(R)=\bigcap\MSpec(R)$ obtained by taking
 the intersection of all maximal ideals of $R$.
@@ -195,6 +201,13 @@ Then $1=x+y$ for some $x\in I$ and $y\in\mathfrak{m}$.
 Then $y=1-x$ is not a unit. Hence contradiction.
 \end{proof}
 
+\begin{proposition}[Radical of ideal is maximal implies quotient by ideal is local]\mml{ideal_2:33}
+Let $R$ be a commutative unital nondegenerated ring.
+Let $\mathfrak{q}\ideal R$ be a proper ideal of $R$.
+If $\Radical{\mathfrak{q}}$ is a maximal ideal,
+then $R/\mathfrak{q}$ is a local ring.
+\end{proposition}
+
 \section{Localization}
 
 \begin{definition}[Multiplicative set]\mml{c0sp1:def 4}
@@ -225,10 +238,13 @@ $i,j\in I$. If $fg\in I$, then the product $(af+i)(bg+j)\in I$,
 contradicting the fact that $I$ is disjoint with $U$.
 \end{proof}
 
-\begin{proposition}[Complement of a prime ideal is a multiplicative set]\label{prop:commutative-algebra:complement-of-prime-ideal-is-multiplicative-set}
+\begin{proposition}[Complement of a prime ideal is a multiplicative set]\mml{ringfrac:def20}\label{prop:commutative-algebra:complement-of-prime-ideal-is-multiplicative-set}
 Let $R$ be a ring. Let $P\in\Spec(R)$ be a prime ideal.
 Then $U=R\setminus P$ is a multiplicative set.
 \end{proposition}
+
+This is defined to be \texttt{Loc(R,P)} in Mizar, and it's registered
+as a multiplicatively-closed set there.
 
 \begin{proof}
   We see that $1\notin P$. Then
@@ -259,13 +275,20 @@ where the $s''$ factor is needed (if we omit it, we would not have an
 equivalence relation, because of zero-divisors).
 \end{definition}
 
-\begin{definition}[Localization with respect to a prime]
+\begin{definition}[Localization with respect to a prime]\mml{ringfrac:def 21}
 Let $R$ be a commutative ring. Let $P\in\Spec(R)$ be a prime ideal.
 We define the \define{Localization with respect to the prime} $P$ of
 the ring $R$ to be the ring $R_{P}:=R/(R\setminus P)$. We can see this
 is well-defined because $U=R\setminus P$ is a multiplicative set by
 Proposition~\ref{prop:commutative-algebra:complement-of-prime-ideal-is-multiplicative-set}.
 \end{definition}
+
+\begin{proposition}\mml{ringfrac:36}
+Let $R$ be a nondegenerate unital commutative ring.
+Let $\mathfrak{p}\in\Spec(R)$ be a prime ideal of $R$.
+Then $R_{\mathfrak{p}}$ is local and $\mathfrak{p}R_{\mathfrak{p}}$ is
+a maximal ideal of $R_{\mathfrak{p}}$.
+\end{proposition}
 
 \section{Nakayama's Lemma}
 
