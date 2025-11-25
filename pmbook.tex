@@ -59,7 +59,7 @@
 \newwrite\tocfile
 \immediate\openout\tocfile={toc2.tex}
 
-\immediate\write\tocfile{\noexpand\chapter*{Contents}\noexpand\begingroup\baselineskip 15pt plus 5pt}
+\immediate\write\tocfile{\noexpand\chapter*{Contents}\noexpand\begingroup}%\baselineskip 12pt plus 5pt}
 
 \def\contentsline#1#2#3#4{\csname l@#1\endcsname {#2}{#3}}
 
