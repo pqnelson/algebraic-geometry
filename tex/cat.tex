@@ -122,7 +122,7 @@ For each category $\cat{C}$ with one collection of morphisms, there
 exists a unique category $\cat{C}_{2}$ with a family of collections of
 morphisms such that $\Ob(\cat{C})=\Ob(\cat{C}_{2})$ and
 $\hom_{\cat{C}}(a,b)=\hom_{\cat{C}_{2}}(a,b)$ for all objects
-$a\in\cat{C}$ and $b\in\cat{C}$ $b\in C$,  and the composition of morphisms agrees.
+$a\in\cat{C}$ and $b\in\cat{C}$,  and the composition of morphisms agrees.
 \end{theorem}
 
 This is actually a \emph{metatheorem} since there is no set theoretic
@@ -325,7 +325,7 @@ with ``co-''). For example: the \emph{codomain} of a morphism is the dual to the
 
 \subsection{Functors}
 
-\begin{definition}[Covariant functor]\mml{functor0:def 25}
+\begin{definition}[Covariant functor]\mml{cat_1:def~21 functor0:def~25}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 We define a \define{(Covariant) Functor} $F\colon\cat{C}\to\cat{D}$
 consists of (i) a function of objects $F_{0}\colon\Ob(\cat{C})\to\Ob(\cat{D})$ 
@@ -347,7 +347,7 @@ When $\cat{C}=\cat{D}$, we call $F\colon\cat{C}\to\cat{C}$ an
 \define{Endofunctor} of $\cat{C}$.
 \end{definition}
 
-\begin{example}[Identity functor]\mml{functor0:def 29}
+\begin{example}[Identity functor]\mml{cat_1:def~24 functor0:def~29}
 Let $\cat{C}$ be a category. We have the identity functor, denoted
 $\id_{\cat{C}}\colon\cat{C}\to\cat{C}$, defined on objects
 $a\in\cat{C}$ by $\id_{\cat{C}}(a)=a$ and on morphisms $f\colon a\to b$
@@ -368,7 +368,7 @@ Hence the result.
 \end{proof}
 \end{example}
 
-\begin{definition}[Contravariant functor]\mml{functor0:def 27}
+\begin{definition}[Contravariant functor]\mml{oppcat_1:def~9 functor0:def~27}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 We define a \define{Contravariant Functor} $F\colon\cat{C}\to\cat{D}$
 to be a covariant functor
@@ -393,14 +393,62 @@ continuous functions in topology (and measurable functions in measure
 theory). This is no coincidence.
 \end{example}
 
+\begin{definition}[Composing functors]\mml{cat_1}
+Let $F\colon\cat{C}\to\cat{D}$ and $G\colon\cat{D}\to\cat{E}$ be functors.
+We define the \define{Composition} operator of functors to give us the
+composition of $F$ followed by $G$ to be the functor $G\circ F\colon\cat{C}\to\cat{E}$
+such that for each object $x\in\cat{C}$ we have $(G\circ F)(x)=G(F(x))$,
+and for each morphism $f\colon x\to y$ in $\cat{C}$ we have
+$(G\circ F)(f)=G(F(f))$.
+\end{definition}
+
+\begin{theorem}[Composing covariant functors is covariant]\mml{cat_1:73}
+Let $F\colon\cat{C}\to\cat{B}$ and $G\colon\cat{B}\to\cat{D}$ be
+covariant functors. Then $G\circ F\colon\cat{C}\to\cat{D}$ is a
+covariant functor. Moreover, for any pair of morphisms $f\colon X\to Y$ and $g\colon Y\to Z$
+in $\cat{C}$, we have $(G\circ F)(g\circ f)=(G\circ F)(g)\circ(G\circ F)(f)\colon(G\circ F)(X)\to(G\circ F)(Y)$.
+\end{theorem}
+
+\begin{theorem}[Composing two contravariant functors yields a covariant functor]\mml{oppcat_1:35}
+Let $F\colon\cat{C}\to\cat{B}$ and $G\colon\cat{B}\to\cat{D}$ be
+contravariant functors. Then $G\circ F\colon\cat{C}\to\cat{D}$ is a
+covariant functor.
+\end{theorem}
+
+\begin{proof}[Proof sketch]
+The basic idea is to make the observation
+if $f\colon X\to Y$ and $g\colon Y\to Z$ are morphisms in $\cat{C}$,
+then $g\circ f\colon X\to Z$ is a morphism in $\cat{C}$. Then
+$F(g\circ f)=F(f)\circ F(g)\colon F(Z)\to F(X)$ is a morphism in $\cat{B}$,
+and $G(F(g\circ f))=G(F(f)\circ F(g))=G(F(g))\circ G(F(f))$ is a
+morphism from $G(F(X))$ to $G(F(Z))$ in $\cat{D}$.
+\end{proof}
+
+\begin{theorem}[Composing a contravariant functor with a covariant functor yields a contravariant functor]
+Let $F\colon\cat{C}\to\cat{B}$ and $G\colon\cat{B}\to\cat{D}$ be
+functors.
+\begin{enumerate}
+\item\mml{oppcat_1:59} If $F$ is contravariant and $G$ is covariant, then $G\circ F\colon\cat{C}\to\cat{D}$ is a contravariant functor.
+\item\mml{oppcat_1:60} If $F$ is covariant and $G$ is contravariant, then $G\circ F\colon\cat{C}\to\cat{D}$ is a contravariant functor.
+\end{enumerate}
+\end{theorem}
+
+These are registered facts in \texttt{FUNCTOR0}.
+
+\begin{theorem}[Composing functors is associative]\mml{functor0:32}
+Let $F\colon\cat{C}_{1}\to\cat{C}_{2}$, $G\colon\cat{C}_{2}\to\cat{C}_{3}$,
+and $H\colon\cat{C}_{3}\to\cat{C}_{4}$ be functors.
+Then $(H\circ G)\circ F=H\circ(G\circ F)$.
+\end{theorem}
+
 \begin{definition}[Faithful and Full functors]
 Let $F\colon\cat{C}\to\cat{D}$ be a functor.
 
-Then $F$ is called \mml{functor0:def 31}\define{Full} if for
+Then $F$ is called \mml{cat_1:def~26 functor0:def~31}\define{Full} if for
 all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\onto\cat{D}(F(x),F(y))$
 is a surjective function.
 
-We call $F$ \mml{functor0:def 30}\define{Faithful} if for
+We call $F$ \mml{cat_1:def~27 functor0:def~30}\define{Faithful} if for
 all objects $x\in\cat{C}$ an $y\in\cat{C}$, we have $F\colon\cat{C}(x,y)\into\cat{D}(F(x),F(y))$
 is a injective function.
 \end{definition}
@@ -412,16 +460,7 @@ $F\colon\cat{C}\to\cat{D}$ which is both injective on objects (i.e.,
 $F\colon\Ob(\cat{C})\into\Ob(\cat{D})$ is an injective function) and faithful.
 \end{definition}
 
-\begin{definition}[Composing functors]
-Let $F\colon\cat{C}\to\cat{D}$ and $G\colon\cat{D}\to\cat{E}$ be functors.
-We define the \define{Composition} operator of functors to give us the
-composition of $F$ followed by $G$ to be the functor $G\circ F\colon\cat{C}\to\cat{E}$
-such that for each object $x\in\cat{C}$ we have $(G\circ F)(x)=G(F(x))$,
-and for each morphism $f\colon x\to y$ in $\cat{C}$ we have
-$(G\circ F)(f\colon x\to y)=G(F(f))\colon G(F(x))\to G(F(y))$.
-\end{definition}
-
-\begin{definition}[Isomorphism and Autofunctor]\mml{functor0:def 39}
+\begin{definition}[Isomorphism and Autofunctor]\mml{cat_1:def~25 functor0:def~39}
 Let $\cat{C}$ and $\cat{D}$ be categories.
 An \define{Isomorphism} of $\cat{C}$ into $\cat{D}$ is a functor
 $F\colon\cat{C}\to\cat{D}$ such that there exists a functor
@@ -435,7 +474,7 @@ We call an isomorphism $F\colon\cat{C}\to\cat{C}$ an
 
 \subsection{Natural Transformation}
 
-\begin{definition}[Natural transformation]\mml{functor2:def 7}
+\begin{definition}[Natural transformation]\mml{nattra_1:def~8 functor2:def~7}
 Let $F$, $G\colon\cat{C}\to\cat{D}$ be functors.
 We define a \define{Natural Transformation} $\alpha\colon F\To G$
 assigns to each object $x\in\cat{C}$ a morphism $\alpha_{x}\colon F(x)\to G(x)$
@@ -457,6 +496,21 @@ transformation $\id_{F}\colon F\To F$ assigns to each object
 $x\in\cat{C}$ the identity morphism $\id_{F(x)}$ in $\cat{D}$.
 \end{example}
 
+\begin{definition}[Composing natural transformations]\mml{nattra_1:def~9 functor_2:def~5}
+Let $F,G,H\colon\cat{C}\to\cat{D}$ be functors.
+Let $\alpha\colon F\To G$ and $\beta\colon G\To H$ be natural transformations.
+We define the \define{Composition} of $\alpha$ followed by $\beta$ to
+be the natural transformation $\beta\circ\alpha\colon F\To H$ such
+that for all $X\in\cat{C}$, $(\beta\circ\alpha)_{X}=\beta_{X}\circ\alpha_{X}$.
+\end{definition}
+
+\begin{theorem}[Associativity of composing natural transformations]\mml{nattra_1:26 functor_2:6,11}
+Let $F_{0},F_{1},F_{2},F_{3}\colon\cat{C}\to\cat{D}$ be functors.
+Let $\alpha\colon F_{0}\To F_{1}$, $\beta\colon F_{1}\To F_{2}$, and
+$\gamma\colon F_{2}\To F_{3}$ be natural transformations.
+Then $(\gamma\circ\beta)\circ\alpha=\gamma\circ(\beta\circ\alpha)$.
+\end{theorem}
+
 \begin{definition}[Whiskering]
 Let $F,G\colon\cat{C}\to\cat{D}$ be functors, let $\alpha\colon F\To G$
 be a natural transformation.
@@ -470,6 +524,14 @@ coordinates at $A$ is $H(\alpha_{A})$.
 $\alpha E\colon(F\circ E)\to(G\circ E)$ (or $\alpha\circ E$) whose
 coordinate at $A$ is $\alpha_{F(A)}$. 
 \end{enumerate}
+\end{definition}
+
+\begin{definition}[Functor category]\mml{nattra_1:def~17}
+Let $\cat{A}$ and $\cat{B}$ be categories.
+We define the \define{Functor Category} from $\cat{A}$ to $\cat{B}$ to
+be the category $\Fun(\cat{A},\cat{B})$ whose collection of objects is
+all functors $F\colon\cat{A}\to\cat{B}$, and morphisms are natural
+transformations $\alpha\colon F\To G$.
 \end{definition}
 
 \section{Universal Properties}
