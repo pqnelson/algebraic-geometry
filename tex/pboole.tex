@@ -47,7 +47,200 @@ We define the predicate $X\subset Y$ to mean for every object $i\in I$
 we have $X_{i}\subset Y_{i}$
 \end{definition}
 
+\begin{definition}[Function-yielding mappings]\mml{funcop_1:def~6}
+Let $f$ be a function.
+We say $f$ is \define{Function-yielding} meaning for each object
+$x\in\dom(f)$, we have $f(x)$ is a function.
+\end{definition}
+
 \begin{definition}[Many-sorted function]\label{def:pboole:many-sorted-function}\mml{pboole}
 Let $I$ be a set. We define a \define{Many-sorted function of $I$}
 to be a function-yielding many-sorted set of $I$.
+\end{definition}
+
+\begin{definition}[Empty many-sorted set]\mml{pboole:def 3}
+Let $I$ be a set.
+We define the \define{Empty Many-Sorted Set} indexed by $I$ to be the
+many-sorted set $\emptyset_{I}$ of $I$ such that for all $i\in I$, $(\emptyset_{I})_{i}=\emptyset$.
+\end{definition}
+
+\begin{definition}[Union of many-sorted sets]\mml{pboole:def 4}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets over $I$.
+We define their \define{Union} to be the many-sorted set $X\cup Y$
+over $I$ such that for all $i\in I$, $(X\cup Y)_{i}=X_{i}\cup Y_{i}$.
+
+We can check this is commutative $X\cup Y=Y\cup X$, and idempotent in
+the sense that $X\cup X=X$.
+\end{definition}
+
+\begin{definition}[Intersection of many-sorted sets]\mml{pboole:def 5}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets over $I$.
+We define their \define{Intersection} to be the many-sorted set $X\cap Y$
+over $I$ such that for all $i\in I$, $(X\cap Y)_{i}=X_{i}\cap Y_{i}$.
+
+We can check this is commutative $X\cap Y=Y\cap X$, and idempotent in
+the sense that $X\cap X=X$.
+\end{definition}
+
+\begin{definition}[Difference of many-sorted sets]\mml{pboole:def 6}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets over $I$.
+We define their \define{Difference} to be the many-sorted set $X\setminus Y$
+over $I$ such that for all $i\in I$, $(X\setminus Y)_{i}=X_{i}\setminus Y_{i}$.
+\end{definition}
+
+\begin{definition}[Overlapping many-sorted sets]\mml{pboole:def 7}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets over $I$.
+We define a predicate, saying $X$ \define{Overlaps} $Y$ meaning
+for all $i\in I$, $X_{i}\cap Y_{i}\neq\emptyset$.
+\end{definition}
+
+\begin{definition}[Disjoint many-sorted sets]\mml{pboole:def 8}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets over $I$.
+We define a predicate, saying $X$ \define{Misses} $Y$ (or that they
+are ``\emph{disjoint\/}'') meaning
+for all $i\in I$, $X_{i}\cap Y_{i}=\emptyset$.
+
+The antonym of this predicate is that $X$ ``\emph{Meets\/}'' $Y$
+(whenever they are not disjoint).
+\end{definition}
+
+\begin{theorem}[Basic properties]
+We can check basic properties of these notions.
+Let $I$ be a set. Let $x$, $X$, $Y$ be many-sorted sets over $I$. Then
+the following all hold:
+\begin{enumerate}
+\item\mml{pboole:6} Suppose for each $i\in I$ we have $X_{i}=\emptyset$. Then $X=\emptyset_{I}$.
+\item\mml{pboole:7} If $x\in X$ or $x\in Y$, then $x\in X\cup Y$.
+\item\mml{pboole:8} $x\in X\cap Y$ iff $x\in X$ and $x\in Y$.
+\item\mml{pboole:9} If $x\in X$ and $X\subset Y$, then $x\in Y$.
+\item\mml{pboole:10} If $x\in X$ and $x\in Y$, then $X$ overlaps with $Y$.
+\item\mml{pboole:11} If $X$ overlaps with $Y$, then there exists a
+  many-sorted set $x$ indexed by $I$ such that $x\in X$ and $x\in Y$.
+\item\mml{pboole:12} If $x\in X\setminus Y$, then $x\in X$.
+\end{enumerate}
+\end{theorem}
+
+\section{Lattice Properties of Many-Sorted Sets}
+
+\begin{definition}[Equality of many-sorted sets]\mml{pboole:def 10}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets indexed by $I$.
+We can redefine equality $X=Y$ to mean: for each $i\in I$, we have $X_{i}=Y_{i}$.
+\end{definition}
+
+\begin{theorem}[Lattice properties]
+Let $I$ be a set. Let $W$, $X$, $Y$, $Z$ be many-sorted sets indexed by $I$.
+Then the following all hold:
+\begin{enumerate}
+\item\mml{pboole:13} If $X\subset Y$ and $Y\subset Z$, then $X\subset Z$
+\item\mml{pboole:14} $X\subset X\cup Y$
+\item\mml{pboole:15} $X\cap Y\subset X$
+\item\mml{pboole:16} If $X\subset Z$ and $Y\subset Z$, then $X\cup Y\subset Z$
+\item\mml{pboole:17} If $Z\subset X$ and $Z\subset Y$, then $Z\subset X\cap Y$
+\item\mml{pboole:18} If $X\subset Y$, then $X\cup Z\subset Y\cup Z$
+\item\mml{pboole:19} If $X\subset Y$, then $X\cap Z\subset Y\cap Z$
+\item\mml{pboole:20} If $W\subset X$ and $Y\subset Z$, then $W\cup X\subset Y\cup Z$
+\item\mml{pboole:21} If $W\subset X$ and $Y\subset Z$,
+  then $W\cap X\subset Y\cap Z$
+\item\mml{pboole:22} If $X\subset Y$, then $X\cup Y=Y$
+\item\mml{pboole:23} If $X\subset Y$, then $X\cap Y=X$
+\item\mml{pboole:24} $X\cap Y\subset X\cup Z$
+\item\mml{pboole:25} If $X\subset Z$, then $X\cup(Y\cap Z)=(X\cup Y)\cap(X\cup Z)$
+\item\mml{pboole:30} $X\cap(X\cup Y)=X$
+\item\mml{pboole:31} $X\cup(X\cap Y)=X$
+\item\mml{pboole:32} $X\cap (Y\cup Z)=(X\cap Y)\cup(X\cap Z)$
+\item\mml{pboole:33} $X\cup(Y\cap Z)=(X\cup Y)\cap(X\cup Z)$
+\item\mml{pboole:37} If $X\cup Y\subset Z$, then $X\subset Z$
+\item\mml{pboole:38} If $X\subset Y\cap Z$, then $X\subset Y$
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Properties of the emtpy many-sorted set]
+Let $I$ be a set.
+Let $X$, $Y$, $Z$ be many-sorted sets indexed by $I$. Then the
+following all hold:
+\begin{enumerate}
+\item\mml{pboole:43} $\emptyset_{I}\subset X$
+\item\mml{pboole:44} If $X\subset\emptyset_{I}$, then $X=\emptyset_{I}$
+\item\mml{pboole:45} If $X\subset Y$ and $X\subset Z$ and $Y\cap Z=\emptyset_{I}$,
+then $X=\emptyset_{I}$
+\item\mml{pboole:46} If $X\subset Y$ and $Y\cap Z=\emptyset_{I}$,
+  then $X\cap Z=\emptyset_{I}$
+\item\mml{pboole:47} $X\cup\emptyset_{I}=X$ and $\emptyset_{I}\cup X=X$
+\item\mml{pboole:48} If $X\cup Y=\emptyset_{I}$, then $X=\emptyset_{I}$
+\item\mml{pboole:49} $X\cap\emptyset_{I}=\emptyset_{I}$
+\item\mml{pboole:50} If $X\subset Y\cup Z$ and $X\cap Z=\emptyset_{I}$,
+  then $X\subset Y$
+\item\mml{pboole:51} If $Y\subset X$ and $X\cap Y=\emptyset_{I}$, then $Y=\emptyset_{I}$
+\item\mml{pboole:52} $X\setminus Y=\emptyset_{I}$ iff $X\subset Y$
+\end{enumerate}
+\end{theorem}
+
+\begin{definition}[Symmetric difference of many-sorted sets]\mml{pboole:def~9}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets indexed by $I$.
+We define the [new term, the] \define{Symmetric Difference} of $X$ by
+$Y$ to be the many-sorted set $X\symdiff Y$ indexed by $I$ equal to
+$X\symdiff Y:=(X\setminus Y)\cup(Y\setminus X)$.
+
+We can check this is commutative $X\symdiff Y=Y\symdiff X$.
+\end{definition}
+
+\begin{theorem}[Equivalent definition for symmetric difference]\mml{pboole:4}
+Let $I$ be a set.
+Let $X$ and $Y$ be many-sorted sets indexed by $I$.
+Then 
+for all $i\in I$, $(X\symdiff Y)_{i}=X_{i}\symdiff Y_{i}$.
+\end{theorem}
+
+\begin{theorem}[Empty many-sorted set is unit for symmetric difference]\mml{pboole:84}
+Let $I$ be a set, let $X$ be a many-sorted set indexed by $I$.
+Then $X\symdiff\emptyset_{I}=X$.
+\end{theorem}
+
+% pboole:def 11 for second inclusion X [= Y iff for x in X holds x in Y
+
+\begin{definition}[Empty-yielding many-sorted set]\mml{pboole:def~12}
+Let $I$ be a set, let $X$ be a many-sorted set of $I$.
+We define [the attribute, saying] $X$ is \define{Empty-Yielding}
+if for each $i\in I$, $X_{i}$ is empty.
+\end{definition}
+
+
+\begin{definition}[Non-empty many-sorted set]\mml{pboole:def~13}
+Let $I$ be a set, let $X$ be a many-sorted set of $I$.
+We define [the attribute, saying] $X$ is \define{Non-Empty}
+if for each $i\in I$, $X_{i}$ is nonempty.
+\end{definition}
+
+\begin{definition}[Element of many-sorted set]\mml{pboole:def~14}
+Let $I$ be a set, let $B$ be a many-sorted set of $I$.
+We define the soft type of a \define{Element} of $B$ to be a
+many-sorted set $x$ indexed by $I$ such that for all $i\in I$, $x_{i}$
+is an element of $B_{i}$.
+\end{definition}
+
+\begin{definition}[Many-sorted functions between many-sorted sets]\mml{pboole:def~15}
+Let $I$ be a set, let $A$ and $B$ be many-sorted sets indexed by $I$.
+We define the soft type of a \define{Many-Sorted Function from $A$ to $B$}
+to be a many-sorted set $f$ indexed by $I$ such that for all $i\in I$,
+we have a function $f_{i}\colon A_{i}\to B_{i}$ from $A_{i}$ to $B_{i}$.
+\end{definition}
+
+\begin{definition}[Cartesian product of many-sorted sets]\mml{pboole:def~16}
+Let $I$ be a set, let $A$ and $B$ be many-sorted sets indexed by $I$.
+We define their \define{Cartesian Product} to be the many-sorted set
+$A\times B$ indexed by $I$ such that for each $i\in I$ we have
+$(A\times B)_{i}=A_{i}\times B_{i}$.
+\end{definition}
+
+\begin{definition}[Many-sorted subset of a many-sorted set]\mml{pboole:def~18}
+Let $I$ be a set, let $M$ be a many-sorted set indexed by $I$.
+We define the soft type of a \define{Many-sorted subset} of $M$ to be
+any many-sorted set $N$ indexed by $I$ such that $N\subset M$.
 \end{definition}
