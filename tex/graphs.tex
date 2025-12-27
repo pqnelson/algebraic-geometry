@@ -11,14 +11,6 @@
 \chapter{Graph Theory}
 \needs{pboole.tex}
 
-\begin{definition}[Graph structure]\label{def:graphs:graph-structure}\mml{altcat_1}
-We define a \define{Graph Structure} to extend a 1-sorted structure
-$G=\structure{U,A}$ consisting of an underlying set $U$ (as we do with
-a 1-sorted structure) and a many-sorted set of \emph{edges} or
-\emph{arrows} $A$ indexed by $U\times U$
-(\S\ref{def:pboole:many-sorted-set}).
-\end{definition}
-
 \begin{remark}[First-class structure]
 Lee and Rudnicki~\cite{lee2007alternative} have observed formalizing
 graph theory in \Mizar/ is more natural when working with ``first
@@ -28,6 +20,60 @@ is more natural for graphs to be described using finite maps
 \emph{in the object theory!}
 \end{remark}
 
+\section{Alternative graph structures}
+
+\begin{definition}[Graph structure]\label{def:graphs:graph-structure}\mml{altcat_1}
+We define a \define{Graph Structure} to extend a 1-sorted structure
+$G=\structure{U,A}$ consisting of an underlying set $U$ (as we do with
+a 1-sorted structure) and a many-sorted set of \emph{edges} or
+\emph{arrows} $A$ indexed by $U\times U$
+(\S\ref{def:pboole:many-sorted-set}).
+\end{definition}
+
+\begin{definition}[Set of edges for a graph structure]\mml{altcat_1:def~1}
+Let $G=\structure{U,A,\dots}$ be a graph structure. Let $x$ and $y$ be elements of $G$.
+We define the \define{Set of Edges} from $x$ to $y$ in $G$ to be the
+set denoted $\langle x,y\rangle:=A$.
+\end{definition}
+
+\begin{definition}[Transitive graph structures]\mml{altcat_1:def~2}
+Let $G$ be a graph structure. We say $G$ is \define{Transitive} if for
+all objects $x,y,z\in G$, if $\langle x,y\rangle\neq\emptyset$ and
+$\langle y,z\rangle\neq\emptyset$, then $\langle x,z\rangle\neq\emptyset$.
+\end{definition}
+
+\begin{definition}[Binary composition operator]
+Let $I$ be a set. Let $G$ and $H$ be many-sorted sets indexed by $I\times I$.
+
+Let us denote\mml{altcat_1:def~3} by $\{|G|\}$ the many-sorted set indexed by $I\times I\times I$ 
+such that for $i\in I$, $j\in I$, and $k\in I$, we have $\{|G|\}_{i,j,k}=G_{i,k}$.
+
+Let us denote\mml{altcat_1:def~4} by $\{|G,H|\}$ the many-sorted set indexed by $I\times I\times I$ 
+such that for $i\in I$, $j\in I$, and $k\in I$, we have $\{|G,H|\}_{i,j,k}=H_{j,k}\times G_{i,h}$.
+
+Then a \define{Binary composition operator} of $G$ is a many-sorted
+function from $\{|G,G|\}$ to $\{|G|\}$.
+\end{definition}
+
+\begin{definition}
+Let $I$ be a nonempty set. Let $G$ be a many-sorted set indexed by
+$I\times I$. Let $b$ be a binary composition operator of $G$.
+
+We call $b$ \define{associative}\mml{altcat_1:def~5} if for all
+$i,j,k,l\in I$, for all $f\in G_{i,j}$, $g\in G_{j,k}$, and $h\in G_{k,l}$,
+we have $b_{i,k,l}(h,b_{i,j,k}(g,f))=b_{i,j,l}(b_{j,k,l}(h,g),f)$.
+
+We say $b$ is \define{with right units}\mml{altcat_1:def~6} if for all
+$i\in I$ there exists an $e\in G_{i,i}$ such that for all $j\in I$ and
+$f\in G_{i,j}$ we have $b_{i,i,j}(f,e)=f$.
+
+We say $b$ is \define{with left units}\mml{altcat_1:def~7} if for all
+$j\in I$ there exists an $e\in G_{j,j}$ such that for all $i\in I$ and
+$f\in G_{i,j}$ we have $b_{i,j,j}(e,f)=f$.
+\end{definition}
+
+\section{Multigraph structures}
+
 \begin{definition}[Multigraph structure]\mml{graph_1}
 A \define{Multigraph Structure} extends a 2-sorted structure
 $M=\structure{U,U_{1},s,t}$ where $U$ is the underlying set of $M$
@@ -35,4 +81,56 @@ called its carrier (inherited from 1-sorted structures) and $U_{1}$ is
 the set inherited from 2-sorted structures, $s\colon U_{1}\to U$ is a
 function called the \emph{Source} mapping, and $t\colon U_{1}\to U$
 is a function called the \emph{Target} mapping.
+
+When $M$ is a multigraph structure, we define the soft types:
+\begin{enumerate}
+\item a \define{Vertex} of $M$ is an element of $M$;
+\item a \define{Edge} of $M$ is an element of $U_{1}$
+\end{enumerate}
+\end{definition}
+
+\begin{definition}[Domain and codomain of an edge of a multigraph]
+Let $M$ be a a multigraph structure.
+Let $f$ be an edge of $M$.
+
+We define the \define{Domain}\mml{graph_1:def~1} of $f$ to be the vertex $\dom(f)$ of $M$
+equal to the source of $M$ applied to $f$ when $M$ is nonempty and
+nonvoid (otherwise, it's just ``the vertex of $M$'').
+
+We define the \define{Codomain}\mml{graph_1:def~2} of $f$ to be the vertex $\cod(f)$ of $M$
+equal to the target of $M$ applied to $f$ when $M$ is nonempty and
+nonvoid (otherwise, it's just ``the vertex of $M$'').
+\end{definition}
+
+\begin{definition}[Graph is a nonempty multigraph]\mml{graph_1}
+We define a \define{Graph} to be a nonempty multigraph structure.
+\end{definition}
+
+\begin{definition}[Compatibility of two functions]\mml{partfun1:def~4}
+Let $f$ and $g$ be functions.
+We say $f$ \define{tolerates} $g$ if for all $x\in\dom(f)\cap\dom(g)$,
+we have $f(x)=g(x)$.
+\end{definition}
+
+\begin{definition}[Union of two graphs]\mml{graph_1:def~5}
+Let $G_{1}$ and $G_{2}$ be graphs. Assume the source of $G_{1}$
+tolerates the source of $G_{2}$, and the target of $G_{1}$ tolerates
+the target of $G_{2}$.
+
+We define their \define{Union} to be the strict graph $G_{1}\cup G_{2}$ such that
+\begin{enumerate}
+\item the vertices of $G_{1}\cup G_{2}$ is the union of the vertices
+  of $G_{1}$ with the vertices of $G_{2}$
+\item the edges of $G_{1}\cup G_{2}$ is the union of the edges
+  of $G_{1}$ with the edges of $G_{2}$
+\item for every edge $e$ of $G_{1}\cup G_{2}$, if $e$ is an edge in
+  $G_{1}$ then the source of $e$ in $G_{1}\cup G_{2}$ is the source of
+  $e$ in $G_{1}$ and also the target of $e$ in $G_{1}\cup G_{2}$ is the target of
+  $e$ in $G_{1}$;
+\item for every edge $e$ of $G_{1}\cup G_{2}$, if $e$ is an edge in
+  $G_{2}$ then the source of $e$ in $G_{1}\cup G_{2}$ is the source of
+  $e$ in $G_{2}$ and also the target of $e$ in $G_{1}\cup G_{2}$ is the target of
+  $e$ in $G_{2}$;
+\end{enumerate}
+This is also called the \define{Sum} of $G_{1}$ and $G_{2}$.
 \end{definition}

@@ -717,3 +717,142 @@ is used or abused by algebraic geometers to generalize the notion of
 are Hausdorff iff they are singletons (see, e.g.,
 Osserman~\cite[ch.5]{osserman2021concise}). 
 \end{remark}
+
+\begin{theorem}[Singletons are closed subsets in a Hausdorff space]
+Let $(X,\tau)$ be a Hausdorff space. Then the intersection of all
+closed neighborhoods of a point equals the singleton set containing
+only point itself.
+
+In particular, this implies singleton sets are closed subsets in a
+Hausdorff space.
+\end{theorem}
+
+\begin{proof}
+Let $x\in X$.
+
+We write $C=\bigcap\{F\subset X\mid F\mbox{ is closed}, x\in F\}$.
+
+Now, either there exists a $y\in X$ such that $y\neq x$, or there is no
+such $y$. If there is no such $y$, then $X=\{x\}$ and we're done.
+So we assume there is such a $y$. By definition of Hausdorff, there
+are open neighborhoods $U_{x}$ of $x$ and $V_{y}$ of $y$ such that
+$U_{x}\cap V_{y}=\emptyset$. Then $y\notin\closure{U_{x}}$ otherwise
+any open neighborhood of $y$ (viz., $V_{y}$) would have a nonempty
+intersection with $U_{x}$. Hence $y\notin C$. Since this is for any
+$y\neq x$, this implies every $y\in X$ is also $y\notin C$.
+\end{proof}
+
+\begin{example}
+Metric spaces $(X,d)$ are Hausdorff. This is because for any $x,y\in X$
+distinct, there is an $0<\varepsilon<d(x,y)/2$ such that
+$B_{\varepsilon}(x)=\{z\in X\mid d(x,z)<\varepsilon\}$ and $B_{\varepsilon}(y)$
+are disjoint.
+\end{example}
+
+\begin{example}[Discrete topological spaces are Hausdorff]
+Let $(X,\tau_{\text{discrete}})$ be a topological space with the
+discrete topology. Then it is obviously Hausdorff (just take the
+singleton neighborhoods, which are disjoint for distinct points).
+\end{example}
+
+\begin{example}[Finite topological spaces are Hausdorff iff discrete]
+The only Hausdorff space $(X,\tau)$ with $X$ being a finite set must
+have $\tau$ be the discrete topology.
+
+If it were Hausdorff, then the singletons are closed subsets, and
+since $X$ is finite this means \emph{every} set is a closed set. This
+implies every subset is open. This means the topology is discrete.
+\end{example}
+
+\begin{example}[Infinite sets equipped with cofinite topology is not Hausdorff]
+Let $X$ be an infinite set, let $\tau$ be the cofinite topology on $X$
+(i.e., the only proper closed subsets of $X$ are finite subsets of $X$).
+Then $(X,\tau)$ is not Hausdorff.
+
+Let $x,y\in X$ be distinct points $x\neq y$. Let $O_{1}$ and $O_{2}$
+be open subsets containing $x\in O_{1}$ and $y\in O_{2}$. But
+$O_{1}\cap O_{2}$ is open, and therefore its complement has only
+finitely many points. But since $X$ is infinite, $O_{1}\cap O_{2}\neq\emptyset$.
+Hence $(X,\tau)$ is not Hausdorff.
+\end{example}
+
+\section{Topological Groups}
+
+\begin{definition}[Topological group structure]\mml{topgrp_1}
+A \define{Topological Group Structure} extends both the multiplicative
+magma structure and the topological structure, and looks like
+$G=\structure{U,\tau,\star}$ where $\tau$ is the topology of $G$, and
+$\star\colon U\times U\to U$ is the binary operator.
+\end{definition}
+
+\begin{definition}[Topological groups]\mml{topgrp_1}
+We define the [soft type] of a \define{Topological Group} to be a
+topological group structure $G=\structure{U,\tau,\star}$ such that
+\begin{itemize}
+\item $G$ is associative, group-like, topological-space-like
+\property{Unary continuous}\mml{topgrp_1:def~7} The inverse operation $x\mapsto x^{-1}$
+is a continuous function $G\to G$
+\property{Binary continuous}\mml{topgrp_1:def~8} The $\star$ binary
+operator is a continuous function $\star\colon G\times G\to G$.
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[Criteria for multiplication being continuous]\mml{topgrp_1:38}
+Let $G=\structure{U,\tau,\star}$ be a nonempty topological group structure
+which is a topological space.
+Suppose for every $a,b\in G$ and for every open neighborhood $W\ni ab$,
+there exists open neighborhoods $A\ni a$ and $B\ni b$ such that
+$AB\subset W$.
+Then $\star$ is continuous.
+\end{theorem}
+
+\begin{theorem}[Criteria for being a topological group]\mml{topgrp_1:42}
+Let $G=\structure{U,\tau,\star}$ be a nonempty topological group structure
+which is a topological space and also a group. (But no conditions on
+$\star$ or $(-)^{1}$ being continuous.)
+Suppose for all $a,b\in G$ and for all neighborhoods $W\ni a\star b^{-1}$,
+there exists neighborhoods $A\ni a$ and $B\ni b$ such that
+$AB^{-1}\subset W$.
+Then $G$ is a topological group.
+\end{theorem}
+
+\begin{definition}[Continuous action of a topological group on a topological space]
+Let $(X,\tau)$ be a topological space, let $G$ be a topological group.
+An \define{Action} of $G$ on $X$ is a continuous map $\mu\colon G\times X\to X$
+such that
+\begin{itemize}
+\property{Action}
+for all $x\in X$ and for all $g,h\in G$, we have $\mu(g,\mu(h,x))=\mu(gh,x)$
+\property{Continuous} $\mu$ is continuous
+\end{itemize}
+\end{definition}
+
+\begin{theorem}[{Continuous action is a family of homeomorphisms (\cite[II~\S2.4~Lemma~1]{bourbaki1987general})}]
+If a topological group $G$ acts continuously on a topological space
+$X$, then for each $s\in G$ the map $\mu(s,-)\colon X\to X$ is a homeomorphism.
+\end{theorem}
+
+% (Bourbaki's \textit{General Topology}, Ch~II \S2.4 Lemma~1.)
+
+\begin{remark}[Topology for affine spaces]
+This is really useful because I want to think about affine spaces for
+differential geometry. Dan Freed's lecture notes on differential
+geometry argues that a chart on a set $X$ consists of a subset
+$U\subset X$ and coordinates $\varphi\colon U\to A$ where $A$ is an
+affine space equipped with some topology. If $A$ enjoys the action of
+a topological vector space $V$ acting on it, then $A$ enjoys the
+action of a topological Abelian group acting on it (namely, that
+obtained by restricting attention to $V$ as if it were just a
+topological Abelian group, ignoring the scalar multiplication,
+etc.). The preceding theorem tells us that the action $v+(-)$ is a
+homeomorphism on $A$, for any $v\in V$. This means that the open sets
+containing a fixed point of $A$ describes all possible open sets under
+the action $U\mapsto v+U$. I haven't really seen this discussed
+anywhere, especially since ``topological affine spaces'' have a very
+different meaning in the literature.
+
+Furthermore, we can equip $A$ with the topology induced by this
+action: for any $U\subset V$ open, $U+a=\{u+a\in A\mid u\in U\}$ is an
+open set in $A$ for any $a\in A$. At least, this \emph{I believe}
+describes the situation.
+\end{remark}
