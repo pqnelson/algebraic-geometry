@@ -206,6 +206,8 @@
 \let\QED@stack\@empty
 \let\qed@elt\relax
 
+\newtoks\@temptokena
+
 \def\pushQED#1{%
   \toks@{\qed@elt{#1}}\@temptokena\expandafter{\QED@stack}%
   \xdef\QED@stack{\the\toks@\the\@temptokena}%
