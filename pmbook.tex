@@ -13,8 +13,6 @@
 % ASSUMES you have you loaded pmlmac.tex
 \makeatletter
 
-
-
 %% \font\sstext=ecss1000
 %% \font\sssub=ecss1000 at 7pt
 %% \font\sssubsub=ecss1000 at 5pt
@@ -59,7 +57,7 @@
 \newwrite\tocfile
 \immediate\openout\tocfile={toc2.tex}
 
-\immediate\write\tocfile{\noexpand\chapter*{Contents}\noexpand\begingroup}%\baselineskip 12pt plus 5pt}
+\immediate\write\tocfile{\noexpand\chapter*{Contents}\noexpand\begingroup}
 
 \def\contentsline#1#2#3#4{\csname l@#1\endcsname {#2}{#3}}
 
@@ -69,7 +67,7 @@
 \def\l@chapter#1#2{\line{\rm#2\diamondleaders\hfil\hbox to 2em{\hss#1}}}
 \def\l@section#1#2{\line{\qquad\rm#2\diamondleaders\hfil\hbox to 2em{\hss#1}}}
 
-
+% horizontal dots between entry name and page number in ToC
 \countdef\counter=255
 \gdef\diamondleaders{\global\advance\counter by 1
   \ifodd\counter \kern-10pt \fi
@@ -78,6 +76,7 @@
 
 \def\thepage{\folio}
 
+% HACK: make sure to flush the \tocfile before ending TeX
 \def\bye{\immediate\write\tocfile{\noexpand\endgroup}%
   \immediate\closeout\tocfile%
   \par\vfill\supereject\@@end}
@@ -106,12 +105,12 @@
 \def\theequation{\thechapter.\arabic{equation}}
 
 
-\font\titlefont=cmssbx10 scaled\magstep2
+\font\sectiontitlefont=cmssbx10 scaled\magstep2
 
 \def\s@chapter#1{\vfill\eject%\refstepcounter{chapter}
     \leftline{\twelvess \spaceskip=10pt \def\\{\kern1pt}\phantom{Chapter}}
     \vskip 4pc
-    \rightline{\titlefont #1}
+    \rightline{\sectiontitlefont #1}
     \def\\{}
     \ifx\rhead\omitrhead\else{\ninepoint\xdef\rhead{\uppercase{#1}}}\fi
     \addcontentsline{chapter}{\thepage}{\hbox to 1.5em{\hfil}\enspace #1}{}%
@@ -121,7 +120,7 @@
 \def\@chapter#1{\vfill\eject\iffront\else\refstepcounter{chapter}\fi
     \leftline{\twelvess \spaceskip=10pt \def\\{\kern1pt}\iffront\phantom{Chapter}\else Chapter \thechapter\fi}
     \vskip 4pc
-    \rightline{\titlefont #1}
+    \rightline{\sectiontitlefont #1}
     \def\\{}
     \ifx\rhead\omitrhead\else{\ninepoint\xdef\rhead{\uppercase{#1}}}\fi
     \addcontentsline{chapter}{\thepage}{\hbox to 1.5em{\hfil\iffront\else\thechapter\fi}\enspace #1}{}%
@@ -136,19 +135,6 @@
 
 \newif\ifrunon\runonfalse 
 \newdimen\spaceleft
-
-% Theorem "slogans" should not appear on one page, and then the rest
-% of the theorem on the next.
-\def\theorembreak{%
-  \spaceleft=\vsize%
-  \advance\spaceleft by-\pagetotal%
-  \ifdim\spaceleft<1in%
-    \vfill\eject%
-  \else%
-    \smallbreak%
-  \fi%
-}
-
 
 % if there's less than 2 inches left on the page, just skip to the
 % next page to start the section
@@ -246,14 +232,14 @@
 
 \def\arXiv#1{\texttt{arXiv:#1}}
 
+\def\mathbf#1{\textbf{#1}}
+
+\makeatother
+\endinput
+
 
 %% Cases
 
 %% \def\og@cases#1{\left \{\,\vcenter {\normalbaselines \m@th \ialign {$##\hfil $&$\quad ##\hfil$ \crcr #1\crcr }}\right}
 %% \def\cases{\og@cases\bgroup}
 %% \def\endcases{\egroup}
-
-\def\mathbf#1{\textbf{#1}}
-
-\makeatother
-\endinput

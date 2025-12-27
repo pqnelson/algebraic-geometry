@@ -184,6 +184,17 @@
 %%
 %% Theorems
 %%
+% Theorem "slogans" should not appear on one page, and then the rest
+% of the theorem on the next.
+\def\theorembreak{%
+  \spaceleft=\vsize%
+  \advance\spaceleft by-\pagetotal%
+  \ifdim\spaceleft<0.5in%
+    \vfill\eject%
+  \else%
+    \smallbreak%
+  \fi%
+}
 
 \newcounter{theorem}
 \@addtoreset{theorem}{section}
@@ -196,7 +207,6 @@
 \newif\ifearmuffed\earmuffedfalse
 \def\earmuffed{\earmuffedtrue}
 
-\def\theorembreak{\smallbreak}
 % \newtheorem{environment-name}{Printed Name}{body font}
 % produces an environment with a mandatory argument (in brackets) for
 % the "slogan" to be printed.

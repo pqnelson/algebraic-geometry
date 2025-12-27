@@ -15,8 +15,6 @@
 
 \makeatletter
 
-\def\@empty{}
-
 \def\@ifundefined#1#2#3{%
   \expandafter\ifx\csname#1\endcsname\relax%
     #2%
@@ -24,7 +22,12 @@
     #3%
   \fi}
 
-\def\@namedef#1{\expandafter\def\csname#1\endcsname}
+
+%%%
+%%% Macros needed to make URL package to work
+%%%
+\def\@namedef#1{\expandafter\def\csname#1\endcsname} % needed for URL package
+\newcount\@tempcnta % needed for url.sty
 
 % HACK: this allows you to \usepackage for some packages
 \let\protect\relax
@@ -34,6 +37,9 @@
 \def\usepackage#1{\makeatletter
   \input #1.sty}
 
+%%%
+%%% Logos
+%%%
 %% L%% print an L
 %% \kern -.36em%% add a negative kern
 %% {%% open a group
@@ -53,22 +59,18 @@
 %% \TeX%% print the TeX logo
 
 \newdimen\z@ \z@=0pt % can be used both for 0pt and 0
-\newcount\@tempcnta % needed for url.sty
 
-\long\def\LaTeX{L\kern-.36em%
-  {\sbox{\z@}T%
-    \vbox to\ht \z@{\hbox{\sevenrm A}%
-      \vss}%
-  }%
-  \kern-.15em%
-  \TeX}
-
+%% \long\def\LaTeX{L\kern-.36em%
+%%   {\sbox{\z@}T%
+%%     \vbox to\ht \z@{\hbox{\sevenrm A}%
+%%       \vss}%
+%%   }%
+%%   \kern-.15em%
+%%   \TeX}
 
 \def\LaTeX{L\kern-.26em \raise.6ex\hbox{\sevenrm A}%
    \kern-.15em\TeX}%
 
-%% \def\LaTeX{L\kern-.26em \raise.6ex\hbox{\fiverm A}%
-%%    \kern-.15em TeX}%
 \def\AMSTeX{$\cal A\kern-.1667em \lower.5ex\hbox{$\cal M$}%
    \kern-.125em S$-\TeX}%
 \def\BibTeX{{\rm B\kern-.05em {\sevenrm I\kern-.025em B}%
@@ -78,6 +80,7 @@
 \def\MF{{\mflogo META}{\tenrm \-}{\mflogo FONT}}%
 \def\MP{{\mflogo META}{\tenrm \-}{\mflogo POST}}%
 
+% hack to make \sbox work
 \def\color@begingroup{\begingroup}
 \def\color@setgroup{\color@begingroup}
 \def\color@endgroup{\endgraf\endgroup}
@@ -89,13 +92,12 @@
 
 % Redefine \bye to use \@@end, so we can redefine \end
 \let\@@end\end
+\def\bye{\par\vfill\supereject\@@end}
 
 % `\enddocument` needs to have an \endgroup to fix
 % "semi simple group (level 1) entered at line N (\begingroup)"
-\def\bye{\par\vfill\supereject\@@end}
 \def\document{\begingroup}
 \def\enddocument{\endgroup\par\bye}
-
 
 % define environment syntax
 % \newif\if@ignore\@ignorefalse does not define things properly
@@ -119,7 +121,7 @@
 % TODO: support "\theH<counter>"?
 \def\stepcounter#1{%
     \expandafter\global\expandafter\advance\csname c@#1\endcsname by1%
-    \begingroup%
+    \begingroup% propagate reset
       \let\@elt\@stpelt%
       \csname cl@#1\endcsname%
     \endgroup%
@@ -180,6 +182,8 @@
 % HACK: TeX defines "\newcount" to be outer, which breaks \@definecount
 % so we just remove the "\outer" prefix
 \def\newcount{\alloc@0\count\countdef\insc@unt}
+
+\def\@empty{}
 
 % Constructs `\cl@<counter>` which is of the form `\@elt <counter1>
 % \@elt <counter-2> ... \@elt <counter-N>`
@@ -397,7 +401,6 @@
 
 %%%
 %%% Font commands
-\def\textsc#1{{\tensc #1}}
 
 %% Poor man's \emph
 \newif\if@emph \@emphfalse
@@ -406,6 +409,7 @@
 \def\emph#1{{\em #1\/}}
 
 % usual font manipulations
+\def\textsc#1{{\tensc #1}}
 \def\textit#1{{\it #1\/}}
 \def\textsl#1{{\sl #1\/}}
 \def\textbf#1{{\bf #1}}
@@ -450,7 +454,6 @@
 }
 \def\maketitle{\@maketitle
   \mbox{ }\par
-  %\vfil\@maketitleaddenda
   \gdef\@maketitle{}
   \mbox{ }\vfill
   \@maketitleaddenda
