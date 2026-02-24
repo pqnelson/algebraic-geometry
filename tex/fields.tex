@@ -1,0 +1,135 @@
+%%
+%% fields.tex
+%% 
+%% Made by Alex Nelson <pqnelson@gmail.com>
+%% Login   <alex@lisp>
+%% 
+%% Started on  2025-12-28T09:35:16-0800
+%% Last update 2025-12-28T09:35:16-0800
+%% 
+
+\chapter{Field Theory}
+
+\section{Fields}
+
+\begin{definition}[Field]\mml{vectsp_1}
+A \define{Field} is a commutative skew-field.
+\end{definition}
+
+\begin{theorem}[Kronecker's construction]\mml{field_1:def 3}
+Let $\FF$ be field, let $p(x)\in\FF[x]$ be an irreducible polynomial.
+Then $\FF[x]/(p(x))$ is a field.
+\end{theorem}
+
+\begin{proposition}[Well-definedness of characteristic of field]
+For any field $\FF$, recall (\S\ref{ex:ring:canHomInt}) there exists a
+unique [ring] morphism $\phi\colon\ZZ\to\FF$ such that $\phi(1)=1$
+with $\ker(\phi)=(n)$ for some $n\geq0$.
+Then there exists a unique induced morphism
+$\widetilde{\phi}\colon\ZZ/n\ZZ\to\FF$ which is injective and either
+$n=0$ or $n$ is a prime number.
+\end{proposition}
+
+\begin{definition}[Characteristic of a ring]\mml{ring_3:def 5}
+Let $R$ be a ring. The \define{Characteristic} of $R$ is the
+number $\Char(R)$ defined as:
+
+If there exists an $n>0$ such that $(n)=\ker(\phi)$ where $\phi\colon\ZZ\to R$
+sends $\phi(1)=1$, then $\Char(R)=n$ if it exists.
+
+Otherwise, if for all $n\in\ZZ$ we have $n\cdot 1_{R}\neq0_{R}$, then
+the characteristic of $R$ is defined to be zero $\Char(R)=0$.
+\end{definition}
+
+\begin{example}
+The field $\FF_{p}$ has characteristic $p$, so does the ring $\FF_{p}[x]$.
+\end{example}
+
+\begin{example}
+The rings $\ZZ$, $\QQ$, $\RR$, $\CC$ all have characteristic zero.
+\end{example}
+
+\begin{definition}[Prime Subfield]\mml{ring_3:def 10}
+Let $\FF$ be a field. The \define{Prime Subfield} of $\FF$ is its
+smallest subfield.
+\end{definition}
+
+\begin{proposition}[Prime subfield of field with characteristic zero is isomorphic to rationals]\mml{ring_3:103}
+If $\FF$ is a field with $\Char(\FF)=0$, then its prime subfield is
+isomorphic to $\QQ$.
+\end{proposition}
+
+\begin{proposition}[Prime subfield of finite characteristic field]\mml{ring_3:108}
+Let $\FF$ be a field with $\Char(\FF)=p\neq0$, then its prime subfield
+is isomorphic to the finite field with $p$ elements $\FF_{p}$.
+\end{proposition}
+
+\begin{example}
+The prime subfield of $\FF_{p}(x)$ is $\FF_{p}$.
+\end{example}
+
+\section{Field Extension}
+
+\begin{definition}[Field and ring extensions]\mml{field_4 field_4:7}
+Let $\FF$ be a field. A \define{Field Extension} of $\FF$, denoted
+$\kk/\FF$, is a field $\kk$ containing $\FF$ as a subfield $\FF\subset\kk$.
+We say ``$\kk$ is \emph{over} $\FF$''.
+
+More generally, if $R$ is a ring, we may define a \define{Ring Extension}
+of $R$, denoted $S/R$, is a ring $S$ containing $R$ as a subring
+$S\subset R$.
+\end{definition}
+
+\begin{example}
+Some simple examples of field extensions $\QQ(\I)/\QQ$, $\CC/\RR$, and
+$\FF_{p}(x)/\FF_{p}$.
+
+However, $\FF_{p}[x]/\FF_{p}$ is not a field extension, but it is a
+ring extension.
+\end{example}
+
+\begin{example}
+The field $\QQ(\I)$ is the field obtained by \define{Adjoining} a root
+of $x^{2}+1$ to $\QQ$.
+\end{example}
+
+\begin{proposition}[Polynomial of a ring is a polynomial of a ring extension]\mml{field_4:8}
+Let $R$ be a ring, let $p(x)\in R[x]$ be a formal polynomial. For any
+ring extension $S/R$, we see $p(x)\in S[x]$.
+\end{proposition}
+
+\begin{proposition}[Ring extension induces extension of formal polynomials]\mml{ring_4:19}
+For any ring $R$ and ring extension $S/R$, the ring of formal
+polynomials $S[x]$ is a ring extension of $R[x]$.
+\end{proposition}
+
+\begin{theorem}[Existence of field extension containing a root of a given polynomial]
+Let $\FF$ be a field and $p(x)\in\FF[x]$ be a nonconstant, irreducible
+polynomial. Then there always exists a field extension $\kk/\FF$ such
+that $p$ has a root in $\kk$.
+\end{theorem}
+
+\begin{definition}[Polynomials splits in a ring]\mml{field_4:def 5}
+Let $R$ be a ring, let $S$ be a nondegenerate ring (where $1_{S}\neq0_{S}$).
+Let $p(x)\in R[x]$ be a polynomial. We say $p$ \define{Splits In} $S$ if
+we can write $p(x)=a\prod^{n}_{i=1}(x-c_{i})$ where $a,c_{i}\in S$.
+\end{definition}
+
+\begin{definition}[Vector space underlying a field extension]\mml{field_4:def 6}
+Let $\FF$ be a field, let $\kk/\FF$ be a field extension. Then we
+define the \define{Vector Space} $V_{\kk}$ to be $\kk$ considered as a
+vector space over $\FF$.
+\end{definition}
+
+\begin{definition}[Degree of field extension]\mml{field_4:def 7}
+Let $\FF$ be a field, let $\kk/\FF$ be a field extension.
+We define the \define{Degree} of $\kk/\FF$ to be the integer
+$[\kk:\FF]=\dim_{\FF}(\kk)$ if $\kk$ is a finite-dimensional vector
+space over $\FF$; otherwise, the conventions vary, but we will set
+$[\kk:\FF]=\infty$. (Some references set $[\kk:\FF]=-1$ if $\kk$ is
+not a finite-dimensional $\FF$-vector space, but I feel uneasy with
+this convention.)
+
+Moreover, when the degree of $\kk/\FF$ is finite, we say that it is a
+\define{Finite Extension} of $\FF$.
+\end{definition}

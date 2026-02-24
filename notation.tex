@@ -51,6 +51,8 @@
 \let\Reals\RR
 \Def\ZZ{\mathbb{Z}}
 \let\Integers\ZZ
+\let\kk\Bbbk
+
 \Def\FinSETS{\textbf{U}_{0}}
 \Def\SETS{\textbf{U}_{1}}
 \Def\TarskiClass#1{{\bf T}(#1)}
@@ -170,6 +172,8 @@
 \Def\Top{\cat{Top}} % category of topological spaces
 
 %% Ring Theory
+\Def\ndivides{\mathrel{\mskip-\thickmuskip\mskip0.5\thinmuskip{\not\mskip-1mu\big|}\mskip0.5\thinmuskip}}%\mskip-\thickmuskip}}
+\Def\divides{\mathrel{\mskip-\thickmuskip\mskip0.5\thinmuskip\big|\mskip0.5\thinmuskip\mskip-\thickmuskip}}
 \Def\UnitGroup#1{#1^{\times}}
 \Def\Bags{\mathop{\rm Bags}\nolimits}
 \Def\EmptyBag{e}
@@ -191,6 +195,9 @@
 
 % Matrices
 \Def\Mat#1#2{\mathop{\rm Mat}\nolimits(#1, #2)}
+
+% fields
+\Def\Char{\mathop{\rm char}\nolimits}
 
 %% Logos
 %\def\logo#1{\hbox{\textsf{#1}}}

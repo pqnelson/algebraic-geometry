@@ -48,6 +48,17 @@
 \def\frak{\fam=\frakfam}
 \def\mathfrak#1{{\frak#1}}
 
+%% MSBM font
+\input amssym
+\font\tenmsb=msbm10
+\font\sevenmsb=msbm7
+\font\fivemsb=msbm5
+% \alloc@@8\fam\chardef\sixt@@n\msbfam
+\textfont\msbfam=\tenmsb
+\scriptfont\msbfam=\sevenmsb
+\scriptscriptfont\msbfam=\fivemsb
+% \global\let\loadmsbm\empty
+
 %%
 %% Table of contents
 
@@ -147,6 +158,8 @@
     \bigbreak%\vskip 2pc plus 1pc minus 5pt%\vskip 1 cm plus 1 pc minus 5 pt%
   \fi%
 }
+
+%\def\sectionbreak{\bigbreak}
 
 \def\common@section#1#2{%\mark{\currentsection \noexpand\else #1}
   \sectionbreak%

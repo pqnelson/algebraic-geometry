@@ -111,7 +111,7 @@ This is a Boolean ring over $X$. When $X$ is a singleton, this is
 isomorphic to the canonical Boolean ring.
 \end{example}
 
-\begin{theorem}[Zero absorps stuff in a ring]\mml{vectsp_1:6}
+\begin{theorem}[Zero absorbs stuff in a ring]\mml{vectsp_1:6}
 Let $R$ be a nonempty right complementable, right zeroed, right
 distributive double loop structure with associative addition.
 Let $x\in R$ be any element.
@@ -130,6 +130,17 @@ We see that (by right zeroed and distributivity)
 Hence the result by Definition of right-complementable.
 \end{proof}
 
+\begin{proposition}
+For any ring $R$, the following all hold:
+\begin{enumerate}
+\item $1^{-1}=1$
+\item $(-1)^{-1}=-1$
+\item for any $x\in R$, $-1\cdot x=-x$
+\item if for any $a\in R$ there exists $b,c\in R$ such that $ab=1=ca$,
+  then $b=c$
+\end{enumerate}
+\end{proposition}
+
 \begin{definition}[Zero-divisor]\mml{ringfrac:def 1}
 Let $R$ be a ring, let $x\in R$ be nonzero $x\neq 0$.
 We call $x$ a \define{Zero-Divisor} if there exists a $y\in R$ such
@@ -137,6 +148,13 @@ that $y\neq0$ and either $xy=0$ or $yx=0$.
 
 If $x$ is not a zero-divisor, we call it a \emph{nonzero-divisor}.
 \end{definition}
+
+\begin{remark}
+In an associative unital ring $R$, if $a\in R$ is invertible, then $a$
+is not a zero-divisor. But ``associativity'' is a critical condition
+here. The Sedonions has invertible zero-divisors, for example, but it
+is highly nonassociative.
+\end{remark}
 
 \begin{definition}[Domains and Integral Domains]\mml{vectsp_2}
 A \define{Domain} is a non-degenerate ring $R$ such that
@@ -170,6 +188,18 @@ if for every $x\in M$ such that $x\neq 0_{M}$ there exists a $y\in M$
 such that $yx=1_{M}$.
 \end{definition}
 
+\begin{proposition}[Cancellation law for left invertible elements]
+In any nonempty multiplicative magma $M$,
+for any $a$, $b$, $c\in M$, if $a$ is left invertible and $ab=ac$,
+then $b=c$.
+\end{proposition}
+
+\begin{proposition}[Cancellation law for right invertible elements]
+In any nonempty multiplicative magma $M$,
+for any $a$, $b$, $c\in M$, if $c$ is right invertible and $ac=bc$,
+then $a=b$.
+\end{proposition}
+
 \begin{definition}[Skew-field or division rings]\mml{vectsp_1}
 We define a \define{Skew-field} (or \emph{Division Ring}) to be a
 nondegenerate almost left invertible unital Ring.
@@ -190,7 +220,7 @@ This follows by Schur's lemma.
 We define a \define{Field} to be a commutative Skew-field.
 \end{definition}
 
-\begin{example}[Finite field of order $p$]
+\begin{example}[Finite field of order $p$]\mml{ring_3}
 Let $p$ be a prime number. Consider $\FF_{p}$ consisting of natural
 numbers up to $p$ equipped with addition of integers taken modulo $p$,
 multiplication of integers taken modulo $p$. Then $\FF_{p}$ is a
@@ -264,6 +294,12 @@ and therefore we have obtained a left inverse of $x$. But this is a
 contradiction. Therefore we reject our assumption, and conclude that
 $c_{n}\neq c_{k}$ for $n\neq k$.
 \end{proof}
+
+\begin{definition}[Associated elements of a ring]\mml{gcd_1:def 3}
+Let $R$ be a nonempty multiplicative loop. Let $x,y\in R$ be elements
+of $R$. We say $x$ is \define{Associated to} $y$ if $x\divides y$ and
+$y\divides x$.
+\end{definition}
 
 \subsection{Ring morphisms}
 
@@ -345,7 +381,7 @@ We say $S$ is \define{$R$-Homomorphic} if there exists a ring morphism
 $f\colon R\to S$.
 \end{definition}
 
-\begin{example}[Existence of canonical ring morphism $\ZZ\to R$]\mml{ring_3:def 8}
+\begin{example}[Existence of canonical ring morphism $\ZZ\to R$]\mml{ring_3:def 8}\label{ex:ring:canHomInt}
 Let $R$ be any unital ring. There exists a canonical ring morphism
 $f\colon\ZZ\to R$ defined by $f(1_{\ZZ})=1_{R}$.
 \end{example}
@@ -746,6 +782,17 @@ Therefore, we will just speak of \define{Ideals} of a commutative ring.
 \end{theorem}
 (This is a fact registered in \texttt{ideal\_1}.)
 
+\begin{proposition}[Proper ideals do not contain invertible elements]\mml{ideal_1:19-21}
+Let $R$ be a unital double loop, let $I$ be a left/right/two-sided ideal of $R$.
+Then $I$ is a proper ideal if and only if for any unital $u\in R$ we
+have $u\notin I$.
+\end{proposition}
+
+\begin{proposition}\mml{ideal_1:22}
+If $D$ is a skew-field and $I\ideal D$ is a left ideal, then either
+$I=\{0\}$ or $I=D$.
+\end{proposition}
+
 \begin{theorem}[Kernels of ring morphisms are ideals]\mml{ring_2}
 Let $R$ be a nonempty double loop structure.
 Let $S$ be a ring. Let $f\colon R\to S$ be a ring morphism.
@@ -869,6 +916,44 @@ We define the term $I+J$ to be the subset of $A$ equal to
 $I+J:=\{(i+j)\in A\mid i\in I, j\in J\}$.
 \end{definition}
 
+\begin{theorem}[Associativity of adding ideals]\mml{ideal_1:72}
+Let $R$ be a ring, let $I,J,K\ideal R$ be ideals of $R$.
+Then $I+(J+K)=(I+J)+K$.
+\end{theorem}
+
+\begin{definition}[Intersection of ideals]\mml{ideal_1:def 20}
+Let $R$ be a ring. Let $I$, $J$ be ideals of $R$. Then we define
+$I\cap J$ to be the ideal of $R$ equal to $\{x\in R\mid x\in I,x\in J\}$.
+\end{definition}
+
+\begin{proposition}\mml{ideal_1:77}
+Let $R$ be a ring. Let $I\ideal R$ be a left-ideal of $R$, let
+$J\subset R$ and $K\subset R$ be subsets.
+If $J\subset I$, then $I\cap(J+K)=J+(I\cap K)$.
+\end{proposition}
+
+\begin{definition}[Dot product of ideals]\mml{ideal_1:def 21}
+Let $R$ be a ring, let $I\ideal R$ and $J\ideal R$ be ideals. We
+define $I\cdot J=\langle IJ\rangle$ to be the ideal generated by the
+set $\{xy\mid x\in I,y\in J\}$.
+\end{definition}
+
+\begin{definition}[Comaximal or coprime subsets]\mml{ideal_1:def 22}
+Let $R$ be an additive magma, let $I$ and $J$ be subsets of $R$. We
+say that $I$ and $J$ \define{Are Coprime} (or ``are comaximal'') if $I+J=R$.
+\end{definition}
+
+\begin{theorem}[Chinese remainder theorem]
+Let $R$ be a ring, let $I\ideal R$ be a two-sided ideal of $R$, let
+$J$ be a right-ideal of $R$. Then the following all hold:
+\begin{enumerate}
+\item\mml{ideal_1:84} $I\cdot J=I\cap J$;
+\item If furthermore $J\ideal R$ is a two-sided ideal of $R$,
+  then the mapping $R/(I\cdot J)\to (R/I)\times(R/J)$ sending
+  $x\mapsto(x+I,x+J)$ is an isomorphism.
+\end{enumerate}
+\end{theorem}
+
 \begin{definition}[Principal ideal]\mml{ideal_1:def 27}
 Let $R$ be a nonempty double loop structure.
 Let $I$ be an ideal of $R$.
@@ -932,3 +1017,144 @@ Therefore every ideal is generated by a finite set. Hence every ideal
 of $R$ is finitely-generated. (Hence $R$ is Noetherian.)
 \end{proof}
 
+\begin{theorem}[First isomorphism theorem for rings]\mml{ring_2:15}
+Let $R$, $S$ be rings, let $\varphi\colon R\to S$ be a ring morphism.
+Then $R/\ker(\varphi)\iso\im(\varphi)$.
+\end{theorem}
+
+\begin{theorem}[Second isomorphism theorem for rings]
+Let $R$ be a ring, let $I\ideal R$ be a two-sided ideal, let $A\subset R$
+be a subring of $R$. Then the following all hold:
+\begin{enumerate}
+\item $A\cap I\ideal A$;
+\item $A+I\subset R$ is a subring;
+\item $A/(A\cap I)\iso (A+I)/I$ with the isomorphism given by
+  $a\mapsto a+I$.
+\end{enumerate}
+\end{theorem}
+
+\begin{theorem}[Third isomorphism theorem for rings]
+Let $R$ be a ring. Let $I\ideal R$ and $J\ideal R$ be two-sided ideals
+of $R$. If $I\subset J$, then $J/I\ideal R/I$ and also
+\begin{equation}
+\frac{R/I}{J/I}\iso R/J.
+\end{equation}
+\end{theorem}
+
+\begin{theorem}[Fourth isomorphism theorem for rings]
+Let $R$ be a ring, let $I\ideal R$ be a two-sided ideal. Then
+\begin{enumerate}
+\item there is a bijection between left-ideals $J\supset I$ and left
+  ideals in the quotient ring $R/I$; and
+\item there is a bijection between two-sided ideals $J\supset I$ and
+  two-sided ideals in the quotient ring $R/I$.
+\end{enumerate}
+\end{theorem}
+
+\section{Unique Factorization}
+
+\begin{definition}[Prime element]\mml{ring_2:def 8}
+Let $R$ be a nonempty right-unital double loop, let $x\in R$ be an
+element of $R$. Then $x$ is \define{Prime} if $x\neq0$ and $x$ is not
+a unit of $R$ and for all $a,b\in R$ if $x\divides ab$ then either
+$x\divides a$ or $x\divides b$.
+\end{definition}
+
+\begin{definition}[Irreducible element]\mml{ring_2:def 9}
+Let $R$ be a nonempty right-unital double loop, let $x\in R$ be an
+element of $R$. Then $x$ is \define{Irreducible} if $x\neq0$ and $x$ is not
+a unit of $R$ and for all $a\in R$ if $a\divides x$ then either
+$d=xu$ for some unit $u$ or $a$ is a unit.
+
+If $x$ is not irreducible, then we say it is \define{Reducible}.
+\end{definition}
+
+\begin{theorem}[Prime elements of domains are irreducible]\mml{ring_2}
+Let $R$ be a domain. Then any prime element of $R$ is an irreducible
+element of $R$.
+\end{theorem}
+
+\begin{proposition}
+Every element of a field is reducible.
+\end{proposition}
+
+\begin{proposition}
+In a principal ideal domain, irreducible elements are prime elements.
+\end{proposition}
+
+\begin{theorem}\mml{ring_2:24}
+Let $R$ be a commutative ring, let $a\in R$ be a nonzero element $a\neq0$.
+Then $a$ is a prime element of $R$ if and only if the principal ideal
+$(a)$ is a prime ideal.
+\end{theorem}
+
+\begin{theorem}[Maximal principal ideals are generated by irreducible elements]\mml{ring_2:25}
+Let $R$ be a nondegenerate commutative ring, let $a\in R$ be a nonzero
+element $a\neq0$. If $(a)\ideal R$ is a maximal ideal, then $a$ is an
+irreducible element.
+\end{theorem}
+
+\begin{theorem}[In a PID, principal ideals are maximal iff generated
+    by irreducible elements]\mml{ring_2:26}
+Let $R$ be a principal ideal domain, let $a\in R$ be a nonzero element $a\neq0$.
+Then $(a)\ideal R$ is maximal if and only if $a$ is an irreducible
+element of $R$.
+\end{theorem}
+
+\begin{definition}[Factorization of an element]\mml{ring_2:def 11-13}
+Let $R$ be a nonempty right-unital double loop. Let $x\in R$ be an
+element of $R$. Let $F$ be a nonempty finite sequence of $R$. We say
+$F$ is a \define{Factorization} of $x$ if $x=\prod F$ and every
+element of $F$ is an irreducible element of $R$.
+
+In this case, we say $x$ is \define{Factorizable}.
+\end{definition}
+
+\begin{definition}[Uniquely factorizable elements]\mml{ring_2:def 14}
+Let $R$ be a nonempty right-unital double loop structure. Let $x\in R$
+be an element of $R$. We say $x$ is \define{Uniquely Factorizable} if
+$x$ is factorizable, and for any two factorizations
+\begin{equation}
+x=\prod^{m}_{i=1}a_{i}
+\end{equation}
+and
+\begin{equation}
+x=\prod^{n}_{j=1}b_{j},
+\end{equation}
+then $n=m$ and there exists a bijection $\sigma\in S_{n}$ such that
+$a_{i}$ is associated with $b_{\sigma(i)}$. 
+\end{definition}
+
+\begin{proposition}\mml{ring_2}
+Let $R$ be a principal ideal domain, let $x\in R$ be an element of $R$.
+If $x$ is factorizable, then $x$ is uniquely factorizable.
+\end{proposition}
+
+\begin{proposition}\mml{ring_2:27}
+Let $R$ be a nonempty right-unital double loop. Let $a\in R$.
+Then $a$ is irreducible if and only if $\langle a\rangle$ is a
+factorization of $a$.
+\end{proposition}
+
+\begin{definition}[Unique factorization domain]\mml{ring_2:def 15}
+An integral domain $R$ is called a \define{Unique Factorization Domain}
+(or \define{Factorial}, or UFD for short) if every non-zero non-unit
+of $R$ is uniquely factorizable.
+\end{definition}
+
+\begin{proposition}
+Let $R$ be a commutative ring, let $x,y\in R$ be irreducible elements of $R$.
+Then $x$ is associated to $y$ if and only if there exists a unit
+$u\in\UnitGroup{R}$ such that $x=uy$.
+\end{proposition}
+
+\begin{proposition}[Principal ideal domains are unique factorization domains]\mml{ring_2}
+Let $R$ be a principal ideal domain. Then $R$ is a unique
+factorization domain.
+\end{proposition}
+
+\begin{theorem}
+Let $R$ be a ring. Then $R$ is a unique factorization domain if and
+only if the ring of formal polynomials $R[x]$ is a unique
+factorization domain.
+\end{theorem}
