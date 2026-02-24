@@ -207,7 +207,23 @@
 % knuth uses \it for his proofheadfont
 \def\proofheadfont{\tensc}
 
-\def\x@proof[#1]{\pushQED{\qed}\smallbreak%\par
+% if there's less than 2 inches left on the page, just skip to the
+% next page to start the section
+\def\proofbreak{%
+  \spaceleft=\vsize%
+  \advance\spaceleft by-\pagetotal%
+  \ifdim\spaceleft<0pt%
+    \smallbreak%
+  \else%
+    \ifdim\spaceleft<1in%
+      \vfill\eject%
+    \else%
+      \smallbreak%\vskip 2pc plus 1pc minus 5pt%\vskip 1 cm plus 1 pc minus 5 pt%
+    \fi%
+  \fi%
+}
+
+\def\x@proof[#1]{\pushQED{\qed}\proofbreak%\par
   %\ifdim\lastskip<\medskipamount \removelastskip\penalty55\medskip\fi%\medskip%
   \noindent{\proofheadfont #1\@addpunct{.}} \ignorespaces%
 }

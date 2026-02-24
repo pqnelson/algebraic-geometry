@@ -186,14 +186,17 @@
 %%
 % Theorem "slogans" should not appear on one page, and then the rest
 % of the theorem on the next.
-\def\theorembreak{%
+\def\theorembreak{%\par%
   \spaceleft=\vsize%
   \advance\spaceleft by-\pagetotal%
-  \ifdim\spaceleft<0.5in%
-    \vfill\eject%
-  \else%
+  \ifdim\spaceleft<0pt%
     \smallbreak%
-  \fi%
+  \else\ifdim\spaceleft<0.5in%
+      \vfill\eject%
+    \else%
+      \smallbreak%
+    \fi%
+  \fi
 }
 
 \newcounter{theorem}
